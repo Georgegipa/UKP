@@ -17,18 +17,15 @@ void button::addInterrupt(void (*function)())
 
 bool button::state()
 {
-    if (digitalRead(button_pin))
+    //if button is pressed and debounce time has passed then state is true
+    if (digitalRead(button_pin) && debounce.debounce())
     {
-        if ((millis() - lastpress) > DEBOUNCEDELAY)
-        {
-            lastpress = millis();
 #if DEBUG_OPTIONS_ENABLED
-            Serial.print("Button_");
-            Serial.print(id);
-            Serial.println(" pressed!");
+        Serial.print("Button_");
+        Serial.print(id);
+        Serial.println(" pressed!");
 #endif
-            return digitalRead(button_pin);
-        }
+        return digitalRead(button_pin);
     }
 }
 
