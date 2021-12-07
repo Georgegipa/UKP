@@ -1,7 +1,7 @@
-#UKP
+# UKP
 (Universal KeyPad)
 
-##Project Goals
+## Project Goals
 * Create a keypad with multiple profiles 
 * Buttons that trigger with interrupts
 * Load Profiles from micro_sd
