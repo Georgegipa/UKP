@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #define MODE RISING
-#define debounceDelay 200
+
 class button
 {
 private:

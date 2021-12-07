@@ -3,10 +3,6 @@
 #include <Keyboard.h>
 #include "button.hpp"
 
-/* #define button_1 15
-#define button_2 14
-#define button_3 16 */
-
 button button_1(15),button_2(14),button_3(16);
 
 

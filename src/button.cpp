@@ -19,7 +19,7 @@ bool button::state()
 {
     if (digitalRead(button_pin))
     {
-        if ((millis() - lastpress) > debounceDelay)
+        if ((millis() - lastpress) > DEBOUNCEDELAY)
         {
             lastpress = millis();
 #if DEBUG_OPTIONS_ENABLED
