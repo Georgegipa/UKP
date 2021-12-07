@@ -1,30 +1,31 @@
 #include <Arduino.h>
 #include <Mouse.h>
 #include <Keyboard.h>
+#include "button.hpp"
 
-#define button_1 15
+/* #define button_1 15
 #define button_2 14
-#define button_3 16
+#define button_3 16 */
 
-void setup() {
+button button_1(15),button_2(14),button_3(16);
+
+
+void UKP()
+{
   Serial.begin(9600);
-  Mouse.begin(); 
+  Mouse.begin();
   Keyboard.begin();
-  pinMode(LED_BUILTIN,OUTPUT);
-  pinMode(button_1,INPUT);
-  pinMode(button_2,INPUT);
-  pinMode(button_3,INPUT);
-
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop() {
-  Serial.print("Button_1 state:");
-  Serial.println(digitalRead(button_1));
-  delay(250);
-  Serial.print("Button_2 state:");
-  Serial.println(digitalRead(button_2));
-  delay(250);
-  Serial.print("Button_3 state:");
-  Serial.println(digitalRead(button_3));
-  delay(250);  
+void setup()
+{
+  UKP();
+}
+
+void loop()
+{
+  button_1.state();
+  button_2.state();
+  button_3.state();
 }
