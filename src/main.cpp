@@ -11,7 +11,11 @@ void UKP()
   Serial.begin(9600);
   Mouse.begin();
   Keyboard.begin();
-  pinMode(LED_BUILTIN, OUTPUT);
+  while(!Serial);//wait for serial
+  #if DEBUG_OPTIONS_ENABLED
+  Serial.print("Number of buttons intialized:");
+  Serial.println(button::numofbuttons);
+  #endif
 }
 
 void setup()
