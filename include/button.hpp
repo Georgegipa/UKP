@@ -14,7 +14,11 @@ private:
     void print_state(int st);
     bool internal_debounce(unsigned long debouncedelay = DEBOUNCEDELAY);
     unsigned long last_trigger = 0;
-
+    enum click
+    {
+        no_click,
+        single_click
+    };
 public:
     static int numofbuttons;
     button(int pin);

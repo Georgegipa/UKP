@@ -45,7 +45,6 @@ bool button::state()
         return 0;
 }
 
-
 #if DEBUG_OPTIONS_ENABLED
 void button::print_state(int st)
 {
@@ -54,7 +53,13 @@ void button::print_state(int st)
         times_pressed++;
         Serial.print("Button_");
         Serial.print(id);
-        Serial.print(" pressed !");
+        Serial.print(" registered: ");
+        switch (st)
+        {
+        case single_click:
+            Serial.print(" single click");
+            break;
+        }
         Serial.print(" (x");
         Serial.print(times_pressed);
         Serial.println(")");
