@@ -1,5 +1,6 @@
 #include "button.hpp"
-
+#include "actions.hpp"
+#include "Keyboard.h"
 int button::numofbuttons = 0;
 
 button::button(int pin)
@@ -8,6 +9,8 @@ button::button(int pin)
     numofbuttons++;
     id = numofbuttons;
     pinMode(pin, INPUT);
+    if (numofbuttons == 1)
+        InitActions();
 }
 
 button::~button()
@@ -34,11 +37,12 @@ void button::addInterrupt(void (*function)())
 
 bool button::state()
 {
-
     //if button is pressed and debounce time has passed then state is 1
     if (digitalRead(button_pin) && internal_debounce())
     {
         print_state(1);
+        //KeyboardMacro(2,KEY_LEFT_CTRL, 118);
+        MacroParser((char*)"KEY_LEFT_CTRL+v");
         return digitalRead(button_pin);
     }
     else
