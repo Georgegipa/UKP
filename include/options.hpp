@@ -5,5 +5,5 @@
 
 extern const int button_pins[BUTTONS] PROGMEM;
 //default profiles
-extern const char profiles[][BUTTONS][MACRO_MAX_SIZE] PROGMEM;
+extern char profiles[][BUTTONS][MACRO_MAX_SIZE];
 extern const int num_of_profiles;

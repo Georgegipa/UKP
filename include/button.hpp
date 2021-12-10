@@ -7,7 +7,7 @@ class button
 private:
     int button_pin;
     bool using_interrupts = 0;
-    int id;
+    int button_id;
 #if DEBUG_OPTIONS_ENABLED
     int times_pressed = 0;
 #endif

@@ -1,5 +1,6 @@
 #include "extra_button_codes.h"
 #include <Mouse.h>
+#include "options.hpp"
 
 void InitActions()
 {
@@ -19,25 +20,15 @@ void KeyboardMacro(int num_args, ...)
     Keyboard.releaseAll();
 }
 
-/* void KeyboardMacro(int keys[])
+//number of max keys is limited by MACRO_MAX_SIZE
+void ExecuteMacro(int profile_id, int button_id)
 {
-    //determine the number of elements
-    int len= sizeof(keys)/sizeof(keys[0]);
-    for(int i=0; i< len ; i++){
-        Keyboard.press(keys[i]);
-    }
-    Keyboard.releaseAll();
-}
- */
+    static char str[MACRO_MAX_SIZE];
+    strcpy(str, profiles[profile_id][button_id]);
 
+    int token_length = 0, key;
 
-//to do add a limit of 6 max tokens
-int *MacroParser(char *str)
-{
-    static int tokens[6];//number of max keys that can be pressed at the same time
-    int token_length = 0, len = 0;
-    memset(tokens, 0, sizeof(tokens));
-    Serial.print("Got string:");
+    Serial.print(F("Macro loaded:"));
     Serial.println(str);
     char *token = strtok(str, "+");
     while (token != NULL)
@@ -52,27 +43,20 @@ int *MacroParser(char *str)
         Serial.print(" and an integer value of: ");
         Serial.println((int)*token);
 #endif
-
-        //add the ascii code of the button to be pressed
-        if (token_length == 1)
-            tokens[len] = (int)*token;
+        if (token_length == 1)//convert char to int and then press button
+        {
+            key = (int)*token;
+            Keyboard.press(key);
+        }
         else if (token_length > 1) //convert modifier keys
         {
-            int key = find_key(token);
+            key = find_key(token);
             if (key != -1)
-                tokens[len] = key;
+            {
+                Keyboard.press(key);
+            }
         }
         token = strtok(NULL, "+");
-        len++;
     }
-#if DEBUG_OPTIONS_ENABLED
-    Serial.print("Macro's len is: ");
-    Serial.println(len);
-    for (int i = 0; i < 6 ; i++)
-    {
-        Serial.println(tokens[i]);
-    }
-#endif
-
-    return tokens;
+    Keyboard.releaseAll();
 }

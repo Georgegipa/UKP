@@ -9,8 +9,8 @@ int button::profile_id = 0;
 button::button(int pin)
 {
     button_pin = pin;
+    button_id = numofbuttons;
     numofbuttons++;
-    id = numofbuttons;
     pinMode(button_pin, INPUT);
     if (numofbuttons == 1)
         InitActions();
@@ -18,7 +18,7 @@ button::button(int pin)
 
 button::button(){
     button_pin = button_pins[numofbuttons];
-    id = numofbuttons;
+    button_id = numofbuttons;
     numofbuttons++;    
     pinMode(button_pin, INPUT);
 }
@@ -51,8 +51,7 @@ bool button::state()
     if (digitalRead(button_pin) && internal_debounce())
     {
         print_state(1);
-        //KeyboardMacro(2,KEY_LEFT_CTRL, 118);
-        MacroParser((char*)"KEY_LEFT_CTRL+v");
+        ExecuteMacro(profile_id,button_id);
         return digitalRead(button_pin);
     }
     else
@@ -65,8 +64,9 @@ void button::print_state(int st)
     if (st)
     {
         times_pressed++;
+        Serial.println(F("------------------"));
         Serial.print(F("Button_"));
-        Serial.print(id+1);
+        Serial.print(button_id+1);
         Serial.print(F(" registered: "));
         switch (st)
         {
