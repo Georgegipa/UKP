@@ -2,8 +2,9 @@
 #include <Mouse.h>
 #include <Keyboard.h>
 #include "button.hpp"
+#include "options.hpp"
 
-button button_1(15),button_2(14),button_3(16);
+button button_1(button_pins[0]),button_2(button_pins[1]),button_3(button_pins[2]);
 
 void UKP()
 {

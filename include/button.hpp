@@ -20,7 +20,8 @@ private:
         single_click
     };
 public:
-    static int numofbuttons;
+    static int numofbuttons,profile_id;
+    button();
     button(int pin);
     ~button();
     void addInterrupt(void (*function)());

@@ -1,16 +1,26 @@
 #include "button.hpp"
 #include "actions.hpp"
 #include "Keyboard.h"
+#include "options.hpp"
+
 int button::numofbuttons = 0;
+int button::profile_id = 0;
 
 button::button(int pin)
 {
     button_pin = pin;
     numofbuttons++;
     id = numofbuttons;
-    pinMode(pin, INPUT);
+    pinMode(button_pin, INPUT);
     if (numofbuttons == 1)
         InitActions();
+}
+
+button::button(){
+    button_pin = button_pins[numofbuttons];
+    id = numofbuttons;
+    numofbuttons++;    
+    pinMode(button_pin, INPUT);
 }
 
 button::~button()
@@ -56,7 +66,7 @@ void button::print_state(int st)
     {
         times_pressed++;
         Serial.print("Button_");
-        Serial.print(id);
+        Serial.print(id+1);
         Serial.print(" registered: ");
         switch (st)
         {
