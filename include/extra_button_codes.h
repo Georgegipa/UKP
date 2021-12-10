@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Keyboard.h"
 
-const char key_bindings[][16] =
+const char key_bindings[][16] PROGMEM =
     {
         "KEY_LEFT_CTRL",
         "KEY_LEFT_SHIFT",
@@ -51,7 +51,7 @@ const char key_bindings[][16] =
         "KEY_F23",
         "KEY_F24"};
 
-const int key_codes[] =
+const int key_codes[] PROGMEM =
     {
         KEY_LEFT_CTRL,
         KEY_LEFT_SHIFT,

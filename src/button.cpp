@@ -65,18 +65,18 @@ void button::print_state(int st)
     if (st)
     {
         times_pressed++;
-        Serial.print("Button_");
+        Serial.print(F("Button_"));
         Serial.print(id+1);
-        Serial.print(" registered: ");
+        Serial.print(F(" registered: "));
         switch (st)
         {
         case single_click:
-            Serial.print(" single click");
+            Serial.print(F(" single click"));
             break;
         }
-        Serial.print(" (x");
+        Serial.print(F(" (x"));
         Serial.print(times_pressed);
-        Serial.println(")");
+        Serial.println(F(")"));
     }
 }
 #elif
