@@ -20,13 +20,18 @@ button::button()
     numofbuttons++;
     pinMode(button_pin, INPUT);
 }
-
+#if INTERRUPTS_ENABLED
 button::~button()
 {
     if (using_interrupts)
         detachInterrupt(button_pin);
 }
 
+void button::addInterrupt(void (*function)())
+{
+    attachInterrupt(digitalPinToInterrupt(button_pin), function, MODE);
+}
+#endif
 bool button::internal_debounce(unsigned long debouncedelay)
 {
 
@@ -38,26 +43,23 @@ bool button::internal_debounce(unsigned long debouncedelay)
     return 0;
 }
 
-void button::addInterrupt(void (*function)())
-{
-    attachInterrupt(digitalPinToInterrupt(button_pin), function, MODE);
-}
-
 bool button::state()
 {
     //if button is pressed and debounce time has passed then state is 1
     if (digitalRead(button_pin) && internal_debounce())
     {
+#if DEBUG
         print_state(1);
+#endif
         if (button_id) //if button isn't profile button
-            MA.ExecuteMacro(current_profile, button_id-1);
+            MA.ExecuteMacro(current_profile, button_id - 1);
         else
         {
-            if (current_profile < num_of_profiles-1)
+            if (current_profile < num_of_profiles - 1)
                 current_profile++;
             else
                 current_profile = 0;
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
             Serial.print(F("Current Profile changed to: "));
             Serial.println(current_profile);
 #endif
@@ -68,7 +70,7 @@ bool button::state()
         return 0;
 }
 
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
 void button::print_state(int st)
 {
     if (st)
@@ -95,9 +97,5 @@ void button::print_state(int st)
         Serial.print(times_pressed);
         Serial.println(F(")"));
     }
-}
-#else
-void button::print_state(int st)
-{
 }
 #endif

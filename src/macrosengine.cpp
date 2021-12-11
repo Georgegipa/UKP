@@ -20,7 +20,7 @@ int macrosengine::find_key(char *word)
 {
     char buf[binding_max_size];
     int res;
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
     Serial.print(F("Got:"));
     Serial.println(word);
 #endif
@@ -28,14 +28,6 @@ int macrosengine::find_key(char *word)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); //retrieve current string from progmem
         res = strcmp(buf, word);                              //if str1==str2 then strcmp returns 0
-#if 0
-        Serial.print("Key code: ");
-        Serial.print(code);
-        Serial.print(F(" ,strcmp:"));
-        Serial.print(res); //print strcmp result
-        Serial.print(F(" key: "));
-        Serial.println(buf);
-#endif
         if (!res)
         {
             return pgm_read_byte(key_codes + i); //retrieve key's code from progmem
@@ -79,7 +71,7 @@ void macrosengine::ExecuteMacro(int profile_id, int button_id)
             key = find_key(token);
         }
 
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
         Serial.print("Token is:");
         Serial.print(token);
         Serial.print(" with lenght of :");

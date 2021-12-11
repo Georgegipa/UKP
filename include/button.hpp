@@ -8,17 +8,21 @@ private:
     int button_pin;
     bool using_interrupts = 0;
     int button_id;
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
     int times_pressed = 0;
-#endif
     void print_state(int st);
+#endif
     bool internal_debounce(unsigned long debouncedelay = DEBOUNCEDELAY);
     unsigned long last_trigger = 0;
+
 public:
-    static int numofbuttons,current_profile;
+    static int numofbuttons, current_profile;
     button();
     button(int pin);
+    bool state();
+    
+#if INTERRUPTS_ENABLED
     ~button();
     void addInterrupt(void (*function)());
-    bool state();
+#endif
 };

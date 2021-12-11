@@ -7,7 +7,7 @@ button button_1(button_pins[0]), button_2(button_pins[1]), button_3(button_pins[
 void UKP()
 {
   Serial.begin(9600);
-#if DEBUG_OPTIONS_ENABLED
+#if DEBUG
   while (!Serial); //wait for serial
   Serial.print("Number of buttons intialized:");
   Serial.println(button::numofbuttons);
