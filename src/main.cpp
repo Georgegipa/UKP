@@ -11,6 +11,8 @@ void UKP()
   while (!Serial); //wait for serial
   Serial.print("Number of buttons intialized:");
   Serial.println(button::numofbuttons);
+  Serial.print("Number of profiles intialized:");
+  Serial.println(num_of_profiles);
 #endif
 }
 

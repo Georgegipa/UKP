@@ -4,7 +4,7 @@
 #include "options.hpp"
 
 int button::numofbuttons = 0;
-int button::profile_id = 0;
+int button::current_profile = 0;
 
 button::button(int pin)
 {
@@ -12,14 +12,15 @@ button::button(int pin)
     button_id = numofbuttons;
     numofbuttons++;
     pinMode(button_pin, INPUT);
-    if (numofbuttons == 1)
+    if (!numofbuttons) //the button 0 is the profile button
         InitActions();
 }
 
-button::button(){
+button::button()
+{
     button_pin = button_pins[numofbuttons];
     button_id = numofbuttons;
-    numofbuttons++;    
+    numofbuttons++;
     pinMode(button_pin, INPUT);
 }
 
@@ -51,7 +52,19 @@ bool button::state()
     if (digitalRead(button_pin) && internal_debounce())
     {
         print_state(1);
-        ExecuteMacro(profile_id,button_id);
+        if (button_id) //if button isn't profile button
+            ExecuteMacro(current_profile, button_id-1);
+        else
+        {
+            if (current_profile < num_of_profiles-1)
+                current_profile++;
+            else
+                current_profile = 0;
+#if DEBUG_OPTIONS_ENABLED
+            Serial.print(F("Current Profile changed to: "));
+            Serial.println(current_profile);
+#endif
+        }
         return digitalRead(button_pin);
     }
     else
@@ -65,12 +78,19 @@ void button::print_state(int st)
     {
         times_pressed++;
         Serial.println(F("------------------"));
-        Serial.print(F("Button_"));
-        Serial.print(button_id+1);
+        if (button_id)
+        {
+            Serial.print(F("Button_"));
+            Serial.print(button_id);
+        }
+        else
+        {
+            Serial.print(F("Profile button"));
+        }
         Serial.print(F(" registered: "));
         switch (st)
         {
-        case single_click:
+        case 1:
             Serial.print(F(" single click"));
             break;
         }

@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+
+## [0.2.2] - 2021-12-11
+### Added
+* Profiles(**The first defined button is assigned to profiles!**)
 ## [0.2.1] - 2021-12-11
 ### Fixed
 * Macros pressing shift when capitals letters when present in profiles
