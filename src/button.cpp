@@ -79,7 +79,7 @@ void button::print_state(int st)
         Serial.println(F(")"));
     }
 }
-#elif
+#else
 void button::print_state(int st)
 {
 }

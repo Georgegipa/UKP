@@ -1,6 +1,7 @@
 #include "extra_button_codes.h"
 #include <Mouse.h>
 #include "options.hpp"
+#include "helper_functions.hpp"
 
 void InitActions()
 {
@@ -43,18 +44,15 @@ void ExecuteMacro(int profile_id, int button_id)
         Serial.print(" and an integer value of: ");
         Serial.println((int)*token);
 #endif
-        if (token_length == 1)//convert char to int and then press button
+        if (token_length == 1) //convert char to int and then press button
         {
-            key = (int)*token;
-            Keyboard.press(key);
+            Keyboard.press(toLowerCase(*token));
         }
         else if (token_length > 1) //convert modifier keys
         {
             key = find_key(token);
             if (key != -1)
-            {
                 Keyboard.press(key);
-            }
         }
         token = strtok(NULL, "+");
     }

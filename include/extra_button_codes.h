@@ -107,9 +107,21 @@ int key_codes[MAX_BINDINGS] =
 
 int find_key(char *word)
 {
+#if DEBUG_OPTIONS_ENABLED
+    Serial.print(F("Got:"));
+    Serial.println(word);
+#endif
     for (int i = 0; i < MAX_BINDINGS; i++)
     {
-        if (strstr(word,key_bindings[i])!=NULL)
+#if DEBUG_OPTIONS_ENABLED
+        Serial.print("Key code: ");
+        Serial.print(key_codes[i]);
+        Serial.print(F(" ,strcmp:"));
+        Serial.print(strcmp(key_bindings[i], word));
+        Serial.print(F(" key: "));
+        Serial.println(key_bindings[i]);
+#endif
+        if (!strcmp(key_bindings[i], word))
         {
             return key_codes[i];
         }
