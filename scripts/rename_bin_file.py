@@ -6,6 +6,5 @@ def get_build_flag_value(flag_name):
     defines = {k: v for (k, v) in flags_with_value_list}
     return defines.get(flag_name).strip('"')
 
-#env.Replace(PROGNAME="firmware_%s" % get_build_flag_value("VERSION"))
-str= "%s_%s_%s" % (get_build_flag_value("PROJECT_NAME"),get_build_flag_value("BUILD"),get_build_flag_value("VERSION")) 
+str= "%s_%s_%s" % (get_build_flag_value("PROJECT_NAME"),env.GetProjectOption("board"),get_build_flag_value("VERSION")) 
 env.Replace(PROGNAME=str)
