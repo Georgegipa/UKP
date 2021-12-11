@@ -1,61 +1,109 @@
 #include <Arduino.h>
+#include <avr/pgmspace.h>
 #include <string.h>
 #include "Keyboard.h"
-#define BIND_MAX_SIZE 12
+#define BINDING_MAX_SIZE 12
 #define MAX_BINDINGS 47
 
-//removed KEYS_ to save space
-char key_bindings[MAX_BINDINGS][BIND_MAX_SIZE] =
-    {
-        "LEFT_CTRL",
-        "LEFT_SHIFT",
-        "LEFT_ALT",
-        "LEFT_GUI",
-        "RIGHT_CTRL",
-        "RIGHT_SHIFT",
-        "RIGHT_ALT",
-        "RIGHT_GUI",
-        "UP_ARROW",
-        "DOWN_ARROW",
-        "LEFT_ARROW",
-        "RIGHT_ARROW",
-        "BACKSPACE",
-        "TAB",
-        "RETURN",
-        "ESC",
-        "INSERT",
-        "DELETE",
-        "PAGE_UP",
-        "PAGE_DOWN",
-        "HOME",
-        "END",
-        "CAPS_LOCK",
-        "F1",
-        "F2",
-        "F3",
-        "F4",
-        "F5",
-        "F6",
-        "F7",
-        "F8",
-        "F9",
-        "F10",
-        "F11",
-        "F12",
-        "F13",
-        "F14",
-        "F15",
-        "F16",
-        "F17",
-        "F18",
-        "F19",
-        "F20",
-        "F21",
-        "F22",
-        "F23",
-        "F24"};
+//use PROGMEM to improve memory usage
+const char binding_0[] PROGMEM = "LEFT_CTRL";
+const char binding_1[] PROGMEM = "LEFT_SHIFT";
+const char binding_2[] PROGMEM = "LEFT_ALT";
+const char binding_3[] PROGMEM = "LEFT_GUI";
+const char binding_4[] PROGMEM = "RIGHT_CTRL";
+const char binding_5[] PROGMEM = "RIGHT_SHIFT";
+const char binding_6[] PROGMEM = "RIGHT_ALT";
+const char binding_7[] PROGMEM = "RIGHT_GUI";
+const char binding_8[] PROGMEM = "UP_ARROW";
+const char binding_9[] PROGMEM = "DOWN_ARROW";
+const char binding_10[] PROGMEM = "LEFT_ARROW";
+const char binding_11[] PROGMEM = "RIGHT_ARROW";
+const char binding_12[] PROGMEM = "BACKSPACE";
+const char binding_13[] PROGMEM = "TAB";
+const char binding_14[] PROGMEM = "RETURN";
+const char binding_15[] PROGMEM = "ESC";
+const char binding_16[] PROGMEM = "INSERT";
+const char binding_17[] PROGMEM = "DELETE";
+const char binding_18[] PROGMEM = "PAGE_UP";
+const char binding_19[] PROGMEM = "PAGE_DOWN";
+const char binding_20[] PROGMEM = "HOME";
+const char binding_21[] PROGMEM = "END";
+const char binding_22[] PROGMEM = "CAPS_LOCK";
+const char binding_23[] PROGMEM = "F1";
+const char binding_24[] PROGMEM = "F2";
+const char binding_25[] PROGMEM = "F3";
+const char binding_26[] PROGMEM = "F4";
+const char binding_27[] PROGMEM = "F5";
+const char binding_28[] PROGMEM = "F6";
+const char binding_29[] PROGMEM = "F7";
+const char binding_30[] PROGMEM = "F8";
+const char binding_31[] PROGMEM = "F9";
+const char binding_32[] PROGMEM = "F10";
+const char binding_33[] PROGMEM = "F11";
+const char binding_34[] PROGMEM = "F12";
+const char binding_35[] PROGMEM = "F13";
+const char binding_36[] PROGMEM = "F14";
+const char binding_37[] PROGMEM = "F15";
+const char binding_38[] PROGMEM = "F16";
+const char binding_39[] PROGMEM = "F17";
+const char binding_40[] PROGMEM = "F18";
+const char binding_41[] PROGMEM = "F19";
+const char binding_42[] PROGMEM = "F20";
+const char binding_43[] PROGMEM = "F21";
+const char binding_44[] PROGMEM = "F22";
+const char binding_45[] PROGMEM = "F23";
+const char binding_46[] PROGMEM = "F24";
 
-int key_codes[MAX_BINDINGS] =
+const char *const bindings[] PROGMEM = {
+    binding_0,
+    binding_1,
+    binding_2,
+    binding_3,
+    binding_4,
+    binding_5,
+    binding_6,
+    binding_7,
+    binding_8,
+    binding_9,
+    binding_10,
+    binding_11,
+    binding_12,
+    binding_13,
+    binding_14,
+    binding_15,
+    binding_16,
+    binding_17,
+    binding_18,
+    binding_19,
+    binding_20,
+    binding_21,
+    binding_22,
+    binding_23,
+    binding_24,
+    binding_25,
+    binding_26,
+    binding_27,
+    binding_28,
+    binding_29,
+    binding_30,
+    binding_31,
+    binding_32,
+    binding_33,
+    binding_34,
+    binding_35,
+    binding_36,
+    binding_37,
+    binding_38,
+    binding_39,
+    binding_40,
+    binding_41,
+    binding_42,
+    binding_43,
+    binding_44,
+    binding_45,
+    binding_46};
+
+const int key_codes[MAX_BINDINGS] PROGMEM =
     {
         KEY_LEFT_CTRL,
         KEY_LEFT_SHIFT,
@@ -107,23 +155,28 @@ int key_codes[MAX_BINDINGS] =
 
 int find_key(char *word)
 {
+    char buf[BINDING_MAX_SIZE];
+    int res;
 #if DEBUG_OPTIONS_ENABLED
     Serial.print(F("Got:"));
     Serial.println(word);
 #endif
+
     for (int i = 0; i < MAX_BINDINGS; i++)
     {
-#if DEBUG_OPTIONS_ENABLED
+        strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); //retrieve current string from progmem
+        res = strcmp(buf, word);                              //if str1==str2 then strcmp returns 0
+#if 0
         Serial.print("Key code: ");
-        Serial.print(key_codes[i]);
+        Serial.print(code);
         Serial.print(F(" ,strcmp:"));
-        Serial.print(strcmp(key_bindings[i], word));
+        Serial.print(res); //print strcmp result
         Serial.print(F(" key: "));
-        Serial.println(key_bindings[i]);
+        Serial.println(buf);
 #endif
-        if (!strcmp(key_bindings[i], word))
+        if (!res)
         {
-            return key_codes[i];
+            return pgm_read_byte(key_codes + i); //retrieve key's code from progmem
         }
     }
     return -1;

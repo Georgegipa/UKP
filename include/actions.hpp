@@ -35,6 +35,15 @@ void ExecuteMacro(int profile_id, int button_id)
     while (token != NULL)
     {
         token_length = strlen(token);
+        key = -1;
+        if (token_length == 1) //convert char to int and then press button
+        {
+            key = toLowerCase(*token);
+        }
+        else if (token_length > 1) //convert modifier keys
+        {
+            key = find_key(token);
+        }
 
 #if DEBUG_OPTIONS_ENABLED
         Serial.print("Token is:");
@@ -42,18 +51,10 @@ void ExecuteMacro(int profile_id, int button_id)
         Serial.print(" with lenght of :");
         Serial.print(token_length);
         Serial.print(" and an integer value of: ");
-        Serial.println((int)*token);
+        Serial.println(key);
 #endif
-        if (token_length == 1) //convert char to int and then press button
-        {
-            Keyboard.press(toLowerCase(*token));
-        }
-        else if (token_length > 1) //convert modifier keys
-        {
-            key = find_key(token);
-            if (key != -1)
-                Keyboard.press(key);
-        }
+        if (key != -1)
+            Keyboard.press(key);
         token = strtok(NULL, "+");
     }
     Keyboard.releaseAll();

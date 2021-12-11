@@ -13,7 +13,12 @@ Update description(template)
 ### Fixed
 *  -->
 
-
+## [0.2.3] - 2021-12-11
+Memory Improvements
+### Changed
+* Keycodes are now stored in progmem
+### Fixed
+* Debug options in actions.hpp not displaying correct key_codes
 ## [0.2.2] - 2021-12-11
 ### Added
 * Profiles(**The first defined button is assigned to profiles!**)
