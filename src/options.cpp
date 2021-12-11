@@ -1,10 +1,11 @@
 #include "options.hpp"
+#include "macros.h"
 //the first defined button is used for profile switching
 //
 const int button_pins[] PROGMEM = {15, 14, 16};
 
 //default profiles 
-//1st dimension is profile id and, 2nd dimensio is button_id
+//1st dimension is profile id and, 2nd dimension is button_id
 char profiles[][BUTTONS-1][MACRO_MAX_SIZE] = {
     {"LEFT_CTRL+V",//copy & paste profile
      "LEFT_CTRL+C"},

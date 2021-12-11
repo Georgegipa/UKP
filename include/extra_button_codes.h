@@ -1,9 +1,6 @@
 #include <Arduino.h>
-#include <avr/pgmspace.h>
-#include <string.h>
 #include "Keyboard.h"
-#define BINDING_MAX_SIZE 12
-#define MAX_BINDINGS 47
+#include "macros.h"
 
 //use PROGMEM to improve memory usage
 const char binding_0[] PROGMEM = "LEFT_CTRL";
@@ -103,7 +100,7 @@ const char *const bindings[] PROGMEM = {
     binding_45,
     binding_46};
 
-const int key_codes[MAX_BINDINGS] PROGMEM =
+const int key_codes[] PROGMEM =
     {
         KEY_LEFT_CTRL,
         KEY_LEFT_SHIFT,
@@ -153,31 +150,5 @@ const int key_codes[MAX_BINDINGS] PROGMEM =
         KEY_F23,
         KEY_F24};
 
-int find_key(char *word)
-{
-    char buf[BINDING_MAX_SIZE];
-    int res;
-#if DEBUG_OPTIONS_ENABLED
-    Serial.print(F("Got:"));
-    Serial.println(word);
-#endif
-
-    for (int i = 0; i < MAX_BINDINGS; i++)
-    {
-        strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); //retrieve current string from progmem
-        res = strcmp(buf, word);                              //if str1==str2 then strcmp returns 0
-#if 0
-        Serial.print("Key code: ");
-        Serial.print(code);
-        Serial.print(F(" ,strcmp:"));
-        Serial.print(res); //print strcmp result
-        Serial.print(F(" key: "));
-        Serial.println(buf);
-#endif
-        if (!res)
-        {
-            return pgm_read_byte(key_codes + i); //retrieve key's code from progmem
-        }
-    }
-    return -1;
-}
+const int num_of_bindings= ARR_SIZE(key_codes);//number of all bindings
+const int binding_max_size= ARR_SIZE(binding_5);//size of the longest binding

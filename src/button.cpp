@@ -1,7 +1,6 @@
 #include "button.hpp"
-#include "actions.hpp"
-#include "Keyboard.h"
 #include "options.hpp"
+#include "macrosengine.hpp"
 
 int button::numofbuttons = 0;
 int button::current_profile = 0;
@@ -12,8 +11,6 @@ button::button(int pin)
     button_id = numofbuttons;
     numofbuttons++;
     pinMode(button_pin, INPUT);
-    if (!numofbuttons) //the button 0 is the profile button
-        InitActions();
 }
 
 button::button()
@@ -53,7 +50,7 @@ bool button::state()
     {
         print_state(1);
         if (button_id) //if button isn't profile button
-            ExecuteMacro(current_profile, button_id-1);
+            MA.ExecuteMacro(current_profile, button_id-1);
         else
         {
             if (current_profile < num_of_profiles-1)

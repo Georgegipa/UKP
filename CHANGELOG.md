@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.2.4] - 2021-12-11
+Memory Improvements
+### Changed
+* Created class MacrosEngine for reading-executing macros
 ## [0.2.3] - 2021-12-11
 Memory Improvements
 ### Changed
