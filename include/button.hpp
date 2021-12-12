@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include "options.hpp"
 
 #if INTERRUPTS_ENABLED
 #define MODE RISING
@@ -19,7 +20,7 @@ private:
     unsigned long last_trigger = 0;
 
 public:
-    static int numofbuttons, current_profile;
+    static int numofbuttons;
     button();
     bool state();
 

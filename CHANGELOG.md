@@ -13,6 +13,12 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.3.0] - 2021-12-12
+UKPmanager
+### Added
+* UKPmanager a cleaner way to control and initialize UKP
+### Changed
+* Moved DEBOUNCEDELAY,MACRO_MAX_SIZE from platfomio.ini to options.hpp
 ## [0.2.5] - 2021-12-12
 Memory Improvements
 ### Changed

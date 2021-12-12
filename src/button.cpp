@@ -1,10 +1,8 @@
 #include "button.hpp"
-#include "options.hpp"
 #include "macrosengine.hpp"
 #include "helpers.h"
 
 int button::numofbuttons = 0;
-int button::current_profile = 0;
 
 button::button()
 {

@@ -1,10 +1,11 @@
 # UKP
 (Universal KeyPad)
 
-## Project Goals
-* Create a keypad with multiple profiles 
-* Buttons that trigger with interrupts
+## Project Roadmap
+* ~~Create a keypad with multiple profiles~~ (done)
+* Display Profile number on onboard led
 * Load Profiles from micro_sd
+* Buttons that trigger with interrupts
 * Create a Profile template
 
 # Supported Modifier Keys
