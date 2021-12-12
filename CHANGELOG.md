@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.3.1] - 2021-12-12
+Disable profiles and profile button
+### Added
+* option to disable profiles and profile button
 ## [0.3.0] - 2021-12-12
 UKPmanager
 ### Added

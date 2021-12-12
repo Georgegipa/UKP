@@ -7,7 +7,7 @@ int button::numofbuttons = 0;
 button::button()
 {
     button_id = numofbuttons;
-    button_pin =intfromPROGMEM(button_pins, numofbuttons);
+    button_pin = intfromPROGMEM(button_pins, numofbuttons);
     numofbuttons++;
     pinMode(button_pin, INPUT);
 }
@@ -42,10 +42,11 @@ bool button::state()
 #if DEBUG
         print_state(1);
 #endif
-        if (button_id) //if button isn't profile button then execute macro
-            MA.ExecuteMacro(current_profile, button_id - 1);
+        //if button isn't profile button then execute macro ,or profiles are  disabled
+        if (button_id || (!PROFILES))
+            MA.ExecuteMacro(current_profile, button_id - (IF_TRUE(PROFILES)));
         else
-        {//change profile
+        { //change profile
             if (current_profile < num_of_profiles - 1)
                 current_profile++;
             else
