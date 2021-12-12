@@ -2,7 +2,7 @@
 #include "button.hpp"
 #include "options.hpp"
 
-button button_1(button_pins[0]), button_2(button_pins[1]), button_3(button_pins[2]);
+button button_1, button_2, button_3;
 
 void UKP()
 {

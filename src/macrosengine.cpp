@@ -1,6 +1,6 @@
 #include "macrosengine.hpp"
 #include "options.hpp"
-#include "helper_functions.h"
+#include "helpers.h"
 
 macrosengine MA;
 
@@ -30,7 +30,7 @@ int macrosengine::find_key(char *word)
         res = strcmp(buf, word);                              //if str1==str2 then strcmp returns 0
         if (!res)
         {
-            return pgm_read_byte(key_codes + i); //retrieve key's code from progmem
+            return intfromPROGMEM(key_codes, i); //retrieve key's code from progmem
         }
     }
     return -1;
@@ -54,9 +54,10 @@ void macrosengine::ExecuteMacro(int profile_id, int button_id)
     strcpy(str, profiles[profile_id][button_id]);
 
     int token_length = 0, key;
-
+#if DEBUG
     Serial.print(F("Macro loaded:"));
     Serial.println(str);
+#endif
     char *token = strtok(str, "+");
     while (token != NULL)
     {

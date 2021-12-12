@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.2.5] - 2021-12-12
+Memory Improvements
+### Changed
+* Button constructor now loads automatically button_pins
 ## [0.2.4] - 2021-12-11
 Memory Improvements
 ### Changed

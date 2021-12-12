@@ -1,22 +1,15 @@
 #include "button.hpp"
 #include "options.hpp"
 #include "macrosengine.hpp"
+#include "helpers.h"
 
 int button::numofbuttons = 0;
 int button::current_profile = 0;
 
-button::button(int pin)
-{
-    button_pin = pin;
-    button_id = numofbuttons;
-    numofbuttons++;
-    pinMode(button_pin, INPUT);
-}
-
 button::button()
 {
-    button_pin = button_pins[numofbuttons];
     button_id = numofbuttons;
+    button_pin =intfromPROGMEM(button_pins, numofbuttons);
     numofbuttons++;
     pinMode(button_pin, INPUT);
 }
@@ -51,10 +44,10 @@ bool button::state()
 #if DEBUG
         print_state(1);
 #endif
-        if (button_id) //if button isn't profile button
+        if (button_id) //if button isn't profile button then execute macro
             MA.ExecuteMacro(current_profile, button_id - 1);
         else
-        {
+        {//change profile
             if (current_profile < num_of_profiles - 1)
                 current_profile++;
             else

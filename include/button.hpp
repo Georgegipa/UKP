@@ -1,6 +1,9 @@
 #pragma once
 #include <Arduino.h>
+
+#if INTERRUPTS_ENABLED
 #define MODE RISING
+#endif
 
 class button
 {
@@ -18,9 +21,8 @@ private:
 public:
     static int numofbuttons, current_profile;
     button();
-    button(int pin);
     bool state();
-    
+
 #if INTERRUPTS_ENABLED
     ~button();
     void addInterrupt(void (*function)());
