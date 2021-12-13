@@ -13,6 +13,13 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.3.2] - 2021-12-13
+Binary profile output
+### Added
+* binary output to use led or buzzer to display the new active profile
+* option to disable builtin rx/tx leds
+### Changed
+* all profile display actions are now managed by UKPmanager 
 ## [0.3.1] - 2021-12-12
 Disable profiles and profile button
 ### Added

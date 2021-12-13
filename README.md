@@ -3,7 +3,7 @@
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (done)
-* Display Profile number on onboard led
+* ~~Display Profile number on onboard led~~ (done)
 * Load Profiles from micro_sd
 * Buttons that trigger with interrupts
 * Create a Profile template

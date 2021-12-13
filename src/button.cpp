@@ -23,6 +23,7 @@ void button::addInterrupt(void (*function)())
     attachInterrupt(digitalPinToInterrupt(button_pin), function, MODE);
 }
 #endif
+
 bool button::internal_debounce(unsigned long debouncedelay)
 {
 
@@ -51,10 +52,6 @@ bool button::state()
                 current_profile++;
             else
                 current_profile = 0;
-#if DEBUG
-            Serial.print(F("Current Profile changed to: "));
-            Serial.println(current_profile);
-#endif
         }
         return digitalRead(button_pin);
     }
