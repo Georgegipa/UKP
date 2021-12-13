@@ -2,11 +2,16 @@
 (Universal KeyPad)
 
 ## Project Roadmap
-* ~~Create a keypad with multiple profiles~~ (done)
-* ~~Display Profile number on onboard led~~ (done)
+* ~~Create a keypad with multiple profiles~~ (v0.2+)
+* ~~Display Profile number on onboard led~~ (v0.3.2)
 * Load Profiles from micro_sd
-* Buttons that trigger with interrupts
-* Create a Profile template
+* Revamp Macros logic
+    * Accept more complicated commands(open programms,enter strings)
+    * Accept media keys
+    * Accept mouse actions
+* More outputs:
+    * Add support for oled display
+    * Add suppor for 7segment display
 
 # Supported Modifier Keys
 * LEFT_CTRL
