@@ -26,6 +26,6 @@ public:
 
 #if INTERRUPTS_ENABLED
     ~button();
-    void addInterrupt(void (*function)());
+    void addInterrupt(void (*function)());//= foo() , if args void (*function)(int , int ) = foo
 #endif
 };
