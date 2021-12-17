@@ -3,15 +3,15 @@
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (v0.2+)
-* ~~Display Profile number on onboard led~~ (v0.3.2)
+* ~~Display Profile number on onboard led~~ (v0.3.2+)
 * Load Profiles from micro_sd
 * Revamp Macros logic
     * Accept more complicated commands(open programms,enter strings)
     * Accept media keys
     * Accept mouse actions
-* More outputs:
+* More display options:
     * Add support for oled display
-    * Add suppor for 7segment display
+    * ~~Add support for 7segment display~~ (v0.4+)
 
 # Supported Modifier Keys
 * LEFT_CTRL
