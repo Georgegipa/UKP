@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.4.0] - 2021-12-17
+7 segment display support & setHigh/Low functions for leds
+### Added
+* 7segment display class 
 ## [0.3.2] - 2021-12-13
 Binary profile output
 ### Added

@@ -5,7 +5,8 @@ UKPmanager UKP;
 void UKPmanager::init()
 {
     Serial.begin(9600);
-    out.init(9);
+    out.init(10);
+    seg.init();
     //disable the builtin leds
 #if BUILTIN_LEDS_ENABLED == 0
     pinMode(LED_BUILTIN_RX, INPUT);
@@ -13,6 +14,7 @@ void UKPmanager::init()
 #endif
 #if PROFILES
     last_profile_state = current_profile;
+    seg.displayProfile(current_profile);
 #endif
 #if DEBUG
     while (!Serial)
@@ -33,6 +35,7 @@ void UKPmanager::profile_changed()
 #endif
     last_profile_state = current_profile;
     out.flashing(current_profile + 1);
+    seg.displayProfile(current_profile);
 }
 #endif
 

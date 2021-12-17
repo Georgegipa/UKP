@@ -9,6 +9,8 @@ private:
     int state_high = 1;
     unsigned long last_trigger;
 public:
-    void init(int pin , bool reversed = 0);
+    void init(int pin , bool reversed = 0,int initial_state=0);
+    void setHigh();
+    void setLow();
     void flashing(int times,int ms = 80,double offset=0.25);
 };

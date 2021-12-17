@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include "macros.h"
 
 inline int toLowerCase(char a)
 {
