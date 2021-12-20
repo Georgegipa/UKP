@@ -8,16 +8,11 @@
 (unless PROFILE is set to 0)) */
 #define BUTTONS 3
 #define PROFILES 1 //set this to 0 to disable profiles and use the first button as a normal macro
-//Button_pins and profiles are configured in options.cpp!
 
+//Button_pins and profiles are configured in options.cpp!
 //DO NOT CHANGE
 extern const int button_pins[BUTTONS] PROGMEM;
-#if PROFILES
-extern char profiles[][BUTTONS - 1][MACRO_MAX_SIZE];
-#else
-extern char profiles[1][BUTTONS][MACRO_MAX_SIZE];
-#endif
-
+extern char profiles[][MACRO_MAX_SIZE];
 //GLOBAL VARIABLES DO NOT CHANGE
 extern int num_of_profiles;
 extern int current_profile;

@@ -48,10 +48,15 @@ void macrosengine::KeyboardMacro(int num_args, ...)
     Keyboard.releaseAll();
 }
 
+inline int macrosengine::findMacroID(int profile_id, int button_id)
+{
+    return (((PROFILES ? BUTTONS -1 : BUTTONS) * profile_id)+(button_id));
+}
+
 void macrosengine::ExecuteMacro(int profile_id, int button_id)
 {
     char str[MACRO_MAX_SIZE];
-    strcpy(str, profiles[profile_id][button_id]);
+    strcpy(str, profiles[findMacroID(profile_id,button_id)]);
 
     int token_length = 0, key;
 #if DEBUG

@@ -5,24 +5,17 @@
 (unless PROFILE is set to 0)) */
 const int button_pins[BUTTONS] PROGMEM = {15, 14, 16};
 
-//default profiles
-
-#if PROFILES //if profiles are enabled(PROFILES 1)change default profiles here
-//1st dimension is profile id and, 2nd dimension is button_id
-char profiles[][BUTTONS - 1][MACRO_MAX_SIZE] = {
-    {"LEFT_CTRL+V", //copy & paste profile
-     "LEFT_CTRL+C"},
-    {"LEFT_CTRL+Z", //undo & redo profile
-     "LEFT_CTRL+Y"},
-    {"LEFT_ALT+LEFT_SHIFT+A", //comment & open command palette profile
-     "LEFT_CTRL+LEFT_SHIFT+P"}};
-#else//if profiles are disabled(PROFILES 0)change default macros here
-char profiles[1][BUTTONS][MACRO_MAX_SIZE] = {
+/**default profiles
+* edit the following lines to change the default profiles
+* to avoid errors the default profiles must be at least the BUTTONS (if profiles is set to 0) and or alternatively BUTTONS-1**/
+char profiles[][MACRO_MAX_SIZE] = {
     "LEFT_CTRL+V", //copy & paste profile
     "LEFT_CTRL+C",
-    "LEFT_CTRL+X"};
-#endif
-
+    "LEFT_CTRL+Z", //undo & redo profile
+    "LEFT_CTRL+Y",
+    "LEFT_ALT+LEFT_SHIFT+A", //comment & open command palette profile
+    "LEFT_CTRL+LEFT_SHIFT+P"
+};
 //GLOBAL VARIABLES DO NOT CHANGE
-int num_of_profiles = ARR_SIZE(profiles);
+int num_of_profiles = (PROFILES ? (ARR_SIZE(profiles) / (BUTTONS - 1)) : 1);
 int current_profile = 0;

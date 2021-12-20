@@ -6,6 +6,7 @@ class macrosengine
 {
 private:
     int find_key(char *word);
+    inline int findMacroID(int profile_id, int button_id);
 public:
     macrosengine();
     ~macrosengine();
