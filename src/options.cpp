@@ -8,13 +8,15 @@ const int button_pins[BUTTONS] PROGMEM = {15, 14, 16};
 /**default profiles
 * edit the following lines to change the default profiles
 * to avoid errors the default profiles must be at least the BUTTONS (if profiles is set to 0) and or alternatively BUTTONS-1**/
-char profiles[][MACRO_MAX_SIZE] = {
+char profiles[][MACRO_MAX_SIZE+MACRO_COMMAND_SIZE] = {
     "LEFT_CTRL+V", //copy & paste profile
     "LEFT_CTRL+C",
     "LEFT_CTRL+Z", //undo & redo profile
     "LEFT_CTRL+Y",
     "LEFT_ALT+LEFT_SHIFT+A", //comment & open command palette profile
-    "LEFT_CTRL+LEFT_SHIFT+P"
+    "LEFT_CTRL+LEFT_SHIFT+P",
+    "W,calc",
+    "W,msedge"
 };
 //GLOBAL VARIABLES DO NOT CHANGE
 int num_of_profiles = (PROFILES ? (ARR_SIZE(profiles) / (BUTTONS - 1)) : 1);

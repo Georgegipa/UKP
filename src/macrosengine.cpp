@@ -50,20 +50,17 @@ void macrosengine::KeyboardMacro(int num_args, ...)
 
 inline int macrosengine::findMacroID(int profile_id, int button_id)
 {
-    return (((PROFILES ? BUTTONS -1 : BUTTONS) * profile_id)+(button_id));
+    return (((PROFILES ? BUTTONS - 1 : BUTTONS) * profile_id) + (button_id));
 }
 
-void macrosengine::ExecuteMacro(int profile_id, int button_id)
+void macrosengine::ExecuteMacro(char *macro)
 {
-    char str[MACRO_MAX_SIZE];
-    strcpy(str, profiles[findMacroID(profile_id,button_id)]);
-
     int token_length = 0, key;
 #if DEBUG
     Serial.print(F("Macro loaded:"));
-    Serial.println(str);
+    Serial.println(macro);
 #endif
-    char *token = strtok(str, "+");
+    char *token = strtok(macro, "+");
     while (token != NULL)
     {
         token_length = strlen(token);
@@ -90,4 +87,34 @@ void macrosengine::ExecuteMacro(int profile_id, int button_id)
         token = strtok(NULL, "+");
     }
     Keyboard.releaseAll();
+}
+
+void macrosengine::ParseMacro(int profile_id, int button_id)
+{
+    char str[MACRO_MAX_SIZE];
+    strncpy(str, profiles[findMacroID(profile_id, button_id)], MACRO_COMMAND_SIZE);
+    str[MACRO_COMMAND_SIZE] = '\0';
+    bool contains_macro_command = 0;
+    //check if the first part of the string is a macro command
+    if (str[MACRO_COMMAND_SIZE - 1] == ',')
+        contains_macro_command = 1;
+
+    if (contains_macro_command) //macro contains macro command , remove command from macro
+    {
+        //strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
+        switch (str[0])
+        {
+        case 'W'://open windows programm
+            strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
+            KeyboardMacro(2,KEY_RIGHT_GUI,'r');
+            delay(30);
+            Keyboard.println(str);
+            break;
+        }
+    }
+    else //macro doesn't contain macro command
+    {
+        strcpy(str, profiles[findMacroID(profile_id, button_id)]);
+        ExecuteMacro(str);
+    }
 }

@@ -45,7 +45,7 @@ bool button::state()
 #endif
         //if button isn't profile button then execute macro ,or profiles are  disabled
         if (button_id || (!PROFILES))
-            MA.ExecuteMacro(current_profile, button_id - (IF_TRUE(PROFILES)));
+            MA.ParseMacro(current_profile, button_id - (IF_TRUE(PROFILES)));
         else
         { //change profile
             if (current_profile < num_of_profiles - 1)

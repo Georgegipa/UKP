@@ -13,6 +13,10 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.5.0] - 2021-12-17
+MacrosEngine API 2.0 
+### Added
+* ability to open windows programs with WIN+R
 ## [0.4.0] - 2021-12-17
 7 segment display support & setHigh/Low functions for leds
 ### Added
