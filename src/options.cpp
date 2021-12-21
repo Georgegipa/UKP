@@ -9,13 +9,13 @@ const int button_pins[BUTTONS] PROGMEM = {15, 14, 16};
 * edit the following lines to change the default profiles
 * to avoid errors the default profiles must be at least the BUTTONS (if profiles is set to 0) and or alternatively BUTTONS-1**/
 char profiles[][MACRO_MAX_SIZE+MACRO_COMMAND_SIZE] = {
-    "LEFT_CTRL+V", //copy & paste profile
-    "LEFT_CTRL+C",
-    "LEFT_CTRL+Z", //undo & redo profile
-    "LEFT_CTRL+Y",
-    "LEFT_ALT+LEFT_SHIFT+A", //comment & open command palette profile
-    "LEFT_CTRL+LEFT_SHIFT+P",
-    "W,calc",
+    "CTRL+C", //copy & paste profile
+    "CTRL+V",
+    "CTRL+Z", //undo & redo profile
+    "CTRL+Y",
+    "ALT+SHIFT+A", //comment & open command palette profile
+    "CTRL+SHIFT+P",
+    "W,calc", //open windows programs
     "W,msedge"
 };
 //GLOBAL VARIABLES DO NOT CHANGE

@@ -3,53 +3,49 @@
 #include "macros.h"
 
 //use PROGMEM to improve memory usage
-const char binding_0[] PROGMEM = "LEFT_CTRL";
-const char binding_1[] PROGMEM = "LEFT_SHIFT";
-const char binding_2[] PROGMEM = "LEFT_ALT";
-const char binding_3[] PROGMEM = "LEFT_GUI";
-const char binding_4[] PROGMEM = "RIGHT_CTRL";
-const char binding_5[] PROGMEM = "RIGHT_SHIFT";
-const char binding_6[] PROGMEM = "RIGHT_ALT";
-const char binding_7[] PROGMEM = "RIGHT_GUI";
-const char binding_8[] PROGMEM = "UP_ARROW";
-const char binding_9[] PROGMEM = "DOWN_ARROW";
-const char binding_10[] PROGMEM = "LEFT_ARROW";
-const char binding_11[] PROGMEM = "RIGHT_ARROW";
-const char binding_12[] PROGMEM = "BACKSPACE";
-const char binding_13[] PROGMEM = "TAB";
-const char binding_14[] PROGMEM = "RETURN";
-const char binding_15[] PROGMEM = "ESC";
-const char binding_16[] PROGMEM = "INSERT";
-const char binding_17[] PROGMEM = "DELETE";
-const char binding_18[] PROGMEM = "PAGE_UP";
-const char binding_19[] PROGMEM = "PAGE_DOWN";
-const char binding_20[] PROGMEM = "HOME";
-const char binding_21[] PROGMEM = "END";
-const char binding_22[] PROGMEM = "CAPS_LOCK";
-const char binding_23[] PROGMEM = "F1";
-const char binding_24[] PROGMEM = "F2";
-const char binding_25[] PROGMEM = "F3";
-const char binding_26[] PROGMEM = "F4";
-const char binding_27[] PROGMEM = "F5";
-const char binding_28[] PROGMEM = "F6";
-const char binding_29[] PROGMEM = "F7";
-const char binding_30[] PROGMEM = "F8";
-const char binding_31[] PROGMEM = "F9";
-const char binding_32[] PROGMEM = "F10";
-const char binding_33[] PROGMEM = "F11";
-const char binding_34[] PROGMEM = "F12";
-const char binding_35[] PROGMEM = "F13";
-const char binding_36[] PROGMEM = "F14";
-const char binding_37[] PROGMEM = "F15";
-const char binding_38[] PROGMEM = "F16";
-const char binding_39[] PROGMEM = "F17";
-const char binding_40[] PROGMEM = "F18";
-const char binding_41[] PROGMEM = "F19";
-const char binding_42[] PROGMEM = "F20";
-const char binding_43[] PROGMEM = "F21";
-const char binding_44[] PROGMEM = "F22";
-const char binding_45[] PROGMEM = "F23";
-const char binding_46[] PROGMEM = "F24";
+const char binding_0[] PROGMEM = "CTRL";
+const char binding_1[] PROGMEM = "SHIFT";
+const char binding_2[] PROGMEM = "ALT";
+const char binding_3[] PROGMEM = "GUI";
+const char binding_4[] PROGMEM = "UP_ARROW";
+const char binding_5[] PROGMEM = "DOWN_ARROW";
+const char binding_6[] PROGMEM = "LEFT_ARROW";
+const char binding_7[] PROGMEM = "RIGHT_ARROW";
+const char binding_8[] PROGMEM = "BACKSPACE";
+const char binding_9[] PROGMEM = "TAB";
+const char binding_10[] PROGMEM = "RETURN";
+const char binding_11[] PROGMEM = "ESC";
+const char binding_12[] PROGMEM = "INSERT";
+const char binding_13[] PROGMEM = "DELETE";
+const char binding_14[] PROGMEM = "PAGE_UP";
+const char binding_15[] PROGMEM = "PAGE_DOWN";
+const char binding_16[] PROGMEM = "HOME";
+const char binding_17[] PROGMEM = "END";
+const char binding_18[] PROGMEM = "CAPS_LOCK";
+const char binding_19[] PROGMEM = "F1";
+const char binding_20[] PROGMEM = "F2";
+const char binding_21[] PROGMEM = "F3";
+const char binding_22[] PROGMEM = "F4";
+const char binding_23[] PROGMEM = "F5";
+const char binding_24[] PROGMEM = "F6";
+const char binding_25[] PROGMEM = "F7";
+const char binding_26[] PROGMEM = "F8";
+const char binding_27[] PROGMEM = "F9";
+const char binding_28[] PROGMEM = "F10";
+const char binding_29[] PROGMEM = "F11";
+const char binding_30[] PROGMEM = "F12";
+const char binding_31[] PROGMEM = "F13";
+const char binding_32[] PROGMEM = "F14";
+const char binding_33[] PROGMEM = "F15";
+const char binding_34[] PROGMEM = "F16";
+const char binding_35[] PROGMEM = "F17";
+const char binding_36[] PROGMEM = "F18";
+const char binding_37[] PROGMEM = "F19";
+const char binding_38[] PROGMEM = "F20";
+const char binding_39[] PROGMEM = "F21";
+const char binding_40[] PROGMEM = "F22";
+const char binding_41[] PROGMEM = "F23";
+const char binding_42[] PROGMEM = "F24";
 
 const char *const bindings[] PROGMEM = {
     binding_0,
@@ -94,11 +90,7 @@ const char *const bindings[] PROGMEM = {
     binding_39,
     binding_40,
     binding_41,
-    binding_42,
-    binding_43,
-    binding_44,
-    binding_45,
-    binding_46};
+    binding_42};
 
 const int key_codes[] PROGMEM =
     {
@@ -106,10 +98,6 @@ const int key_codes[] PROGMEM =
         KEY_LEFT_SHIFT,
         KEY_LEFT_ALT,
         KEY_LEFT_GUI,
-        KEY_RIGHT_CTRL,
-        KEY_RIGHT_SHIFT,
-        KEY_RIGHT_ALT,
-        KEY_RIGHT_GUI,
         KEY_UP_ARROW,
         KEY_DOWN_ARROW,
         KEY_LEFT_ARROW,
@@ -151,4 +139,4 @@ const int key_codes[] PROGMEM =
         KEY_F24};
 
 const int num_of_bindings PROGMEM = ARR_SIZE(key_codes);  //number of all bindings
-const int binding_max_size PROGMEM = ARR_SIZE(binding_5); //size of the longest binding
+const int binding_max_size PROGMEM = ARR_SIZE(binding_7); //size of the longest binding

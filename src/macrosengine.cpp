@@ -94,19 +94,18 @@ void macrosengine::ParseMacro(int profile_id, int button_id)
     char str[MACRO_MAX_SIZE];
     strncpy(str, profiles[findMacroID(profile_id, button_id)], MACRO_COMMAND_SIZE);
     str[MACRO_COMMAND_SIZE] = '\0';
-    bool contains_macro_command = 0;
-    //check if the first part of the string is a macro command
-    if (str[MACRO_COMMAND_SIZE - 1] == ',')
-        contains_macro_command = 1;
 
-    if (contains_macro_command) //macro contains macro command , remove command from macro
+    if (str[MACRO_COMMAND_SIZE - 1] == ',') //macro contains macro command , remove command from macro
     {
-        //strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
         switch (str[0])
         {
-        case 'W'://open windows programm
+        case 'P':
             strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
-            KeyboardMacro(2,KEY_RIGHT_GUI,'r');
+            Keyboard.print(str);
+            break;
+        case 'W': //open windows programm
+            strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
+            KeyboardMacro(2, KEY_RIGHT_GUI, 'r');
             delay(30);
             Keyboard.println(str);
             break;

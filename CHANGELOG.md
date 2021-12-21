@@ -13,7 +13,15 @@ Update description(template)
 ### Fixed
 *  -->
 
-## [0.5.0] - 2021-12-17
+## [0.5.1] - 2021-12-21
+Removed duplicate modifier keys and replaced with simpler ones
+### Changed
+The following keys are no longer duplicates of left and right:
+* CTRL
+* SHIFT
+* ALT
+* GUI
+## [0.5.0] - 2021-12-21
 MacrosEngine API 2.0 
 ### Added
 * ability to open windows programs with WIN+R

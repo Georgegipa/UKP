@@ -3,25 +3,22 @@
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (v0.2+)
-* ~~Display Profile number on onboard led~~ (v0.3.2+)
-* Load Profiles from micro_sd
-* Revamp Macros logic
-    * Accept more complicated commands(open programms,enter strings)
+* Revamp Macros logic & MacrosEngine
+    * ~~Accept more complicated commands(open programms,enter strings)~~ (v0.5+)
+    * Accept  even more advanced actions
     * Accept media keys
     * Accept mouse actions
 * More display options:
-    * Add support for oled display
+    * ~~Display Profile number on onboard led~~ (v0.3.2+)
     * ~~Add support for 7segment display~~ (v0.4+)
+    * Add support for oled display
+* Load Profiles from micro_sd
 
 # Supported Modifier Keys
-* LEFT_CTRL
-* LEFT_SHIFT
-* LEFT_ALT
-* LEFT_GUI
-* RIGHT_CTRL
-* RIGHT_SHIFT
-* RIGHT_ALT
-* RIGHT_GUI
+* CTRL
+* SHIFT
+* ALT
+* GUI (windows key)
 * UP_ARROW
 * DOWN_ARROW
 * LEFT_ARROW
@@ -61,3 +58,18 @@
 * F22
 * F23
 * F24
+
+# MACRO COMMANDS 
+## THINGS TO KNOW BEFORE USING
+### Macro commands contain 1 letter (**are case sensitive!**) and followed by comma (,).
+* **If no commands are detect the string is treated as a macro!**
+* **Macro commands are not always executed when the button is held and thus cause errors!**
+## USAGE
+With release v0.5+ UKP now supports the following commands:
+
+**(str represents the following string)**
+* W,str
+    * Press WIN+R and paste the following str. Used for opening programs and services
+* P,str 
+    * Enter str to output 
+    * more coming soon...
