@@ -13,6 +13,12 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.5.2] - 2021-12-23
+Added kill switch
+### Added
+* Kill switch to disable-enable UKP actions, this help avoid accidental presses while debugging
+### Changed
+* Layout of default buttons for adding microSD support
 ## [0.5.1] - 2021-12-21
 Removed duplicate modifier keys and replaced with simpler ones
 ### Changed

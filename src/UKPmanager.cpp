@@ -5,9 +5,12 @@ UKPmanager UKP;
 void UKPmanager::init()
 {
     Serial.begin(9600);
-    out.init(10);
+    out.init(9);
     seg.init();
     //disable the builtin leds
+#if KILL_SWITCH
+    pinMode(KILL_SWITCH, INPUT);
+#endif
 #if BUILTIN_LEDS_ENABLED == 0
     pinMode(LED_BUILTIN_RX, INPUT);
     pinMode(LED_BUILTIN_TX, INPUT);
@@ -19,6 +22,11 @@ void UKPmanager::init()
 #if DEBUG
     while (!Serial)
         ; //wait for serial
+    if (KILL_SWITCH)
+    {
+        Serial.print("Kill switch enabled on pin:");
+        Serial.println(KILL_SWITCH);
+    }
     Serial.print("Number of buttons intialized:");
     Serial.println(button::numofbuttons);
     Serial.print("Number of profiles intialized:");
@@ -53,6 +61,18 @@ void UKPmanager::runtime()
 {
     for (int i = 0; i < BUTTONS; i++)
     {
+#if KILL_SWITCH
+        //kill switch must set high in order to allow macros
+        if (!digitalRead(KILL_SWITCH))
+        {
+            out.setHigh();
+            continue;
+        }
+        else
+        {
+            out.setLow();
+        }
+#endif
         btn[i].state();
     }
 #if PROFILES

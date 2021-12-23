@@ -3,7 +3,7 @@
 /*Define the pins for each of the number BUTTONS declared in options.hpp
 (Note that the first number button pin is used for profile switching 
 (unless PROFILE is set to 0)) */
-const int button_pins[BUTTONS] PROGMEM = {15, 14, 16};
+const int button_pins[BUTTONS] PROGMEM = {A0, A1, A2};
 
 /**default profiles
 * edit the following lines to change the default profiles

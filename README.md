@@ -14,6 +14,24 @@
     * Add support for oled display
 * Load Profiles from micro_sd
 
+## Arduino and MicroSd module connections
+**Note if using arduino pro micro 5v, micro sd module has to be 5v torelant!**
+```
+Arduino Pro Micro ||| microSD module
+
+VCC  --->   VCC
+
+D15  --->   SCK
+
+D14  --->   MISO
+
+D16  --->   MOSI
+
+GND  --->   GND
+
+D10   --->   CS
+```
+
 # Supported Modifier Keys
 * CTRL
 * SHIFT
