@@ -1,5 +1,4 @@
 #include "button.hpp"
-#include "macrosengine.hpp"
 #include "helpers.h"
 
 int button::numofbuttons = 0;
@@ -35,7 +34,7 @@ bool button::internal_debounce(unsigned long debouncedelay)
     return 0;
 }
 
-bool button::state()
+int button::state()
 {
     //if button is pressed and debounce time has passed then state is 1
     if (digitalRead(button_pin) && internal_debounce())
@@ -43,20 +42,10 @@ bool button::state()
 #if DEBUG
         print_state(1);
 #endif
-        //if button isn't profile button then execute macro ,or profiles are  disabled
-        if (button_id || (!PROFILES))
-            MA.ParseMacro(current_profile, button_id - (IF_TRUE(PROFILES)));
-        else
-        { //change profile
-            if (current_profile < num_of_profiles - 1)
-                current_profile++;
-            else
-                current_profile = 0;
-        }
-        return digitalRead(button_pin);
+        return button_id;
     }
     else
-        return 0;
+        return -1;
 }
 
 #if DEBUG

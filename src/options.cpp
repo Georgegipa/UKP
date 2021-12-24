@@ -19,5 +19,4 @@ char profiles[][MACRO_MAX_SIZE+MACRO_COMMAND_SIZE] = {
     "W,msedge"
 };
 //GLOBAL VARIABLES DO NOT CHANGE
-int num_of_profiles = (PROFILES ? (ARR_SIZE(profiles) / (BUTTONS - 1)) : 1);
-int current_profile = 0;
+int default_profiles_num = (PROFILES ? (ARR_SIZE(profiles) / (BUTTONS - 1)) : 1);

@@ -1,4 +1,5 @@
 #include "UKPmanager.hpp"
+#include "macrosengine.hpp"
 
 UKPmanager UKP;
 
@@ -18,6 +19,8 @@ void UKPmanager::init()
 #if PROFILES
     last_profile_state = current_profile;
     seg.displayProfile(current_profile);
+    current_profile = 0;
+    
 #endif
 #if DEBUG
     while (!Serial)
@@ -30,7 +33,7 @@ void UKPmanager::init()
     Serial.print("Number of buttons intialized:");
     Serial.println(button::numofbuttons);
     Serial.print("Number of profiles intialized:");
-    Serial.println(num_of_profiles);
+    Serial.println(default_profiles_num);
 #endif
 }
 
@@ -57,6 +60,20 @@ UKPmanager::~UKPmanager()
 #endif
 }
 
+void UKPmanager::manageButtonMacros(int &button_pin)
+{
+    //if button isn't profile button , or profiles are  disabled , then execute macro
+    if (button_pin || (!PROFILES))
+        MA.ParseMacro(current_profile, button_pin - (IF_TRUE(PROFILES)));
+    else
+    { //change profile
+        if (current_profile < default_profiles_num - 1)
+            current_profile++;
+        else
+            current_profile = 0;
+    }
+}
+
 void UKPmanager::runtime()
 {
     for (int i = 0; i < BUTTONS; i++)
@@ -73,7 +90,9 @@ void UKPmanager::runtime()
             out.setLow();
         }
 #endif
-        btn[i].state();
+        pin_triggered = btn[i].state();
+        if (pin_triggered != -1)
+            manageButtonMacros(pin_triggered);
     }
 #if PROFILES
     if (last_profile_state != current_profile)

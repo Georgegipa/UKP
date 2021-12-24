@@ -3,14 +3,13 @@
 #include "options.hpp"
 
 #if INTERRUPTS_ENABLED
-#define MODE RISING
+#define MODE FALLING
 #endif
 
 class button
 {
 private:
     int button_pin;
-    bool using_interrupts = 0;
     int button_id;
 #if DEBUG
     int times_pressed = 0;
@@ -22,7 +21,7 @@ private:
 public:
     static int numofbuttons;
     button();
-    bool state();
+    int state();
 
 #if INTERRUPTS_ENABLED
     ~button();

@@ -16,5 +16,4 @@
 extern const int button_pins[BUTTONS] PROGMEM;
 extern char profiles[][MACRO_MAX_SIZE+MACRO_COMMAND_SIZE];
 //GLOBAL VARIABLES DO NOT CHANGE
-extern int num_of_profiles;
-extern int current_profile;
+extern int default_profiles_num;

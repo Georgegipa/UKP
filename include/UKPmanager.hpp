@@ -1,9 +1,9 @@
 #pragma once
 #include <Arduino.h>
 #include "button.hpp"
-#include "options.hpp"
 #include "binary_output.hpp"
 #include "_7segment.hpp"
+#include "options.hpp"
 
 class UKPmanager
 {
@@ -15,7 +15,10 @@ private:
 #if PROFILES
     int last_profile_state;
     void profile_changed();
+    void manageButtonMacros(int &button_pin);
+    int current_profile;
 #endif
+    int pin_triggered;
 public:
     void init();
     ~UKPmanager();
