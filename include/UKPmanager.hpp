@@ -1,9 +1,9 @@
 #pragma once
 #include <Arduino.h>
+#include "config/definitions.h"
 #include "button.hpp"
 #include "binary_output.hpp"
 #include "_7segment.hpp"
-#include "options.hpp"
 
 class UKPmanager
 {

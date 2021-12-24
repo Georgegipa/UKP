@@ -12,7 +12,7 @@ public:
     macrosengine();
     ~macrosengine();
     void KeyboardMacro(int num_args, ...);
-    void ParseMacro(int profile_id, int button_id);
+    void ParseMacro(int profile_id, int button_id, bool load_default_profile=1);
 };
 
 extern macrosengine MA;

@@ -1,7 +1,9 @@
 #include "macrosengine.hpp"
-#include "options.hpp"
 #include "helpers.h"
-
+#include "config/definitions.h"
+#include "config/default_profiles.h"
+#define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(default_profiles[POS]))
+const int default_profiles_num = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
 
 macrosengine::macrosengine()
@@ -89,23 +91,36 @@ void macrosengine::ExecuteMacro(char *macro)
     Keyboard.releaseAll();
 }
 
-void macrosengine::ParseMacro(int profile_id, int button_id)
+void macrosengine::ParseMacro(int profile_id, int button_id, bool load_default_profile)
 {
-    char str[MACRO_MAX_SIZE];
-    strncpy(str, profiles[findMacroID(profile_id, button_id)], MACRO_COMMAND_SIZE);
-    str[MACRO_COMMAND_SIZE] = '\0';
+    char str[MACRO_MAX_SIZE + MACRO_COMMAND_SIZE];
+    if (load_default_profile)
+    {
+        strncpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)), MACRO_COMMAND_SIZE);
+        str[MACRO_COMMAND_SIZE] = '\0';
+    }
+    else
+        ; //load from micro sd
 
     if (str[MACRO_COMMAND_SIZE - 1] == ',') //macro contains macro command , remove command from macro
     {
         switch (str[0])
         {
-        case 'P':
-            strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
+        case 'P': //paste following string
+            strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)) + MACRO_COMMAND_SIZE);
+#if DEBUG
+            Serial.print("Entering text:");
+            Serial.println(str);
+#endif
             Keyboard.print(str);
             break;
         case 'W': //open windows programm
-            strcpy(str, profiles[findMacroID(profile_id, button_id)] + MACRO_COMMAND_SIZE);
+            strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)) + MACRO_COMMAND_SIZE);
             KeyboardMacro(2, KEY_RIGHT_GUI, 'r');
+#if DEBUG
+            Serial.print("WIN+R:");
+            Serial.println(str);
+#endif
             delay(30);
             Keyboard.println(str);
             break;
@@ -113,7 +128,7 @@ void macrosengine::ParseMacro(int profile_id, int button_id)
     }
     else //macro doesn't contain macro command
     {
-        strcpy(str, profiles[findMacroID(profile_id, button_id)]);
+        strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)));
         ExecuteMacro(str);
     }
 }

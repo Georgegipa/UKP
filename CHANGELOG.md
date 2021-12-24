@@ -13,6 +13,16 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.5.3] - 2021-12-24
+Revamped options 
+### Removed
+* options files
+    * Options files have been replaced by all the files in the config  folder
+### Changed
+* moved button pins config options.hpp->button_pins.h
+* moved definitions options.hpp->defintions.h
+* changed profiles logic options.hpp->default_profiles.h
+    * default_profiles are now stored in progmem
 ## [0.5.2] - 2021-12-23
 Added kill switch
 ### Added

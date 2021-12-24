@@ -1,6 +1,6 @@
 #pragma once
 #include <Arduino.h>
-#include "options.hpp"
+#include "config/button_pins.h"
 
 #if INTERRUPTS_ENABLED
 #define MODE FALLING
