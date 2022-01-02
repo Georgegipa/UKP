@@ -18,6 +18,12 @@ macrosengine::~macrosengine()
     Mouse.end();
 }
 
+/**
+ * @brief Find the corresponding code for modifier key from "extra_button_codes.h"
+ * 
+ * @param word to find inside extra_button_codes.h
+ * @return The modifier key's integer value
+ */
 int macrosengine::find_key(char *word)
 {
     char buf[binding_max_size];
@@ -50,11 +56,22 @@ void macrosengine::KeyboardMacro(int num_args, ...)
     Keyboard.releaseAll();
 }
 
+/**
+ * @brief Returns the position of the default_profiles array corres corresponding to the button pressed and the profile selected.
+ * If profiles are enabled the total number of buttons is -1.
+ * @param profile_id the currnetly selected profile
+ * @param button_id the pressed button
+ */
 inline int macrosengine::findMacroID(int profile_id, int button_id)
-{
+{ 
     return (((PROFILES ? BUTTONS - 1 : BUTTONS) * profile_id) + (button_id));
 }
 
+/**
+ * @brief Splits the given array. Then executes the given macros.
+ * 
+ * @param *macro A char* containing the keys which are going to be pressed.
+ */
 void macrosengine::ExecuteMacro(char *macro)
 {
     int token_length = 0, key;
@@ -91,10 +108,18 @@ void macrosengine::ExecuteMacro(char *macro)
     Keyboard.releaseAll();
 }
 
-void macrosengine::ParseMacro(int profile_id, int button_id, bool load_default_profile)
+
+/**
+ * @brief Reads,analyzes and executes all the supported macro types (see README).
+ * 
+ * @param profile_id The currently selected profile
+ * @param button_id The button pressed
+ * @param load_default_profile True to load the default profiles/False load from sd.
+ */
+void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
 {
     char str[MACRO_MAX_SIZE + MACRO_COMMAND_SIZE];
-    if (load_default_profile)
+    if (load_defaults)
     {
         strncpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)), MACRO_COMMAND_SIZE);
         str[MACRO_COMMAND_SIZE] = '\0';
