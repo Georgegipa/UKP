@@ -20,5 +20,5 @@ const char *const default_profiles[] PROGMEM = {
     macro_6,
     macro_7};
 
-//this variable save the size of the array in order to calculate default_profiles_num in macrosengine
+//this variable saves the size of the array in order to calculate default_profiles_num in macrosengine
 const int dp_num = ARR_SIZE(default_profiles);

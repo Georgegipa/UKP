@@ -7,4 +7,5 @@
 (unless PROFILE is set to 0)) */
 #define BUTTONS 3
 #define PROFILES 1 //set this to 0 to disable profiles and use the first button as a normal macro
+#define BUILTIN_LEDS_ENABLED 0 // enable/disable builtin_leds
 extern const int default_profiles_num;
