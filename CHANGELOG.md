@@ -13,6 +13,12 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.6.0] - 2022-1-4
+SD card support
+### Added
+* **alpha1** sd card support
+### Changed
+* **alpha1** simplified macro command recognition
 ## [0.5.3] - 2021-12-24
 Revamped options 
 ### Removed

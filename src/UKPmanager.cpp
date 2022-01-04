@@ -6,6 +6,7 @@ UKPmanager UKP;
 void UKPmanager::init()
 {
     Serial.begin(9600);
+    MA.init();//start macrosengine, also loads sd card
     out.init(9);
     seg.init();
     //disable the builtin leds
