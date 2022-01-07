@@ -9,15 +9,15 @@
 class macrosengine
 {
 private:
-    int find_key(char *word);
-    inline int findMacroID(int profile_id, int button_id);
-    void ExecuteMacro(char *macro);
+    int findKey(char *word);
+    inline int findMacroID(int profileId, int buttonId);
+    void executeMacro(char *macro);
 
 public:
-    void init();
+    void begin();
     ~macrosengine();
-    void KeyboardMacro(int num_args, ...);
-    void ParseMacro(int profile_id, int button_id, bool load_defaults = 0);
+    void keyboardMacro(int num_args, ...);
+    void parseMacro(int profileId, int buttonId, bool loadDefaults = 0);
 };
 
 extern macrosengine MA;

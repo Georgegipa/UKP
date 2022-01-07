@@ -2,28 +2,28 @@
 
 sdcard sd;
 
-bool sdcard::init()
+bool sdcard::begin()
 {
     if (!SD.begin(10))
     {
         Serial.println("Card Mount Failed");
-        sdconnected = 0;
+        sdConnected = 0;
         return NULL;
     }
     else
     {
-        sdconnected = 1;
+        sdConnected = 1;
         Serial.println("Successfully mounted microSD");
     }
-    times_called = 0;
+    timesCalled = 0;
     refereshFileInfo();
-    return sdconnected;
+    return sdConnected;
 }
 
 bool sdcard::checkConnection()
 {
-    if (!sdconnected)
-        init();
+    if (!sdConnected)
+        begin();
     else
     {
         File F = SD.open(file);
@@ -37,18 +37,18 @@ void sdcard::refereshFileInfo()
 {
     File F = SD.open(file);
     int current_str_len = 0;
-    max_lines = 0;
-    max_str_len = 0;
+    maxLines = 0;
+    maxStrLength = 0;
     while (F.available())
     {
         char t = F.read();
         if (t == '\n')
         {
             //remove \n from max length
-            if (current_str_len > max_str_len)
-                max_str_len = current_str_len - 1;
+            if (current_str_len > maxStrLength)
+                maxStrLength = current_str_len - 1;
             current_str_len = 0;
-            max_lines++;
+            maxLines++;
         }
         else
         {
@@ -57,35 +57,35 @@ void sdcard::refereshFileInfo()
         Serial.print(t);
     }
     F.close();
-    if (times_called) //if this function was called at least once before
-        free(internal_str);
-    internal_str = (char *)malloc(sizeof(char) * max_str_len);
-    times_called++;
+    if (timesCalled) //if this function was called at least once before
+        free(internalStr);
+    internalStr = (char *)malloc(sizeof(char) * maxStrLength);
+    timesCalled++;
 }
 
 char *sdcard::readLine(int line)
 {
-    if (line > max_lines)
+    if (line > maxLines)
         return NULL;
     File F = SD.open(file);
-    memset(internal_str, '\0', sizeof(char) * max_lines); //initialize empty array
+    memset(internalStr, '\0', sizeof(char) * maxLines); //initialize empty array
     int linesread = 0, i = 0;
     bool found = 0;
     while (F.available())
     {
         char t = F.read();
-        internal_str[i] = t;
+        internalStr[i] = t;
         if (t == '\n')
         {
             if (line == linesread)
             {
-                internal_str[i - 1] = '\0'; //replace \n with \0
+                internalStr[i - 1] = '\0'; //replace \n with \0
                 found = 1;
                 break;
             }
             else
                 //replace the written part of the array with null terminators
-                memset(internal_str, '\0', sizeof(char) * strlen(internal_str));
+                memset(internalStr, '\0', sizeof(char) * strlen(internalStr));
             linesread++;
             i = 0;
         }
@@ -94,7 +94,7 @@ char *sdcard::readLine(int line)
     }
     F.close();
     if (found)
-        return internal_str;
+        return internalStr;
     else
         return NULL;
 }

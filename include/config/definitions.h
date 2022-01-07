@@ -9,4 +9,4 @@
 #define PROFILES 1 //set this to 0 to disable profiles and use the first button as a normal macro
 #define BUILTIN_LEDS_ENABLED 1 // enable/disable builtin_leds
 #define MICRO_SD_ENABLED 1 //enable/disable micro_sd (macros are loaded from default_profiles.h)
-extern const int default_profiles_num;
+extern const int defaultProfilesSum;

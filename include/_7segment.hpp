@@ -96,7 +96,7 @@ private:
 
 public:
     //if COM pin is connected to GND(cathode) is_cathode is true
-    void init(bool is_cathode = 1);
+    void begin(bool is_cathode = 1);
     void displayChar(int c);
     void displayProfile(int num);
 #if DEBUG

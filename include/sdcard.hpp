@@ -7,15 +7,15 @@ class sdcard
 {
 private:
     const char *file = "macros.txt";
-    char *internal_str;
-    int times_called;
+    char *internalStr;
+    int timesCalled;
     void refereshFileInfo();
-    bool sdconnected;
+    bool sdConnected;
 
 public:
-    bool init();
+    bool begin();
     bool checkConnection();
-    int max_lines, max_str_len;
+    int maxLines, maxStrLength;
     char *readLine(int line);
 };
 

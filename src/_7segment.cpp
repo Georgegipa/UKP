@@ -1,10 +1,10 @@
 #include "_7segment.hpp"
 #include "helpers.h"
 
-void _7segment::init(bool is_cathode)
+void _7segment::begin(bool is_cathode)
 {
     for (int i = 0; i < SEGMENT_LEDS; i++)
-        led[i].init(intfromPROGMEM(leds, i), !is_cathode);
+        led[i].begin(intfromPROGMEM(leds, i), !is_cathode);
 }
 
 void _7segment::display(const byte *arr, int num)

@@ -3,12 +3,12 @@
 
 UKPmanager UKP;
 
-void UKPmanager::init()
+void UKPmanager::begin()
 {
     Serial.begin(9600);
-    MA.init();//start macrosengine, also loads sd card
-    out.init(9);
-    seg.init();
+    MA.begin();//start macrosengine, also loads sd card
+    out.begin(9);
+    seg.begin();
     //disable the builtin leds
 #if KILL_SWITCH
     pinMode(KILL_SWITCH, INPUT);
@@ -18,9 +18,9 @@ void UKPmanager::init()
     pinMode(LED_BUILTIN_TX, INPUT);
 #endif
 #if PROFILES
-    last_profile_state = current_profile;
-    seg.displayProfile(current_profile);
-    current_profile = 0;
+    lastProfileState = currentProfile;
+    seg.displayProfile(currentProfile);
+    currentProfile = 0;
     
 #endif
 #if DEBUG
@@ -32,22 +32,22 @@ void UKPmanager::init()
         Serial.println(KILL_SWITCH);
     }
     Serial.print("Number of buttons intialized:");
-    Serial.println(button::numofbuttons);
+    Serial.println(button::buttonSum);
     Serial.print("Number of profiles intialized:");
-    Serial.println(default_profiles_num);
+    Serial.println(defaultProfilesSum);
 #endif
 }
 
 #if PROFILES
-void UKPmanager::profile_changed()
+void UKPmanager::profileChanged()
 {
 #if DEBUG
     Serial.print(F("Current Profile changed to: "));
-    Serial.println(current_profile);
+    Serial.println(currentProfile);
 #endif
-    last_profile_state = current_profile;
-    out.flashing(current_profile + 1);
-    seg.displayProfile(current_profile);
+    lastProfileState = currentProfile;
+    out.flashing(currentProfile + 1);
+    seg.displayProfile(currentProfile);
 }
 #endif
 
@@ -65,13 +65,13 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 {
     //if button isn't profile button , or profiles are  disabled , then execute macro
     if (button_pin || (!PROFILES))
-        MA.ParseMacro(current_profile, button_pin - (IF_TRUE(PROFILES)));
+        MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
     else
     { //change profile
-        if (current_profile < default_profiles_num - 1)
-            current_profile++;
+        if (currentProfile < defaultProfilesSum - 1)
+            currentProfile++;
         else
-            current_profile = 0;
+            currentProfile = 0;
     }
 }
 
@@ -91,12 +91,12 @@ void UKPmanager::runtime()
             out.setLow();
         }
 #endif
-        pin_triggered = btn[i].state();
-        if (pin_triggered != -1)
-            manageButtonMacros(pin_triggered);
+        pinTriggered = btn[i].state();
+        if (pinTriggered != -1)
+            manageButtonMacros(pinTriggered);
     }
 #if PROFILES
-    if (last_profile_state != current_profile)
-        profile_changed();
+    if (lastProfileState != currentProfile)
+        profileChanged();
 #endif
 }

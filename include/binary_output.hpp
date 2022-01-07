@@ -4,12 +4,12 @@
 class binary_output
 {
 private:
-    int led_pin;
-    int state_low = 0;
-    int state_high = 1;
-    unsigned long last_trigger;
+    int ledPin;
+    int stateLow = 0;
+    int stateHigh = 1;
+    unsigned long lastTrigger;
 public:
-    void init(int pin , bool reversed = 0,int initial_state=0);
+    void begin(int pin , bool reversed = 0,int initialState=0);
     void setHigh();
     void setLow();
     void flashing(int times,int ms = 80,double offset=0.25);

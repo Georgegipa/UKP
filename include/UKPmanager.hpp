@@ -13,14 +13,14 @@ private:
     _7segment seg;
 //if profiles are enabled track when they change
 #if PROFILES
-    int last_profile_state;
-    void profile_changed();
-    void manageButtonMacros(int &button_pin);
-    int current_profile;
+    int lastProfileState;
+    int currentProfile;
+    void profileChanged();
+    void manageButtonMacros(int &buttonId);    
 #endif
-    int pin_triggered;
+    int pinTriggered;
 public:
-    void init();
+    void begin();
     ~UKPmanager();
     void runtime();
 };

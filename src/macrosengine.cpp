@@ -1,16 +1,16 @@
 #include "macrosengine.hpp"
 #include "helpers.h"
 #include "config/default_profiles.h"
-#define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(default_profiles[POS]))
-const int default_profiles_num = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
+#define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(defaultProfiles[POS]))
+const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
 
-void macrosengine::init()
+void macrosengine::begin()
 {
     Keyboard.begin();
     Mouse.begin();
 #if MICRO_SD_ENABLED
-    sd.init();
+    sd.begin();
 #endif
 }
 
@@ -26,7 +26,7 @@ macrosengine::~macrosengine()
  * @param word to find inside extra_button_codes.h
  * @return The modifier key's integer value
  */
-int macrosengine::find_key(char *word)
+int macrosengine::findKey(char *word)
 {
     char buf[binding_max_size];
     int res;
@@ -46,7 +46,7 @@ int macrosengine::find_key(char *word)
     return -1;
 }
 
-void macrosengine::KeyboardMacro(int num_args, ...)
+void macrosengine::keyboardMacro(int num_args, ...)
 {
     va_list args;
     va_start(args, num_args);
@@ -74,7 +74,7 @@ inline int macrosengine::findMacroID(int profile_id, int button_id)
  * 
  * @param *macro A char* containing the keys which are going to be pressed.
  */
-void macrosengine::ExecuteMacro(char *macro)
+void macrosengine::executeMacro(char *macro)
 {
     int token_length = 0, key;
 #if DEBUG
@@ -92,7 +92,7 @@ void macrosengine::ExecuteMacro(char *macro)
         }
         else if (token_length > 1) //convert modifier keys
         {
-            key = find_key(token);
+            key = findKey(token);
         }
 
 #if DEBUG
@@ -117,7 +117,7 @@ void macrosengine::ExecuteMacro(char *macro)
  * @param button_id The button pressed
  * @param load_default_profile True to load the default profiles/False load from sd.(if sd card is not enabled this parameter doesn't do anything)
  */
-void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
+void macrosengine::parseMacro(int profile_id, int button_id, bool load_defaults)
 {
     char str[MACRO_MAX_SIZE], check[MACRO_COMMAND_SIZE + 1];
     if (!MICRO_SD_ENABLED) //if sd card is disabled only default profiles can be loaded
@@ -152,7 +152,7 @@ void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
             Keyboard.print(str);
             break;
         case 'W': //open windows programm
-            KeyboardMacro(2, KEY_RIGHT_GUI, 'r');
+            keyboardMacro(2, KEY_RIGHT_GUI, 'r');
 #if DEBUG
             Serial.print("WIN+R:");
             Serial.println(str);
@@ -168,6 +168,6 @@ void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
             strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)));
         else
             strncpy(str, sd.readLine(findMacroID(profile_id, button_id)), MACRO_MAX_SIZE);
-        ExecuteMacro(str);
+        executeMacro(str);
     }
 }

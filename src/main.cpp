@@ -3,7 +3,7 @@
 
 void setup()
 {
-  UKP.init();
+  UKP.begin();
 }
 
 void loop()

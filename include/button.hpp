@@ -9,17 +9,17 @@
 class button
 {
 private:
-    int button_pin;
-    int button_id;
+    int buttonPin;
+    int buttonId;
 #if DEBUG
-    int times_pressed = 0;
-    void print_state();
+    int timesPressed = 0;
+    void printState();
 #endif
-    bool internal_debounce(unsigned long debouncedelay = DEBOUNCEDELAY);
-    unsigned long last_trigger = 0;
+    bool internalDebounce(unsigned long debouncedelay = DEBOUNCEDELAY);
+    unsigned long lastTrigger = 0;
 
 public:
-    static int numofbuttons;
+    static int buttonSum;
     button();
     int state();
 

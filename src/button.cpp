@@ -1,14 +1,14 @@
 #include "button.hpp"
 #include "helpers.h"
 
-int button::numofbuttons = 0;
+int button::buttonSum = 0;
 
 button::button()
 {
-    button_id = numofbuttons;
-    button_pin = intfromPROGMEM(button_pins, numofbuttons);
-    numofbuttons++;
-    pinMode(button_pin, INPUT);
+    buttonId = buttonSum;
+    buttonPin = intfromPROGMEM(buttonPins, buttonSum);
+    buttonSum++;
+    pinMode(buttonPin, INPUT);
 }
 #if INTERRUPTS_ENABLED
 button::~button()
@@ -23,12 +23,12 @@ void button::addInterrupt(void (*function)())
 }
 #endif
 
-bool button::internal_debounce(unsigned long debouncedelay)
+bool button::internalDebounce(unsigned long debouncedelay)
 {
 
-    if ((millis() - last_trigger) > debouncedelay)
+    if ((millis() - lastTrigger) > debouncedelay)
     {
-        last_trigger = millis();
+        lastTrigger = millis();
         return 1;
     }
     return 0;
@@ -37,26 +37,26 @@ bool button::internal_debounce(unsigned long debouncedelay)
 int button::state()
 {
     //if button is pressed and debounce time has passed then state is 1
-    if (digitalRead(button_pin) && internal_debounce())
+    if (digitalRead(buttonPin) && internalDebounce())
     {
 #if DEBUG
-        print_state();
+        printState();
 #endif
-        return button_id;
+        return buttonId;
     }
     else
         return -1;
 }
 
 #if DEBUG
-void button::print_state()
+void button::printState()
 {
-        times_pressed++;
+        timesPressed++;
         Serial.println(F("------------------"));
-        if (button_id)
+        if (buttonId)
         {
             Serial.print(F("Button_"));
-            Serial.print(button_id);
+            Serial.print(buttonId);
             Serial.print(F(" registered: "));
         }
         else
@@ -64,6 +64,6 @@ void button::print_state()
             Serial.print(F("Profile button"));
         }
         Serial.print(F(" clicked x"));
-        Serial.println(times_pressed);
+        Serial.println(timesPressed);
 }
 #endif
