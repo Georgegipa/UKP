@@ -138,5 +138,5 @@ const int key_codes[] PROGMEM =
         KEY_F23,
         KEY_F24};
 
-const int num_of_bindings PROGMEM = ARR_SIZE(key_codes);  //number of all bindings
-const int binding_max_size PROGMEM = ARR_SIZE(binding_7); //size of the longest binding
+const int bindingsSum PROGMEM = ARR_SIZE(key_codes);  //number of all bindings
+const int bindingMaxSize PROGMEM = ARR_SIZE(binding_7); //size of the longest binding

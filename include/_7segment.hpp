@@ -92,13 +92,13 @@ class _7segment
 {
 private:
     binary_output led[SEGMENT_LEDS];
-    void display(const byte *arr, int num);
+    void display(const byte *ledArray, int ledId);
 
 public:
     //if COM pin is connected to GND(cathode) is_cathode is true
-    void begin(bool is_cathode = 1);
+    void begin(bool isCathode = 1);
     void displayChar(int c);
-    void displayProfile(int num);
+    void displayProfile(int profileId);
 #if DEBUG
     void testLeds();
 #endif

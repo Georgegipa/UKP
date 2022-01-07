@@ -28,13 +28,13 @@ macrosengine::~macrosengine()
  */
 int macrosengine::findKey(char *word)
 {
-    char buf[binding_max_size];
+    char buf[bindingMaxSize];
     int res;
 #if DEBUG
     Serial.print(F("Got:"));
     Serial.println(word);
 #endif
-    for (int i = 0; i < num_of_bindings; i++)
+    for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); //retrieve current string from progmem
         res = strcmp(buf, word);                              //if str1==str2 then strcmp returns 0
