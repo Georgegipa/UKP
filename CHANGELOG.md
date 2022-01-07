@@ -17,8 +17,10 @@ Update description(template)
 SD card support
 ### Added
 * **alpha1** sd card support
+* **alpha2** sd card option to check if file exists
 ### Changed
 * **alpha1** simplified macro command recognition
+* **alpha2** simplified button print_state
 ## [0.5.3] - 2021-12-24
 Revamped options 
 ### Removed

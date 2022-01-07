@@ -40,7 +40,7 @@ int button::state()
     if (digitalRead(button_pin) && internal_debounce())
     {
 #if DEBUG
-        print_state(1);
+        print_state();
 #endif
         return button_id;
     }
@@ -49,31 +49,21 @@ int button::state()
 }
 
 #if DEBUG
-void button::print_state(int st)
+void button::print_state()
 {
-    if (st)
-    {
         times_pressed++;
         Serial.println(F("------------------"));
         if (button_id)
         {
             Serial.print(F("Button_"));
             Serial.print(button_id);
+            Serial.print(F(" registered: "));
         }
         else
         {
             Serial.print(F("Profile button"));
         }
-        Serial.print(F(" registered: "));
-        switch (st)
-        {
-        case 1:
-            Serial.print(F(" single click"));
-            break;
-        }
-        Serial.print(F(" (x"));
-        Serial.print(times_pressed);
-        Serial.println(F(")"));
-    }
+        Serial.print(F(" clicked x"));
+        Serial.println(times_pressed);
 }
 #endif

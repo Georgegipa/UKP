@@ -20,6 +20,19 @@ bool sdcard::init()
     return sdconnected;
 }
 
+bool sdcard::checkConnection()
+{
+    if (!sdconnected)
+        init();
+    else
+    {
+        File F = SD.open(file);
+        if (F)//if file exists return true
+            return 1;
+    }
+    return 0;
+}
+
 void sdcard::refereshFileInfo()
 {
     File F = SD.open(file);
@@ -66,7 +79,7 @@ char *sdcard::readLine(int line)
         {
             if (line == linesread)
             {
-                internal_str[i-1] = '\0';//replace \n with \0 
+                internal_str[i - 1] = '\0'; //replace \n with \0
                 found = 1;
                 break;
             }

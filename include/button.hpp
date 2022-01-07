@@ -13,7 +13,7 @@ private:
     int button_id;
 #if DEBUG
     int times_pressed = 0;
-    void print_state(int st);
+    void print_state();
 #endif
     bool internal_debounce(unsigned long debouncedelay = DEBOUNCEDELAY);
     unsigned long last_trigger = 0;

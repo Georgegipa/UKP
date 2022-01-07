@@ -123,7 +123,10 @@ void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
     if (!MICRO_SD_ENABLED) //if sd card is disabled only default profiles can be loaded
         load_defaults = 1;
     else //check if file can be read
-        ;
+    {
+        if (!sd.checkConnection())
+            load_defaults=1;
+    }
     //first start by checking if a macro command exists
     if (load_defaults)
         strncpy_P(check, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)), MACRO_COMMAND_SIZE);
@@ -138,7 +141,7 @@ void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
         if (load_defaults) //read from progmem
             strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)) + MACRO_COMMAND_SIZE);
         else // read from micro_sd
-            strncpy(str,sd.readLine(findMacroID(profile_id, button_id))+ MACRO_COMMAND_SIZE,MACRO_MAX_SIZE);
+            strncpy(str, sd.readLine(findMacroID(profile_id, button_id)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
         switch (check[0])
         {
         case 'P': //paste following string
@@ -163,8 +166,8 @@ void macrosengine::ParseMacro(int profile_id, int button_id, bool load_defaults)
     {
         if (load_defaults)
             strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profile_id, button_id)));
-        else 
-            strncpy(str,sd.readLine(findMacroID(profile_id, button_id)),MACRO_MAX_SIZE);
+        else
+            strncpy(str, sd.readLine(findMacroID(profile_id, button_id)), MACRO_MAX_SIZE);
         ExecuteMacro(str);
     }
 }
