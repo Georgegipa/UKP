@@ -18,7 +18,10 @@ private:
     void profileChanged();
     void manageButtonMacros(int &buttonId);    
 #endif
-    int pinTriggered;
+#if KILL_SWITCH
+    boolean killSwitch();
+#endif
+    int pinTriggered;//save the button id of the last pressed button
 public:
     void begin();
     ~UKPmanager();

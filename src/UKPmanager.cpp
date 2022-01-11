@@ -2,13 +2,16 @@
 #include "macrosengine.hpp"
 
 UKPmanager UKP;
-
+/**
+ * @brief Initialize all the components needed to di
+ * 
+ */
 void UKPmanager::begin()
 {
     Serial.begin(9600);
-    MA.begin();//start macrosengine, also loads sd card
-    out.begin(9);
-    seg.begin();
+    MA.begin(); //start macrosengine, also loads sd card
+    out.begin(9);//start binary display(led and buzzer)
+    seg.begin();//start 7 segment display
     //disable the builtin leds
 #if KILL_SWITCH
     pinMode(KILL_SWITCH, INPUT);
@@ -21,7 +24,7 @@ void UKPmanager::begin()
     lastProfileState = currentProfile;
     seg.displayProfile(currentProfile);
     currentProfile = 0;
-    
+
 #endif
 #if DEBUG
     while (!Serial)
@@ -39,6 +42,10 @@ void UKPmanager::begin()
 }
 
 #if PROFILES
+/**
+ * @brief Check if a profile has changed and update the outputs(displays, leds)
+ * 
+ */
 void UKPmanager::profileChanged()
 {
 #if DEBUG
@@ -61,6 +68,12 @@ UKPmanager::~UKPmanager()
 #endif
 }
 
+/**
+ * @brief Send correct button id by checking if profiles are enabled
+ * If profiles are enabled increment by 1 if profile button was pressed
+ * 
+ * @param button_pin the button which tiggered a macro
+ */
 void UKPmanager::manageButtonMacros(int &button_pin)
 {
     //if button isn't profile button , or profiles are  disabled , then execute macro
@@ -75,21 +88,28 @@ void UKPmanager::manageButtonMacros(int &button_pin)
     }
 }
 
+#if KILL_SWITCH
+bool UKPmanager::killSwitch()
+{
+    //kill switch must set high in order to allow macros
+    bool killSwitchState = digitalRead(KILL_SWITCH);
+    if (!killSwitchState)
+        out.setHigh();
+    else
+        out.setLow();
+
+    return killSwitchState;
+}
+#endif
+
 void UKPmanager::runtime()
 {
-    for (int i = 0; i < BUTTONS; i++)
+
+    for (int i = 0; i < button::buttonSum; i++)
     {
 #if KILL_SWITCH
-        //kill switch must set high in order to allow macros
-        if (!digitalRead(KILL_SWITCH))
-        {
-            out.setHigh();
-            continue;
-        }
-        else
-        {
-            out.setLow();
-        }
+        killSwitch();
+        continue;
 #endif
         pinTriggered = btn[i].state();
         if (pinTriggered != -1)

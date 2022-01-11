@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "binary_output.hpp"
-#define SEGMENT_LEDS 8
+#include "config/_7segment_leds.h"
 
 /*
 7segment wiring
@@ -15,7 +15,6 @@ e       c
 | | | | |
 e dCOMc .
 */
-const int leds[SEGMENT_LEDS] PROGMEM = {2, 3, 4, 5, 6, 7, 8, 9};
 
 const byte symbols[] = {
 
