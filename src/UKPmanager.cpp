@@ -1,5 +1,8 @@
 #include "UKPmanager.hpp"
+#include "HID.h"
+#ifdef _USING_HID
 #include "macrosengine.hpp"
+#endif
 
 UKPmanager UKP;
 /**
@@ -9,9 +12,13 @@ UKPmanager UKP;
 void UKPmanager::begin()
 {
     Serial.begin(9600);
+#ifdef _USING_HID
     MA.begin(); //start macrosengine, also loads sd card
-    out.begin(9);//start binary display(led and buzzer)
-    seg.begin();//start 7 segment display
+#endif
+    out.begin(9); //start binary display(led and buzzer)
+#if SEVEN_SEGMENT
+    seg.begin(); //start 7 segment display
+#endif
     //disable the builtin leds
 #if KILL_SWITCH
     pinMode(KILL_SWITCH, INPUT);
@@ -22,7 +29,9 @@ void UKPmanager::begin()
 #endif
 #if PROFILES
     lastProfileState = currentProfile;
+#if SEVEN_SEGMENT
     seg.displayProfile(currentProfile);
+#endif
     currentProfile = 0;
 
 #endif
@@ -54,7 +63,9 @@ void UKPmanager::profileChanged()
 #endif
     lastProfileState = currentProfile;
     out.flashing(currentProfile + 1);
+#if SEVEN_SEGMENT
     seg.displayProfile(currentProfile);
+#endif
 }
 #endif
 
@@ -78,7 +89,14 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 {
     //if button isn't profile button , or profiles are  disabled , then execute macro
     if (button_pin || (!PROFILES))
+    {
+#ifdef _USING_HID
         MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
+#else
+        Serial.print("SKP call");
+#endif
+    }
+
     else
     { //change profile
         if (currentProfile < defaultProfilesSum - 1)
@@ -105,11 +123,11 @@ bool UKPmanager::killSwitch()
 void UKPmanager::runtime()
 {
 
-    for (int i = 0; i < button::buttonSum; i++)
+    for (int i = 0; i < BUTTONS; i++)
     {
 #if KILL_SWITCH
-        killSwitch();
-        continue;
+        if (!killSwitch())
+            continue;
 #endif
         pinTriggered = btn[i].state();
         if (pinTriggered != -1)

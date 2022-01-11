@@ -15,12 +15,23 @@ Update description(template)
 
 ## [0.6.0] - 2022-1-4
 SD card support
+### **alpha 3** - 2022-1-12
 ### Added
-* **alpha1** sd card support
-* **alpha2** sd card option to check if file exists
+* Option in config to disable 7 segment display
 ### Changed
-* **alpha1** simplified macro command recognition
-* **alpha2** simplified button print_state
+* Check if board natively supports USB_HID
+* Definition for board name
+* Refactor of platformio.ini to support more boards
+### **alpha2** - 2022-1-12
+### Added
+* sd card option to check if file exists
+### Changed
+* simplified button print_state
+### **alpha1** - 2022-1-4
+### Added
+* sd card support
+### Changed
+* simplified macro command recognition
 ## [0.5.3] - 2021-12-24
 Revamped options 
 ### Removed
