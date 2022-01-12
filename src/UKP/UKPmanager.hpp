@@ -11,6 +11,7 @@ class UKPmanager
 private:
     button btn[BUTTONS];
     binary_output out;
+#ifdef HID_ENABLED
 #if SEVEN_SEGMENT
     _7segment seg;
 #endif
@@ -19,11 +20,12 @@ private:
     int lastProfileState;
     int currentProfile;
     void profileChanged();
-    void manageButtonMacros(int &buttonId);
 #endif
 #if KILL_SWITCH
     boolean killSwitch();
 #endif
+#endif
+    void manageButtonMacros(int &buttonId);
     int pinTriggered; //save the button id of the last pressed button
 public:
     void begin();
@@ -31,4 +33,4 @@ public:
     void runtime();
 };
 
-extern UKPmanager UKP;
+extern UKPmanager manager;

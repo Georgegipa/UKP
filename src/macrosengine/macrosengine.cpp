@@ -1,3 +1,4 @@
+#ifdef HID_ENABLED
 #include "macrosengine/macrosengine.hpp"
 #include "macrosengine/default_profiles.h"
 #include "helpers.h"
@@ -171,3 +172,4 @@ void macrosengine::parseMacro(int profile_id, int button_id, bool load_defaults)
         executeMacro(str);
     }
 }
+#endif

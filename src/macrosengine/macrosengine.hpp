@@ -1,4 +1,5 @@
 #pragma once
+#ifdef HID_ENABLED
 #include <Mouse.h>
 #include "extra_button_codes.h"
 #include "definitions.h"
@@ -21,3 +22,4 @@ public:
 };
 
 extern macrosengine MA;
+#endif

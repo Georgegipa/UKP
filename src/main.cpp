@@ -1,12 +1,12 @@
 #include <Arduino.h>
-#include "UKPmanager.hpp"
+#include "UKP/UKPmanager.hpp"
 
 void setup()
 {
-  UKP.begin();
+  manager.begin();
 }
 
 void loop()
 {
-  UKP.runtime();
+  manager.runtime();
 }

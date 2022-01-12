@@ -1,3 +1,4 @@
+#ifdef HID_ENABLED
 #pragma once
 #include <Arduino.h>
 #include <SPI.h>
@@ -20,3 +21,4 @@ public:
 };
 
 extern sdcard sd;
+#endif
