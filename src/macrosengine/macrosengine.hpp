@@ -1,9 +1,9 @@
 #pragma once
 #include <Mouse.h>
 #include "extra_button_codes.h"
-#include "config/definitions.h"
+#include "definitions.h"
 #if MICRO_SD_ENABLED
-#include "sdcard.hpp"
+#include "sdcard/sdcard.hpp"
 #endif
 
 class macrosengine

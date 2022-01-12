@@ -1,6 +1,6 @@
-#include "macrosengine.hpp"
+#include "macrosengine/macrosengine.hpp"
+#include "macrosengine/default_profiles.h"
 #include "helpers.h"
-#include "config/default_profiles.h"
 #define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(defaultProfiles[POS]))
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;

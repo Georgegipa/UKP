@@ -1,7 +1,6 @@
 #include "UKPmanager.hpp"
-#include "HID.h"
-#ifdef _USING_HID
-#include "macrosengine.hpp"
+#if HID_ENABLED
+#include "macrosengine/macrosengine.hpp"
 #endif
 
 UKPmanager UKP;
@@ -12,7 +11,7 @@ UKPmanager UKP;
 void UKPmanager::begin()
 {
     Serial.begin(9600);
-#ifdef _USING_HID
+#if HID_ENABLED
     MA.begin(); //start macrosengine, also loads sd card
 #endif
     out.begin(9); //start binary display(led and buzzer)
@@ -23,9 +22,11 @@ void UKPmanager::begin()
 #if KILL_SWITCH
     pinMode(KILL_SWITCH, INPUT);
 #endif
+#if HID_ENABLED
 #if BUILTIN_LEDS_ENABLED == 0
     pinMode(LED_BUILTIN_RX, INPUT);
     pinMode(LED_BUILTIN_TX, INPUT);
+#endif
 #endif
 #if PROFILES
     lastProfileState = currentProfile;
@@ -90,7 +91,7 @@ void UKPmanager::manageButtonMacros(int &button_pin)
     //if button isn't profile button , or profiles are  disabled , then execute macro
     if (button_pin || (!PROFILES))
     {
-#ifdef _USING_HID
+#if HID_ENABLED
         MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
 #else
         Serial.print("SKP call");

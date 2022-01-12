@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
-#include "binary_output.hpp"
-#include "config/_7segment_leds.h"
+#include "binary_output/binary_output.hpp"
+#include "7segment/_7segment_leds.h"
 
 /*
 7segment wiring
@@ -15,7 +15,7 @@ e       c
 | | | | |
 e dCOMc .
 */
-
+#if SEVEN_SEGMENT
 const byte symbols[] = {
 
     B01000001, //!
@@ -102,3 +102,4 @@ public:
     void testLeds();
 #endif
 };
+#endif

@@ -1,8 +1,8 @@
 #pragma once
 #include <Arduino.h>
-#include "config/definitions.h"
-#include "button.hpp"
-#include "binary_output.hpp"
+#include "definitions.h"
+#include "button/button.hpp"
+#include "binary_output/binary_output.hpp"
 #if SEVEN_SEGMENT
 #include "_7segment.hpp"
 #endif
