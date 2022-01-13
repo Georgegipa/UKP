@@ -71,7 +71,7 @@ inline int macrosengine::findMacroID(int profile_id, int button_id)
 }
 
 /**
- * @brief Splits the given array. Then executes the given macros.
+ * @brief Splits the given char* array. Then executes the given macros.
  * 
  * @param *macro A char* containing the keys which are going to be pressed.
  */

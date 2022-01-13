@@ -11,7 +11,7 @@ UKPmanager manager;
  */
 void UKPmanager::begin()
 {
-    Serial.begin(9600);
+    //Serial.begin(9600);
     out.begin(LED_BUILTIN); //start binary display(led and buzzer)
 #ifdef HID_ENABLED
     MA.begin(); //start macrosengine, also loads sd card
@@ -102,7 +102,7 @@ void UKPmanager::manageButtonMacros(int &button_pin)
     }
 #else 
     Serial.print("->Pressed:");
-    Serial.println(button_pin);
+    Serial.print(button_pin);
 #endif
 }
 
