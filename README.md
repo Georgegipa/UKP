@@ -32,22 +32,22 @@ UKP supports 2 categories of macros:
 * CTRL
 * SHIFT
 * ALT
-* GUI (windows key)
-* UP_ARROW
-* DOWN_ARROW
-* LEFT_ARROW
-* RIGHT_ARROW
+* WIN   (windows key)
+* UP    (up arrow key)
+* DOWN  (down arrow key)
+* LEFT  (left arrow key)
+* RIGHT (right arrow key)
 * BACKSPACE
 * TAB
 * RETURN
 * ESC
 * INSERT
 * DELETE
-* PAGE_UP
-* PAGE_DOWN
+* PUP   (page up)
+* PDOWN (page down)
 * HOME
 * END
-* CAPS_LOCK
+* CAPS (caps lock)
 * F1
 * F2
 * F3

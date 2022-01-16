@@ -4,8 +4,8 @@ class scomms
 {
 private:
     /* data */
-    const char* prefix = "->";
-    void respond(int request);
+    const char* protocolPrefix = "->";
+    void respond(char request);
 public:
     void begin(int baudRate);
     void runtime();

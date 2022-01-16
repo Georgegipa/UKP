@@ -8,7 +8,7 @@ const char macro_3[] PROGMEM = "CTRL+Y";
 const char macro_4[] PROGMEM = "ALT+SHIFT+A";
 const char macro_5[] PROGMEM = "CTRL+SHIFT+P";
 const char macro_6[] PROGMEM = "W,calc";
-const char macro_7[] PROGMEM = "W,msedge";
+const char macro_7[] PROGMEM = "W,notepad";
 
 const char *const defaultProfiles[] PROGMEM = {
     macro_0,
