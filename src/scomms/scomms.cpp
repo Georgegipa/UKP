@@ -1,7 +1,7 @@
-#include "jcomms/scomms.hpp"
+#include "scomms/scomms.hpp"
 #include "definitions.h"
 
-scomms JC;
+scomms SC;
 
 void scomms::begin(int baudRate)
 {

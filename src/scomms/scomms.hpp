@@ -12,4 +12,4 @@ public:
 };
 
 
-extern scomms JC;
+extern scomms SC;
