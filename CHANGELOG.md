@@ -15,6 +15,11 @@ Update description(template)
 
 ## [0.6.0] - 2022-1-4
 SD card support
+### **alpha 4** - 2022-1-18
+### Added
+* Option to change led pin
+### Changed
+* Simplified macros type 
 ### **alpha 3** - 2022-1-12
 ### Added
 * Option in config to disable 7 segment display

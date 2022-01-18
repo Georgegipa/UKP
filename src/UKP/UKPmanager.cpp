@@ -12,7 +12,7 @@ UKPmanager manager;
 void UKPmanager::begin()
 {
     //Serial.begin(9600);
-    out.begin(LED_BUILTIN); //start binary display(led and buzzer)
+    out.begin(LED); //start binary display(led and buzzer)
 #ifdef HID_ENABLED
     MA.begin(); //start macrosengine, also loads sd card
 #if SEVEN_SEGMENT

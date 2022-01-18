@@ -1,14 +1,15 @@
 #include <Arduino.h>
 #include "macros.h"
+#define MACRO const char PROGMEM
 
-const char macro_0[] PROGMEM = "CTRL+C";
-const char macro_1[] PROGMEM = "CTRL+V";
-const char macro_2[] PROGMEM = "CTRL+Z";
-const char macro_3[] PROGMEM = "CTRL+Y";
-const char macro_4[] PROGMEM = "ALT+SHIFT+A";
-const char macro_5[] PROGMEM = "CTRL+SHIFT+P";
-const char macro_6[] PROGMEM = "W,calc";
-const char macro_7[] PROGMEM = "W,notepad";
+MACRO macro_0[] = "CTRL+C";
+MACRO macro_1[] = "CTRL+V";
+MACRO macro_2[] = "CTRL+Z";
+MACRO macro_3[] = "CTRL+Y";
+MACRO macro_4[] = "ALT+SHIFT+A";
+MACRO macro_5[] = "CTRL+SHIFT+P";
+MACRO macro_6[] = "W,calc";
+MACRO macro_7[] = "W,notepad";
 
 const char *const defaultProfiles[] PROGMEM = {
     macro_0,
