@@ -1,7 +1,14 @@
 # UKP
-(Universal KeyPad)
+(Universal Keypad Protocol)
 
-A simple arduino micro macro keyboard with profile support and more!
+A simple macro keyboard with profile support and more!
+
+For microcontrollers supporting builtin USB-HID (like the arduino micro) UKP is used.
+
+For microcontrollers which don't have support for USB-HID(like the arduino uno) SKP is used.
+
+### **SKP requires Serial communication with the host computer as well as a companion app to be installed!**
+
 ## Features
 * Support for multiple profiles.
 * Fully customizable
