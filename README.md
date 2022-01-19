@@ -2,25 +2,26 @@
 (Universal Keypad Protocol)
 
 A simple macro keyboard with profile support and more!
-
+<!-- 
+SKP as well as the companion app is under heavy development!
 For microcontrollers supporting builtin USB-HID (like the arduino micro) UKP is used.
 
 For microcontrollers which don't have support for USB-HID(like the arduino uno) SKP is used.
 
-### **SKP requires Serial communication with the host computer as well as a companion app to be installed!**
+### **SKP requires Serial communication with the host computer as well as a companion app to be installed!** -->
 
 ## Features
 * Support for multiple profiles.
-* Fully customizable
-* Support for macros and advanced macros ([macro commands](#macro-commands))
+* Customizable ([customizing UKP](#addingremoving-components))
+* Support for [macros](#basic-macros) 
+* Support for [advanced macros](#macro-commands)
 * Display current profile in a number of different ways:
     * Binary output (speaker or led)
     * 7 Segment display
+* Load Profiles from micro_sd
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (v0.2+)
-* add option for enable/disable of binary output
-* fix MICRO_SD_ENABLED not working correctly
 * Revamp Macros logic & MacrosEngine
     * ~~Accept more complicated commands(open programs,enter strings)~~ (v0.5+)
     * Accept  even more advanced actions
@@ -30,12 +31,31 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
     * ~~Display Profile number on onboard led~~ (v0.3.2+)
     * ~~Add support for 7segment display~~ (v0.4+)
     * Add support for oled display
-* Load Profiles from micro_sd
+* ~~Load macros from micro_sd~~ (v0.6+)
+* SD improvements
+    * better micro sd detection
 
 # How to use UKP
 UKP supports 2 categories of macros:
-* button combinations
+* [basic macros](#basic-macros) (which are button combinations)
 * and [macro commands](#macro-commands)
+
+## Basic Macros
+**This is the default behavior if no macro command is specified!**
+
+A basic macro is the collection of keys which are going to be held down and then be released.
+Basic macro rules:
+* The keys which are going to be pressed are separated with the use of: **+**.
+* letters should be capital.
+* the supported [Modifier keys](#supported-modifier-keys) are listed below.
+* If the given modifier or key is not found then it is not pressed
+### Examples:
+* COPY  : CTRL+C
+* PASTE : CTRL+V
+* UNDO  : CTRL+Z
+* REDO  : CTRL+Y
+
+Learn more on how to change default macros [here](#changing-default-macros)
 
 ## Supported Modifier Keys
 * CTRL
@@ -137,15 +157,21 @@ D8  --->   kill_switch
 
 # Adding/Removing Components
 
-## Changing the number of butt
+## Changing the number of buttons
 To change the number of buttons:
 * navigate to definitions.h and the definition of **BUTTONS** to the desired number then
 * navigate to button/button_pins.h and add the corresponding pins that will be assigned to the buttons
 
+## Changing the binary output pin
+To change the binary output(led/piezo speaker) pin:
+* navigate to definitions.h and the definition of **LED** to the desired number 
+
+**Setting LED to 0 uses the arduino builtin led!**
+
 ## Enabling/Disabling KILL_SWITCH
 This component enables the keypad to be enabled/disabled based on the state of a connected switch. 
 
-Enabling KILL_SWITCH:
+## Enabling KILL_SWITCH:
 * navigate to definitions.h and the definition of **KILL_SWITCH** to the desired number
 
  **Warning** setting this to 0 disables the KILL_SWITCH component completely! 
@@ -155,14 +181,15 @@ The following outputs are currently supported:
 * Binary output(led or piezo buzzer).
 * Directly connected 7 segment display (due to the number of available pins on the arduino micro , enabling this display will decrease the available pins).
 
-# Changing Default Profiles
-To change the default profiles which are stored in arduino's flash:
-* navigate to macrosengine/default_profiles.h
+# Changing Default Macros
+To change the default macros which are stored in arduino's flash:
+* navigate to macrosengine/default_macros.h
 * add a new macro with a unique name : MACRO name[] = "your_macro";
-* add the newly added macro to the defaultProfiles
+    * your_macro should be replaced by your desired macro [instructions1](#basic-macros) and [instructions2](#macro-commands)
+* add the newly added macro name to the defaultMacros
 
-## Example adding a new a new macro
+## Example adding a new macro
 * add a new macro:
     - MACRO macro_8[] = "ALT+TAB";
-* add the name of the newly added macro to the defaultProfiles table
+* add the name of the newly added macro to the defaultMacros table
     - ... macro_7,macro_8 };

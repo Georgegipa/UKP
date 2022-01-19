@@ -4,6 +4,14 @@
 #include "macrosengine/macrosengine.hpp"
 #endif
 
+#if !LED
+#ifdef LED_BUILTIN
+#define LED_PIN LED_BUILTIN
+#endif
+#else 
+#define LED_PIN LED
+#endif
+
 UKPmanager manager;
 /**
  * @brief Initialize all the components needed to di
@@ -12,7 +20,7 @@ UKPmanager manager;
 void UKPmanager::begin()
 {
     //Serial.begin(9600);
-    out.begin(LED); //start binary display(led and buzzer)
+    out.begin(LED_PIN); //start binary display(led and buzzer)
 #ifdef HID_ENABLED
     MA.begin(); //start macrosengine, also loads sd card
 #if SEVEN_SEGMENT

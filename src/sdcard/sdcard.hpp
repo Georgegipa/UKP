@@ -1,4 +1,4 @@
-#ifdef HID_ENABLED
+#if HID_ENABLED && SD_ENABLED
 #pragma once
 #include <Arduino.h>
 #include <SPI.h>

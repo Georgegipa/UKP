@@ -11,7 +11,7 @@ MACRO macro_5[] = "CTRL+SHIFT+P";
 MACRO macro_6[] = "W,calc";
 MACRO macro_7[] = "W,notepad";
 
-const char *const defaultProfiles[] PROGMEM = {
+const char *const defaultMacros[] PROGMEM = {
     macro_0,
     macro_1,
     macro_2,
@@ -22,4 +22,4 @@ const char *const defaultProfiles[] PROGMEM = {
     macro_7};
 
 //this variable saves the size of the array in order to calculate default_profiles_num in macrosengine
-const int dp_num = ARR_SIZE(defaultProfiles);
+const int dp_num = ARR_SIZE(defaultMacros);

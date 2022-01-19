@@ -1,4 +1,6 @@
 #ifdef HID_ENABLED
+#include "definitions.h"
+#if SD_ENABLED
 #include "sdcard/sdcard.hpp"
 
 sdcard sd;
@@ -9,7 +11,7 @@ bool sdcard::begin()
     {
         Serial.println("Card Mount Failed");
         sdConnected = 0;
-        return NULL;
+        return false;
     }
     else
     {
@@ -99,4 +101,5 @@ char *sdcard::readLine(int line)
     else
         return NULL;
 }
+#endif
 #endif

@@ -13,8 +13,14 @@ Update description(template)
 ### Fixed
 *  -->
 
-## [0.6.0] - 2022-1-4
+## [0.6.0]
 SD card support
+### **alpha 5** - 2022-1-20
+### Changed
+* renamed MICRO_SD_ENABLED -> SD_ENABLED
+### Fixed
+* SD_ENABLED behavior
+* LED pin behavior
 ### **alpha 4** - 2022-1-18
 ### Added
 * Option to change led pin
