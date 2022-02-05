@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "macros.h"
-#define MACRO const char PROGMEM
 
 MACRO macro_0[] = "CTRL+C";
 MACRO macro_1[] = "CTRL+V";
@@ -11,7 +10,7 @@ MACRO macro_5[] = "CTRL+SHIFT+P";
 MACRO macro_6[] = "W,calc";
 MACRO macro_7[] = "W,notepad";
 
-const char *const defaultMacros[] PROGMEM = {
+MACRO_ARRAY defaultMacros[] = {
     macro_0,
     macro_1,
     macro_2,
@@ -22,4 +21,4 @@ const char *const defaultMacros[] PROGMEM = {
     macro_7};
 
 //this variable saves the size of the array in order to calculate default_profiles_num in macrosengine
-const int dp_num = ARR_SIZE(defaultMacros);
+MACRO_INT dp_num = ARR_SIZE(defaultMacros);

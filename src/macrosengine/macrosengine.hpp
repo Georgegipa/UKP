@@ -13,7 +13,6 @@ private:
     int findKey(char *word);
     inline int findMacroID(int profileId, int buttonId);
     void executeMacro(char *macro, bool releaseOneByOne=0);
-    void onePress();
 public:
     void begin();
     ~macrosengine();

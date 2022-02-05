@@ -49,11 +49,6 @@ Basic macro rules:
 * letters should be capital.
 * the supported [Modifier keys](#supported-modifier-keys) are listed below.
 * If the given modifier or key is not found then it is not pressed
-### Examples:
-* COPY  : CTRL+C
-* PASTE : CTRL+V
-* UNDO  : CTRL+Z
-* REDO  : CTRL+Y
 
 Learn more on how to change default macros [here](#changing-default-macros)
 

@@ -2,52 +2,51 @@
 #include "Keyboard.h"
 #include "macros.h"
 
-//use PROGMEM to improve memory usage
-const char binding_0[] PROGMEM = "CTRL";
-const char binding_1[] PROGMEM = "SHIFT";
-const char binding_2[] PROGMEM = "ALT";
-const char binding_3[] PROGMEM = "WIN";
-const char binding_4[] PROGMEM = "UP";
-const char binding_5[] PROGMEM = "DOWN";
-const char binding_6[] PROGMEM = "LEFT";
-const char binding_7[] PROGMEM = "RIGHT";
-const char binding_8[] PROGMEM = "BACKSPACE";
-const char binding_9[] PROGMEM = "TAB";
-const char binding_10[] PROGMEM = "RETURN";
-const char binding_11[] PROGMEM = "ESC";
-const char binding_12[] PROGMEM = "INSERT";
-const char binding_13[] PROGMEM = "DELETE";
-const char binding_14[] PROGMEM = "PUP";
-const char binding_15[] PROGMEM = "PDOWN";
-const char binding_16[] PROGMEM = "HOME";
-const char binding_17[] PROGMEM = "END";
-const char binding_18[] PROGMEM = "CAPS";
-const char binding_19[] PROGMEM = "F1";
-const char binding_20[] PROGMEM = "F2";
-const char binding_21[] PROGMEM = "F3";
-const char binding_22[] PROGMEM = "F4";
-const char binding_23[] PROGMEM = "F5";
-const char binding_24[] PROGMEM = "F6";
-const char binding_25[] PROGMEM = "F7";
-const char binding_26[] PROGMEM = "F8";
-const char binding_27[] PROGMEM = "F9";
-const char binding_28[] PROGMEM = "F10";
-const char binding_29[] PROGMEM = "F11";
-const char binding_30[] PROGMEM = "F12";
-const char binding_31[] PROGMEM = "F13";
-const char binding_32[] PROGMEM = "F14";
-const char binding_33[] PROGMEM = "F15";
-const char binding_34[] PROGMEM = "F16";
-const char binding_35[] PROGMEM = "F17";
-const char binding_36[] PROGMEM = "F18";
-const char binding_37[] PROGMEM = "F19";
-const char binding_38[] PROGMEM = "F20";
-const char binding_39[] PROGMEM = "F21";
-const char binding_40[] PROGMEM = "F22";
-const char binding_41[] PROGMEM = "F23";
-const char binding_42[] PROGMEM = "F24";
+MACRO binding_0[] = "CTRL";
+MACRO binding_1[] = "SHIFT";
+MACRO binding_2[] = "ALT";
+MACRO binding_3[] = "WIN";
+MACRO binding_4[] = "UP";
+MACRO binding_5[] = "DOWN";
+MACRO binding_6[] = "LEFT";
+MACRO binding_7[] = "RIGHT";
+MACRO binding_8[] = "BACKSPACE";
+MACRO binding_9[] = "TAB";
+MACRO binding_10[] = "RETURN";
+MACRO binding_11[] = "ESC";
+MACRO binding_12[] = "INSERT";
+MACRO binding_13[] = "DELETE";
+MACRO binding_14[] = "PUP";
+MACRO binding_15[] = "PDOWN";
+MACRO binding_16[] = "HOME";
+MACRO binding_17[] = "END";
+MACRO binding_18[] = "CAPS";
+MACRO binding_19[] = "F1";
+MACRO binding_20[] = "F2";
+MACRO binding_21[] = "F3";
+MACRO binding_22[] = "F4";
+MACRO binding_23[] = "F5";
+MACRO binding_24[] = "F6";
+MACRO binding_25[] = "F7";
+MACRO binding_26[] = "F8";
+MACRO binding_27[] = "F9";
+MACRO binding_28[] = "F10";
+MACRO binding_29[] = "F11";
+MACRO binding_30[] = "F12";
+MACRO binding_31[] = "F13";
+MACRO binding_32[] = "F14";
+MACRO binding_33[] = "F15";
+MACRO binding_34[] = "F16";
+MACRO binding_35[] = "F17";
+MACRO binding_36[] = "F18";
+MACRO binding_37[] = "F19";
+MACRO binding_38[] = "F20";
+MACRO binding_39[] = "F21";
+MACRO binding_40[] = "F22";
+MACRO binding_41[] = "F23";
+MACRO binding_42[] = "F24";
 
-const char *const bindings[] PROGMEM = {
+MACRO_ARRAY bindings[] = {
     binding_0,
     binding_1,
     binding_2,
@@ -138,5 +137,5 @@ const int key_codes[] PROGMEM =
         KEY_F23,
         KEY_F24};
 
-const int bindingsSum PROGMEM = ARR_SIZE(key_codes);  //number of all bindings
-const int bindingMaxSize PROGMEM = ARR_SIZE(binding_8); //size of the longest binding
+MACRO_INT bindingsSum = ARR_SIZE(key_codes);    //number of all bindings
+MACRO_INT bindingMaxSize = ARR_SIZE(binding_8); //size of the longest binding

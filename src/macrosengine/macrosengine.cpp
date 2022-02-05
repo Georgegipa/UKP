@@ -75,7 +75,6 @@ inline int macrosengine::findMacroID(int profile_id, int button_id)
  * 
  * @param *macro A char* containing the keys which are going to be pressed.
  */
-
 void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
 {
     int token_length = 0, key;
@@ -173,7 +172,7 @@ void macrosengine::parseMacro(int profileId, int buttonId, bool loadDefaults)
             Serial.print("Pressing the following keys one by one");
             Serial.println(str);
 #endif
-            executeMacro(str);
+            executeMacro(str,true);
             break;
         case 'H': //hold a key
 #if DEBUG
