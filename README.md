@@ -3,7 +3,7 @@
 
 A simple macro keyboard with profile support and more!
 <!-- 
-SKP as well as the companion app is under heavy development!
+SKP as well as its companion app is under heavy development!
 For microcontrollers supporting builtin USB-HID (like the arduino micro) UKP is used.
 
 For microcontrollers which don't have support for USB-HID(like the arduino uno) SKP is used.
@@ -25,7 +25,7 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
 * Revamp Macros logic & MacrosEngine
     * ~~Accept more complicated commands(open programs,enter strings)~~ (v0.5+)
     * Accept  even more advanced actions
-    * Accept media keys
+    * ~~Accept media keys~~ (v0.7+)
     * Accept mouse actions
 * More display options:
     * ~~Display Profile number on onboard led~~ (v0.3.2+)
@@ -52,51 +52,6 @@ Basic macro rules:
 
 Learn more on how to change default macros [here](#changing-default-macros)
 
-## Supported Modifier Keys
-* CTRL
-* SHIFT
-* ALT
-* WIN   (windows key)
-* UP    (up arrow key)
-* DOWN  (down arrow key)
-* LEFT  (left arrow key)
-* RIGHT (right arrow key)
-* BACKSPACE
-* TAB
-* RETURN
-* ESC
-* INSERT
-* DELETE
-* PUP   (page up)
-* PDOWN (page down)
-* HOME
-* END
-* CAPS (caps lock)
-* F1
-* F2
-* F3
-* F4
-* F5
-* F6
-* F7
-* F8
-* F9
-* F10
-* F11
-* F12
-* F13
-* F14
-* F15
-* F16
-* F17
-* F18
-* F19
-* F20
-* F21
-* F22
-* F23
-* F24
-
 # MACRO COMMANDS 
 ## THINGS TO KNOW BEFORE USING
 ### Macro commands contain 1 letter (**are case sensitive!**) and are followed by a comma (,).
@@ -110,8 +65,23 @@ With release v0.5+ UKP now supports the following commands:
     * Press WIN+R and paste the following str. Used for opening programs and services
 * P,str 
     * Enter str to output 
+* O,str
+    * Press str keys that are parsed like a macro and seperated with +
+* E,str
+    * Press and then release the following [extra key](#supported-extra-keys)
 
 more coming soon...
+
+## Supported Extra Keys
+* PLAY_PAUSE
+* VOLUME_MUTE
+* VOLUME_UP
+* VOLUME_DOWN
+* NEXT
+* PREVIOUS
+* STOP
+* BRIGHTNESS_UP
+* BRIGHTNESS_DOWN
 
 # Wiring
 ## Arduino and MicroSd module connections
