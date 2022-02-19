@@ -13,7 +13,13 @@ Update description(template)
 ### Fixed
 *  -->
 
-## [0.7.0]
+## [0.7.1] - 2022-02-19
+Support for more keyCodes
+## Added 
+* Browser Controls
+* Open calculator, media player, file explorer, email
+
+## [0.7.0] - 2022-02-19
 Support for more KeyCodes
 ### Added
 * Support for extraKeys using a modified version of NicoHood HID

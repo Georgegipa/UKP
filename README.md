@@ -66,7 +66,7 @@ With release v0.5+ UKP now supports the following commands:
 * P,str 
     * Enter str to output 
 * O,str
-    * Press str keys that are parsed like a macro and seperated with +
+    * Functions like basic macro but instead of holding all the buttons pressed, instead each button is released as soon as it is pressed
 * E,str
     * Press and then release the following [extra key](#supported-extra-keys)
 
@@ -127,6 +127,16 @@ more coming soon...
 * STOP
 * BRIGHTNESS_UP
 * BRIGHTNESS_DOWN
+* MEDIA (opens default media player)
+* EMAIL_READER
+* CALCULATOR
+* EXPLORER
+### Browser Controls
+* BR_HOME
+* BR_BACK
+* BR_FORWARD
+* BR_REFRESH
+* BR_BOOKMARKS
 
 # Wiring
 ## Arduino and MicroSd module connections
