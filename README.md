@@ -15,6 +15,7 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
 * Customizable ([customizing UKP](#addingremoving-components))
 * Support for [macros](#basic-macros) 
 * Support for [advanced macros](#macro-commands)
+* Support for Media Keys, Browser Actions , volume-brightness control and more
 * Display current profile in a number of different ways:
     * Binary output (speaker or led)
     * 7 Segment display
@@ -22,18 +23,22 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (v0.2+)
-* Revamp Macros logic & MacrosEngine
-    * ~~Accept more complicated commands(open programs,enter strings)~~ (v0.5+)
-    * Accept  even more advanced actions
-    * ~~Accept media keys~~ (v0.7+)
-    * Accept mouse actions
 * More display options:
     * ~~Display Profile number on onboard led~~ (v0.3.2+)
     * ~~Add support for 7segment display~~ (v0.4+)
-    * Add support for oled display
-* ~~Load macros from micro_sd~~ (v0.6+)
+* Revamp Macros logic & MacrosEngine
+    * ~~Accept more complicated commands(open programs,enter strings)~~ (v0.5+)
+    * ~~Accept media keys~~ (v0.7+)
+    * Accept mouse actions
+    * More macro commands
 * SD improvements
     * better micro sd detection
+    * bind profiles to files (1.txt -> profile 1 ....)
+* More input options
+    * add keypad support
+    * add potentiometer support
+    * add joystick support
+    * add support for mixed inputs
 
 # How to use UKP
 UKP supports 2 categories of macros:
