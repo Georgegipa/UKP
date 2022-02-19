@@ -72,6 +72,51 @@ With release v0.5+ UKP now supports the following commands:
 
 more coming soon...
 
+## Supported Modifier Keys
+* CTRL
+* SHIFT
+* ALT
+* WIN   (windows key)
+* UP    (up arrow key)
+* DOWN  (down arrow key)
+* LEFT  (left arrow key)
+* RIGHT (right arrow key)
+* BACKSPACE
+* TAB
+* RETURN
+* ESC
+* INSERT
+* DELETE
+* PUP   (page up)
+* PDOWN (page down)
+* HOME
+* END
+* CAPS (caps lock)
+* F1
+* F2
+* F3
+* F4
+* F5
+* F6
+* F7
+* F8
+* F9
+* F10
+* F11
+* F12
+* F13
+* F14
+* F15
+* F16
+* F17
+* F18
+* F19
+* F20
+* F21
+* F22
+* F23
+* F24
+
 ## Supported Extra Keys
 * PLAY_PAUSE
 * VOLUME_MUTE
