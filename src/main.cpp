@@ -4,7 +4,7 @@
 
 void setup()
 {
-  SC.begin(9600);
+  SC.begin(BAUD_RATE);
   manager.begin();
 }
 

@@ -13,6 +13,17 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.7.0]
+Support for more KeyCodes
+### Added
+* Support for extraKeys using a modified version of NicoHood HID
+### Removed
+* definitions.h
+* extra_button_codes.h
+### Changed
+* Renaned definitions.h -> config.h
+* Moved extern variabled to global_varibles.h
+
 ## [0.6.0]
 SD card support
 ### **alpha 5** - 2022-1-20

@@ -1,8 +1,10 @@
 #pragma once
 #ifdef HID_ENABLED
 #include <Mouse.h>
-#include "extra_button_codes.h"
-#include "definitions.h"
+#include "basic_key_codes.h"
+#include "extra_key_codes.h"
+#include "global_variables.h"
+#include "settings.h"
 #if SD_ENABLED
 #include "sdcard/sdcard.hpp"
 #endif
@@ -11,8 +13,10 @@ class macrosengine
 {
 private:
     int findKey(char *word);
+    ConsumerKeycode findExtraKey(char *word);
     inline int findMacroID(int profileId, int buttonId);
     void executeMacro(char *macro, bool releaseOneByOne=0);
+    void executeExtraKey(char *key);
 public:
     void begin();
     ~macrosengine();

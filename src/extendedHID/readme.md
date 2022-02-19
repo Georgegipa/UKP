@@ -1,0 +1,1 @@
+Consumer2 is a modified version of [NicoHood HID](https://github.com/NicoHood/HID) ConsumerAPI.
