@@ -173,7 +173,7 @@ A1  --->   button1
 
 A2  --->   button2
 
-A3  --->   button3
+D7  --->   button3
 
 D9  --->   led
 

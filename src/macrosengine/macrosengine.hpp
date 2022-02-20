@@ -3,7 +3,6 @@
 #include <Mouse.h>
 #include "basic_key_codes.h"
 #include "extra_key_codes.h"
-#include "global_variables.h"
 #include "settings.h"
 #if SD_ENABLED
 #include "sdcard/sdcard.hpp"
@@ -24,6 +23,6 @@ public:
     //if sd card is enabled then loadDefaults should be set to 0 to try load sd card macros first
     void parseMacro(int profileId, int buttonId, bool loadDefaults = !SD_ENABLED); 
 };
-
+extern const int defaultProfilesSum;
 extern macrosengine MA;
 #endif
