@@ -10,18 +10,6 @@ button::button()
     buttonSum++;
     pinMode(buttonPin, INPUT);
 }
-#if INTERRUPTS_ENABLED
-button::~button()
-{
-    if (using_interrupts)
-        detachInterrupt(button_pin);
-}
-
-void button::addInterrupt(void (*function)())
-{
-    attachInterrupt(digitalPinToInterrupt(button_pin), function, MODE);
-}
-#endif
 
 bool button::internalDebounce(unsigned long debouncedelay)
 {

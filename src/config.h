@@ -20,12 +20,13 @@
  * (unless PROFILE is set to 0)
  */
 #define BUTTONS 3
+#define BUTTON_PINS A0, A1, 7
 
 /**
  * @brief The following settings enable/disable Components
  */
-#define KILL_SWITCH 8  //set this to 0 to disable switch disabler
-#define PROFILES 1 //set this to 0 to disable profiles and use the first button as a normal macro
+#define SWITCH 8  //set this to 0 to disable switch disabler
+#define PROFILES_ENABLED 1 //set this to 0 to disable profiles and use the first button as a normal macro
 #define BUILTIN_LEDS_ENABLED 0 // enable/disable builtin leds of the board
 #define SEVEN_SEGMENT 0 // enable/disable 7 segment display
 #define SD_ENABLED 0 //enable/disable micro_sd (macros are loaded from default_profiles.h)

@@ -1,10 +1,8 @@
 #pragma once
+#include "settings.h"
+#if BUTTONS
 #include <Arduino.h>
-#include "button/button_pins.h"
-
-#if INTERRUPTS_ENABLED
-#define MODE FALLING
-#endif
+const int buttonPins[BUTTONS] PROGMEM = {BUTTON_PINS};
 
 class button
 {
@@ -22,9 +20,5 @@ public:
     static int buttonSum;
     button();
     int state();
-
-#if INTERRUPTS_ENABLED
-    ~button();
-    void addInterrupt(void (*function)());//= foo() , if args void (*function)(int , int ) = foo
-#endif
 };
+#endif

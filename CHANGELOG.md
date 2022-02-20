@@ -13,6 +13,20 @@ Update description(template)
 ### Fixed
 *  -->
 
+
+## [0.7.2] - 2022-02-20
+DynamicInput 
+### Added
+* DynamicInput (better way to control inputs)
+### Removed
+* interrupts & code using interrupts
+* button_pins.h
+* button input from UKPmanager
+### Changed
+* buttons_pins moved to config.h
+* moved button config to button.hpp
+
+
 ## [0.7.1] - 2022-02-19
 Support for more keyCodes
 ## Added 
@@ -130,4 +144,4 @@ Memory Improvements
 ### Fixed
 * Macros pressing shift when capitals letters when present in profiles
 ### Changed
-* Removed KEYS_ infront of modifier keys to save memory 
+* Removed KEYS_ in front of modifier keys to save memory 

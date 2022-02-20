@@ -185,7 +185,7 @@ D8  --->   kill_switch
 ## Changing the number of buttons
 To change the number of buttons:
 * navigate to config.h and the definition of **BUTTONS** to the desired number then
-* navigate to button/button_pins.h and add the corresponding pins that will be assigned to the buttons
+* below on BUTTON_PINS definition add the pins corresponding to the number of buttons separated by a comma (,).
 
 ## Changing the binary output pin
 To change the binary output(led/piezo speaker) pin:
@@ -197,7 +197,7 @@ To change the binary output(led/piezo speaker) pin:
 This component enables the keypad to be enabled/disabled based on the state of a connected switch. 
 
 ## Enabling KILL_SWITCH:
-* navigate to config.h and the definition of **KILL_SWITCH** to the desired number
+* navigate to config.h and the definition of **SWITCH** to the desired number
 
  **Warning** setting this to 0 disables the KILL_SWITCH component completely! 
 

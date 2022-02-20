@@ -7,19 +7,18 @@
 UKPmanager manager;
 /**
  * @brief Initialize all the components needed to di
- * 
+ *
  */
 void UKPmanager::begin()
 {
-    //Serial.begin(9600);
-    out.begin(LED_PIN); //start binary display(led and buzzer)
+    out.begin(LED_PIN); // start binary display(led and buzzer)
 #ifdef HID_ENABLED
-    MA.begin(); //start macrosengine, also loads sd card
+    MA.begin(); // start macrosengine, also loads sd card
 #if SEVEN_SEGMENT
-    seg.begin(); //start 7 segment display
+    seg.begin(); // start 7 segment display
 #endif
-    //disable the builtin leds
-#if KILL_SWITCH
+    // disable the builtin leds
+#ifdef KILL_SWITCH
     pinMode(KILL_SWITCH, INPUT);
 #endif
 #if BUILTIN_LEDS_ENABLED == 0
@@ -36,13 +35,11 @@ void UKPmanager::begin()
 #endif
 #endif
 #if DEBUG
-    while (!Serial)
-        ; //wait for serial
-    if (KILL_SWITCH)
-    {
+    while (!Serial); // wait for serial
+#ifdef KILL_SWITCH
         Serial.print("Kill switch enabled on pin:");
         Serial.println(KILL_SWITCH);
-    }
+#endif
     Serial.print("Number of buttons intialized:");
     Serial.println(button::buttonSum);
     Serial.print("Number of profiles intialized:");
@@ -50,10 +47,10 @@ void UKPmanager::begin()
 #endif
 }
 
-#if PROFILES && HID_ENABLED
+#if PROFILES
 /**
  * @brief Check if a profile has changed and update the outputs(displays, leds)
- * 
+ *
  */
 void UKPmanager::profileChanged()
 {
@@ -69,47 +66,37 @@ void UKPmanager::profileChanged()
 }
 #endif
 
-UKPmanager::~UKPmanager()
-{
-#if INTERRUPTS_ENABLED
-    for (int i = 0; i < BUTTONS; i++)
-    {
-        btn[i].~button();
-    }
-#endif
-}
-
 /**
  * @brief Send correct button id by checking if profiles are enabled
  * If profiles are enabled increment by 1 if profile button was pressed
- * 
- * @param button_pin the button which tiggered a macro
+ *
+ * @param button_pin the button which triggered a macro
  */
 void UKPmanager::manageButtonMacros(int &button_pin)
 {
-    //if button isn't profile button , or profiles are  disabled , then execute macro
+    // if button isn't profile button , or profiles are disabled , then execute macro
 #ifdef HID_ENABLED
     if (button_pin || (!PROFILES))
     {
         MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
     }
     else
-    { //change profile
+    { // change profile
         if (currentProfile < defaultProfilesSum - 1)
             currentProfile++;
         else
             currentProfile = 0;
     }
-#else 
+#else
     Serial.print("->Pressed:");
     Serial.print(button_pin);
 #endif
 }
 
-#if KILL_SWITCH && HID_ENABLED
+#ifdef KILL_SWITCH
 bool UKPmanager::killSwitch()
 {
-    //kill switch must set high in order to allow macros
+    // kill switch must set high in order to allow macros
     bool killSwitchState = digitalRead(KILL_SWITCH);
     if (!killSwitchState)
         out.setHigh();
@@ -122,18 +109,21 @@ bool UKPmanager::killSwitch()
 
 void UKPmanager::runtime()
 {
-
-    for (int i = 0; i < BUTTONS; i++)
-    {
-#if KILL_SWITCH && HID_ENABLED
-        if (!killSwitch())
-            continue;
+#ifdef KILL_SWITCH
+    if (killSwitch())
 #endif
-        pinTriggered = btn[i].state();
-        if (pinTriggered != -1)
-            manageButtonMacros(pinTriggered);
+    {
+        auto d = Input.inputPolling();
+        switch (d.type)
+        {
+        case type_button:
+            manageButtonMacros(d.id);
+            break;
+        default:
+            break;
+        }
     }
-#if PROFILES && HID_ENABLED
+#if PROFILES
     if (lastProfileState != currentProfile)
         profileChanged();
 #endif
