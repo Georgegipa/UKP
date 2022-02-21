@@ -23,6 +23,13 @@
 #define BUTTON_PINS A0, A1, 7
 
 /**
+ * @brief Define the number of joysticks and their pins 
+ * 
+ */
+#define JOYSTICKS 1
+#define JOYSTICK_PINS A2,A3
+#define JOYSTICK_ACCURACY 2
+/**
  * @brief The following settings enable/disable Components
  */
 #define SWITCH 8  //set this to 0 to disable switch disabler

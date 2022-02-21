@@ -16,6 +16,19 @@ InputData DynamicInput::inputPolling()
         }
     }
 #endif
+#if JOYSTICKS
+    for (int i = 0; i < JOYSTICKS; i++)
+    {
+#if DEBUG
+        int state = jstck[i].state();
+        if (state != 0)
+        {
+            Serial.print("Joystick position:");
+            Serial.println(state);
+        }
+#endif
+    }
+#endif
     d.type = type_none;
     return d;
 }

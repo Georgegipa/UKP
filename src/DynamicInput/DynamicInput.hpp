@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "button/button.hpp"
+#include "joystick/joystick.hpp"
 
 enum InputType
 {
@@ -8,7 +9,7 @@ enum InputType
     type_button,
     type_keypad,
     type_encoder,
-    type_joystic
+    type_joystick
 };
 
 // keypad -> 0...N(int)
@@ -33,6 +34,10 @@ private:
 #if BUTTONS
     button btn[BUTTONS];
 #endif
+#if JOYSTICKS
+    joystick jstck[JOYSTICKS];
+#endif
+
 public:
     InputData inputPolling();
 };

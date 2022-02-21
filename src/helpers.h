@@ -1,5 +1,5 @@
 #include <Arduino.h>
-
+//TODO:add documentation
 inline int toLowerCase(char a)
 {
     return ((a >= 'A') && (a <= 'Z')) ? a += 32 : a;

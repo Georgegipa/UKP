@@ -35,10 +35,11 @@ void UKPmanager::begin()
 #endif
 #endif
 #if DEBUG
-    while (!Serial); // wait for serial
+    while (!Serial)
+        ; // wait for serial
 #ifdef KILL_SWITCH
-        Serial.print("Kill switch enabled on pin:");
-        Serial.println(KILL_SWITCH);
+    Serial.print("Kill switch enabled on pin:");
+    Serial.println(KILL_SWITCH);
 #endif
     Serial.print("Number of buttons intialized:");
     Serial.println(button::buttonSum);
