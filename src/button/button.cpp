@@ -1,4 +1,5 @@
 #include "button/button.hpp"
+#if BUTTONS
 #include "helpers.h"
 
 int button::buttonSum = 0;
@@ -54,4 +55,5 @@ void button::printState()
         Serial.print(F(" clicked x"));
         Serial.println(timesPressed);
 }
+#endif
 #endif

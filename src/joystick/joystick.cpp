@@ -1,4 +1,5 @@
 #include "joystick.hpp"
+#if JOYSTICKS
 #include "helpers.h"
 #include "math.h"
 #define REMAP_VAL 10
@@ -103,3 +104,5 @@ int joystick::state()
     valY = map(analogRead(pinY), 0, 1023, REMAP_VAL, -REMAP_VAL);
     return remapXY(valX, valY);
 }
+
+#endif

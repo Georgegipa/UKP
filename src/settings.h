@@ -17,6 +17,13 @@
 #endif
 #endif
 
+//check if the sum of inputs is 0
+//prevent from compiling a build that does nothing
+
+#if BUTTONS+JOYSTICKS == 0
+#error Defined not inputs, build canceled
+#endif
+
 //define macros
 
 #define ARR_SIZE(X) sizeof(X)/sizeof(X[0])
