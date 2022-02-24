@@ -79,19 +79,7 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 #ifdef HID_ENABLED
     if (button_pin || (!PROFILES))
     {
-        //MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
-
-        switch (button_pin)
-        {
-        case 1:
-            Mouse.move(0, 0, 100);
-            break;
-        case 2:
-            Mouse.move(0, 0, -1);
-            break;
-        default:
-            break;
-        }
+        MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
     }
     else
     { // change profile

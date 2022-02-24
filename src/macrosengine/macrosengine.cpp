@@ -155,7 +155,6 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
         }
         else if (token_length > 1) // convert modifier keys
         {
-
             key = findKey(token);
         }
 

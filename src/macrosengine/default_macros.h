@@ -5,8 +5,8 @@ MACRO macro_0[] = "CTRL+C";
 MACRO macro_1[] = "CTRL+V";
 MACRO macro_2[] = "CTRL+Z";
 MACRO macro_3[] = "CTRL+Y";
-MACRO macro_4[] = "E,VOLUME_UP";
-MACRO macro_5[] = "E,VOLUME_DOWN";
+MACRO macro_4[] = "E,VOL_UP";
+MACRO macro_5[] = "E,VOL_DOWN";
 MACRO macro_6[] = "W,calc";
 MACRO macro_7[] = "W,notepad";
 
