@@ -85,7 +85,7 @@ void macrosengine::keyboardMacro(int num_args, ...)
 }
 
 /**
- * @brief Returns the position of the default_profiles array corres corresponding to the button pressed and the profile selected.
+ * @brief Returns the position of the default_profiles array corresponding to the button pressed and the profile selected.
  * If profiles are enabled the total number of buttons is -1.
  * @param profile_id the currently selected profile
  * @param button_id the pressed button

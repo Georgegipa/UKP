@@ -124,24 +124,24 @@ more coming soon...
 
 ## Supported Extra Keys
 * PLAY_PAUSE
-* VOLUME_MUTE
-* VOLUME_UP
-* VOLUME_DOWN
-* NEXT
-* PREVIOUS
+* VOL_MUTE
+* VOL_UP
+* VOL_DOWN
+* NEXT_TRACK
+* PREV_TRACK
 * STOP
-* BRIGHTNESS_UP
-* BRIGHTNESS_DOWN
+* BR_UP
+* BR_DOWN
 * MEDIA (opens default media player)
-* EMAIL_READER
-* CALCULATOR
-* EXPLORER
+* EMAIL
+* CALC
+* FILES
 ### Browser Controls
-* BR_HOME
-* BR_BACK
-* BR_FORWARD
-* BR_REFRESH
-* BR_BOOKMARKS
+* B_HOME
+* B_BACK
+* B_FORWARD
+* B_REFRESH
+* B_BOOKMARKS
 
 # Wiring
 ## Arduino and MicroSd module connections

@@ -5,23 +5,23 @@
 namespace extraKeys
 {
     MACRO binding_0[] = "PLAY_PAUSE";
-    MACRO binding_1[] = "VOLUME_MUTE";
-    MACRO binding_2[] = "VOLUME_UP";
-    MACRO binding_3[] = "VOLUME_DOWN";
-    MACRO binding_4[] = "NEXT";
-    MACRO binding_5[] = "PREVIOUS";
+    MACRO binding_1[] = "VOL_MUTE";
+    MACRO binding_2[] = "VOL_UP";
+    MACRO binding_3[] = "VOL_DOWN";
+    MACRO binding_4[] = "NEXT_TRACK";
+    MACRO binding_5[] = "PREV_TRACK";
     MACRO binding_6[] = "STOP";
-    MACRO binding_7[] = "BRIGHTNESS_UP";
-    MACRO binding_8[] = "BRIGHTNESS_DOWN";
-    MACRO binding_9[] = "MEDIA";         // opens default media player
-    MACRO binding_10[] = "EMAIL_READER"; // opens default email app
-    MACRO binding_11[] = "CALCULATOR";   // opens calculator
-    MACRO binding_12[] = "EXPLORER";     // open windows file explorer
-    MACRO binding_13[] = "BR_HOME";      // if browser is open redirects to home ,else opens new window on home tab
-    MACRO binding_14[] = "BR_BACK";
-    MACRO binding_15[] = "BR_FORWARD";
-    MACRO binding_16[] = "BR_REFRESH";
-    MACRO binding_17[] = "BR_BOOKMARKS";
+    MACRO binding_7[] = "BR_UP";
+    MACRO binding_8[] = "BR_DOWN";
+    MACRO binding_9[] = "MEDIA";   // opens default media player
+    MACRO binding_10[] = "EMAIL";  // opens default email app
+    MACRO binding_11[] = "CALC";   // opens calculator
+    MACRO binding_12[] = "FILES";  // open windows file explorer
+    MACRO binding_13[] = "B_HOME"; // if browser is open redirects to home ,else opens new window on home tab
+    MACRO binding_14[] = "B_BACK";
+    MACRO binding_15[] = "B_FORWARD";
+    MACRO binding_16[] = "B_REFRESH";
+    MACRO binding_17[] = "B_BOOKMARKS";
 
     MACRO_ARRAY bindings[] = {
         binding_0,
