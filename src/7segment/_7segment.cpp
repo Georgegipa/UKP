@@ -26,7 +26,7 @@ void _7segment::display(const byte *arr, int num)
 void _7segment::displayChar(int c)
 {
     if (c >= 97 && c <= 122) //convert lower case letters to capital ones
-        c = toUpperCase(c);
+        c = toupper(c);
     int conversion;
     if (c >= 21 && c <= 47) //symbols before numbers
     {

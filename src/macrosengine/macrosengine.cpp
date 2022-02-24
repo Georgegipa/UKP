@@ -2,6 +2,7 @@
 #include "macrosengine/macrosengine.hpp"
 #include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
+#include "extenededHelpers/exthelpers.h"
 #include "helpers.h"
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
@@ -38,7 +39,7 @@ int macrosengine::findKey(char *word)
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcasecmp(buf, word))                               // if str1==str2 then strcmp returns 0
+        if (!strcasecmp(buf, word))                           // if str1==str2 then strcmp returns 0
         {
             return intfromPROGMEM(key_codes, i); // retrieve key's code from progmem
         }
@@ -64,7 +65,7 @@ ConsumerKeycode macrosengine::findExtraKey(char *word)
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcasecmp(buf, word))                               // if str1==str2 then strcmp returns 0
+        if (!strcasecmp(buf, word))                           // if str1==str2 then strcmp returns 0
         {
             return key_codes[i];
         }
@@ -93,6 +94,31 @@ void macrosengine::keyboardMacro(int num_args, ...)
 inline void macrosengine::mouseScroll(bool up, int val)
 {
     Mouse.move(0, 0, up ? val : val * -1);
+}
+
+void macrosengine::mouseAction(char *word)
+{
+    //scroll command size is >5
+    int wordlen = strlen(word);
+    if (wordlen >= 5)
+    {
+        char buf[4];
+        bool up;
+        strncpy_T(buf, word, 3);
+        if (!strcmp(buf, "SCR"))
+        {
+            strncpy_T(buf, &word[3], 2);
+            if (!strcmp(buf, "UP"))
+                up = 1;
+            else if (!strcmp(buf, "DW"))
+                up = 0;
+            else
+                return;
+            int scrval = atoi(&word[5]);
+            if (scrval >= 0 && scrval <= 127)
+                mouseScroll(up, scrval);
+        }
+    }
 }
 
 /**
@@ -125,16 +151,11 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
         key = -1;
         if (token_length == 1) // convert char to int
         {
-            key = toLowerCase(*token);
+            key = tolower(*token);
         }
         else if (token_length > 1) // convert modifier keys
         {
 
-            /* if (token_length>=strlen("SCRUP") && !strcasecmp())
-            {
-
-
-            } */
             key = findKey(token);
         }
 

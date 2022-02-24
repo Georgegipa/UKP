@@ -5,7 +5,7 @@
 #include "DynamicInput/DynamicInput.hpp"
 
 #if SEVEN_SEGMENT
-#include "_7segment.hpp"
+#include "7segment/_7segment.hpp"
 #endif
 
 class UKPmanager
