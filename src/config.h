@@ -28,7 +28,7 @@
  */
 #define JOYSTICKS 1
 #define JOYSTICK_PINS A2,A3
-#define JOYSTICK_ACCURACY 2
+
 /**
  * @brief The following settings enable/disable Components
  */

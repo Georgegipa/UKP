@@ -9,7 +9,7 @@ class joystick
 private:
     int pinX, pinY;
     int valX, valY;
-
+    int remapXY(int x, int y);
 public:
     joystick();
     int state();

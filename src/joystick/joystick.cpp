@@ -1,6 +1,12 @@
 #include "joystick.hpp"
 #include "helpers.h"
+#include "math.h"
 #define REMAP_VAL 10
+#define OFFSET 2
+
+#define POSITIVE_VAL REMAP_VAL - OFFSET
+#define NEGATIVE_VAL -REMAP_VAL + OFFSET
+
 int joystick::joysticks = 0;
 
 joystick::joystick()
@@ -14,14 +20,9 @@ joystick::joystick()
     joysticks++;
 }
 
-// TODO: add debounce
-// TODO: remap values
-int joystick::state()
+int joystick::remapXY(int x, int y)
 {
-    valX = map(analogRead(pinX), 0, 1023, -REMAP_VAL, REMAP_VAL);
-    valY = map(analogRead(pinY), 0, 1023, REMAP_VAL, -REMAP_VAL);
-    /*
-    How remap works
+    /*Remapping documentation
             1
             |Y
             |
@@ -31,65 +32,74 @@ int joystick::state()
             |
            -1
 
-    1 2 3
-    4 0 5
+    Axis remaping
+
+    4 3 2
+    5 0 1
     6 7 8
 
-    pos  X   Y
-     0   0   0
-    ----------
-     1  -1   1
-     2   0   1
-     3   1   1
-     4  -1   0
-     5   1   0
-     6  -1  -1
-     7   0  -1
-     8   1  -1
+    +---------------+ Outside area = 
+    |   +-------+   |
+    |   | Inner |   |
+    |   | area  |   |
+    |   |       |   |
+    |   +-------+   |
+    +---------------+
+    -x              x
+    Outside area is the area where the joystick is near the edges.
+    
+    Convert the passed x and y to 1 0 or -1 based on position 
+    X and Y is 0 where inside their value is inside inner square
+    else 1 and -1 correspond to cartesian coordinates
     */
+    if (x >= POSITIVE_VAL) // 1
+        x = 1;
+    else if (x <= NEGATIVE_VAL) //-1
+        x = -1;
+    else
+        x = 0;
 
-#if DEBUG
-    Serial.print("(");
-    Serial.print(valX);
-    Serial.print(",");
-    Serial.print(valY);
-    Serial.println(")");
-#endif
+    if (y >= POSITIVE_VAL) // 1
+        y = 1;
+    else if (y <= NEGATIVE_VAL) // -1
+        y = -1;
+    else
+        y = 0;
 
-    switch (valY)
+    if(y == 0 && x == 0)
+        return 0;
+    else if(y == 0 && x == 1)
+        return 1;
+
+    //calculate the angle
+    int val = atan2(y, x) * 180.0 / PI;
+    
+    //convert the given angle to a number
+    switch (val)
     {
-    case REMAP_VAL: // 1
-        switch (valX)
-        {
-        case -REMAP_VAL:
-            return 1;
-        default:
-            return 2;
-        case REMAP_VAL:
-            return 3;
-        }
-    default: // 0
-        switch (valX)
-        {
-        case -REMAP_VAL:
-            return 4;
-        default:
-            return 0;
-        case REMAP_VAL:
-            return 5;
-        }
-    case -REMAP_VAL: // -1
-        switch (valX)
-        {
-        case -REMAP_VAL:
-            return 6;
-        default:
-            return 7;
-        case REMAP_VAL:
-            return 8;
-        }
-        break;
+    case 45:
+        return 2;
+    case 90:
+        return 3;
+    case 135:
+        return 4;
+    case 180:
+        return 5;
+    case -135:
+        return 6;
+    case -90:
+        return 7;
+    case -45:
+        return 8;
+    default:
+        return 0;
     }
+}
 
-    return 0;
+// TODO: add debounce
+int joystick::state()
+{
+    valX = map(analogRead(pinX), 0, 1023, -REMAP_VAL, REMAP_VAL);
+    valY = map(analogRead(pinY), 0, 1023, REMAP_VAL, -REMAP_VAL);
+    return remapXY(valX, valY);
 }
