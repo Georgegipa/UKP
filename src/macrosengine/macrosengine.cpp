@@ -38,7 +38,7 @@ int macrosengine::findKey(char *word)
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcmp(buf, word))                               // if str1==str2 then strcmp returns 0
+        if (!strcasecmp(buf, word))                               // if str1==str2 then strcmp returns 0
         {
             return intfromPROGMEM(key_codes, i); // retrieve key's code from progmem
         }
@@ -52,7 +52,7 @@ int macrosengine::findKey(char *word)
  * @param word to find inside extra_key_codes.h
  * @return The modifier key's integer value
  */
-//TODO: Clean up extra_key_codes.h
+// TODO: Clean up extra_key_codes.h
 ConsumerKeycode macrosengine::findExtraKey(char *word)
 {
     using namespace extraKeys;
@@ -64,7 +64,7 @@ ConsumerKeycode macrosengine::findExtraKey(char *word)
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcmp(buf, word))                               // if str1==str2 then strcmp returns 0
+        if (!strcasecmp(buf, word))                               // if str1==str2 then strcmp returns 0
         {
             return key_codes[i];
         }
@@ -82,6 +82,17 @@ void macrosengine::keyboardMacro(int num_args, ...)
     }
     va_end(args);
     Keyboard.releaseAll();
+}
+
+/**
+ * @brief Select how much to scroll up or down.
+ * 
+ * @param up Set this to true to scroll up, or false to scroll down.
+ * @param val Set the amount of scrolling.
+ */
+inline void macrosengine::mouseScroll(bool up, int val)
+{
+    Mouse.move(0, 0, up ? val : val * -1);
 }
 
 /**
@@ -118,6 +129,12 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
         }
         else if (token_length > 1) // convert modifier keys
         {
+
+            /* if (token_length>=strlen("SCRUP") && !strcasecmp())
+            {
+
+
+            } */
             key = findKey(token);
         }
 
@@ -141,8 +158,8 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
 void macrosengine::executeExtraKey(char *key)
 {
     ConsumerKeycode keyCode = findExtraKey(key);
-    if(keyCode!=HID_CONSUMER_UNASSIGNED)
-    Consumer.write(keyCode);
+    if (keyCode != HID_CONSUMER_UNASSIGNED)
+        Consumer.write(keyCode);
 }
 
 /**

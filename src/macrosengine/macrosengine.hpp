@@ -16,6 +16,7 @@ private:
     inline int findMacroID(int profileId, int buttonId);
     void executeMacro(char *macro, bool releaseOneByOne=0);
     void executeExtraKey(char *key);
+    inline void mouseScroll(bool up,int val);
 public:
     void begin();
     ~macrosengine();

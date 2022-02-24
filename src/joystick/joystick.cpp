@@ -14,8 +14,10 @@ joystick::joystick()
 {
     pinX = intfromPROGMEM(joystickPins, joysticks * 2);
     pinY = intfromPROGMEM(joystickPins, joysticks * 2 + 1);
+#if DEBUG
     Serial.println("pinX:" + pinX);
     Serial.println("pinY:" + pinY);
+#endif
     pinMode(pinX, INPUT);
     pinMode(pinY, INPUT);
     joysticks++;
@@ -39,7 +41,7 @@ int joystick::remapXY(int x, int y)
     5 0 1
     6 7 8
 
-    +---------------+ Outside area = 
+    +---------------+ Outside area =
     |   +-------+   |
     |   | Inner |   |
     |   | area  |   |
@@ -48,8 +50,8 @@ int joystick::remapXY(int x, int y)
     +---------------+
     -x              x
     Outside area is the area where the joystick is near the edges.
-    
-    Convert the passed x and y to 1 0 or -1 based on position 
+
+    Convert the passed x and y to 1 0 or -1 based on position
     X and Y is 0 where inside their value is inside inner square
     else 1 and -1 correspond to cartesian coordinates
     */
@@ -67,15 +69,15 @@ int joystick::remapXY(int x, int y)
     else
         y = 0;
 
-    if(y == 0 && x == 0)
+    if (y == 0 && x == 0)
         return 0;
-    else if(y == 0 && x == 1)
+    else if (y == 0 && x == 1)
         return 1;
 
-    //calculate the angle
+    // calculate the angle
     int val = atan2(y, x) * 180.0 / PI;
-    
-    //convert the given angle to a number
+
+    // convert the given angle to a number
     switch (val)
     {
     case 45:
