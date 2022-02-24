@@ -10,7 +10,7 @@ inline int toUpperCase(char a)
     return ((a >= 'a') && (a <= 'z')) ? a -= 32 : a;
 }
 
-inline int intfromPROGMEM(const int arr[],const int moved )
+inline int intfromPROGMEM(const int arr[],const int index )
 {
-    return pgm_read_byte(arr + moved);
+    return pgm_read_byte(arr + index);
 }

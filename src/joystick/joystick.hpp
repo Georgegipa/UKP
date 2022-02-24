@@ -3,7 +3,7 @@
 #if JOYSTICKS
 #include <Arduino.h>
 
-const int joystickPins[JOYSTICKS * 2] PROGMEM = {JOYSTICK_PINS};
+PROGMEM_INT joystickPins[JOYSTICKS * 2] = {JOYSTICK_PINS};
 class joystick
 {
 private:

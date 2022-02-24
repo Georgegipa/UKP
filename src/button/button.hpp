@@ -2,7 +2,7 @@
 #include "settings.h"
 #if BUTTONS
 #include <Arduino.h>
-const int buttonPins[BUTTONS] PROGMEM = {BUTTON_PINS};
+PROGMEM_INT buttonPins[BUTTONS] = {BUTTON_PINS};
 
 class button
 {

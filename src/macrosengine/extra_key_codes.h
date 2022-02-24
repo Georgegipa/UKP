@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "extendedHID/Consumer2_Keycodes.h"
-#include "macros.h"
+#include "settings.h"
 
 namespace extraKeys
 {

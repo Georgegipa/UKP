@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "macros.h"
+#include "settings.h"
 
 MACRO macro_0[] = "CTRL+C";
 MACRO macro_1[] = "CTRL+V";

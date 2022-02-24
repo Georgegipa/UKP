@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Keyboard.h"
-#include "macros.h"
+#include "settings.h"
 
 namespace basicKeys
 {

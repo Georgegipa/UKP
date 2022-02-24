@@ -9,21 +9,17 @@ enum InputType
     type_button,
     type_keypad,
     type_encoder,
-    type_joystick
+    type_joystick//possible positions 0-8
 };
 
 // keypad -> 0...N(int)
 // button -> 0...N(int)
 // encoder -> +(1) or -(0) (bool)
-/*joystic position
-1   2   3
-4  -1   5
-6   7   8
-*/
+
 struct InputData
 {
     InputType type;//type of input
-    int id;//id of triggered input if multiple exist(example. 1st btn -> 0 , 2nd btn -> 1 ...)
+    int id;//id of triggered input if multiples exist,index of array(example. 1st btn -> 0 , 2nd btn -> 1 ...)
     int state = 0; // last known state of triggered input
 };
 
