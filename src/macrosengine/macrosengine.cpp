@@ -3,7 +3,6 @@
 #include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
 #include "helpers.h"
-#define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(defaultMacros[POS]))
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
 

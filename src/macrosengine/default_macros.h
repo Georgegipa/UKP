@@ -21,4 +21,4 @@ MACRO_ARRAY defaultMacros[] = {
     macro_7};
 
 //this variable saves the size of the array in order to calculate default_profiles_num in macrosengine
-MACRO_INT dp_num = ARR_SIZE(defaultMacros);
+PROGMEM_INT dp_num = ARR_SIZE(defaultMacros);

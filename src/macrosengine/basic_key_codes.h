@@ -140,6 +140,6 @@ namespace basicKeys
             KEY_F23,
             KEY_F24};
 
-    MACRO_INT bindingsSum = ARR_SIZE(key_codes);    // number of all bindings
-    MACRO_INT bindingMaxSize = ARR_SIZE(binding_8); // size of the longest binding
+    PROGMEM_INT bindingsSum = ARR_SIZE(key_codes);    // number of all bindings
+    PROGMEM_INT bindingMaxSize = ARR_SIZE(binding_8); // size of the longest binding
 }

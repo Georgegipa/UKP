@@ -13,7 +13,7 @@ enum ConsumerKeycode : uint16_t
     MEDIA_VOLUME_MUTE = 0xE2,
     MEDIA_VOLUME_UP = 0xE9,
     MEDIA_VOLUME_DOWN = 0xEA,
-    //works only on laptops
+    //works only on laptop displays
     CONSUMER_BRIGHTNESS_UP = 0x006F,
     CONSUMER_BRIGHTNESS_DOWN = 0x0070,    
     //open apps

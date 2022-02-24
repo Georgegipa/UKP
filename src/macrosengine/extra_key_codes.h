@@ -64,6 +64,6 @@ namespace extraKeys
             CONSUMER_BROWSER_REFRESH,
             CONSUMER_BROWSER_BOOKMARKS};
 
-    MACRO_INT bindingsSum = ARR_SIZE(key_codes);    // number of all bindings
-    MACRO_INT bindingMaxSize = ARR_SIZE(binding_3); // size of the longest binding
+    PROGMEM_INT bindingsSum = ARR_SIZE(key_codes);    // number of all bindings
+    PROGMEM_INT bindingMaxSize = ARR_SIZE(binding_3); // size of the longest binding
 }
