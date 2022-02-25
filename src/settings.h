@@ -8,9 +8,18 @@
 #define LED_PIN LED
 #endif
 
+//profile button is the first defined button 
+//if is -1 then profiles are disabled
+#if PROFILE_BUTTON!=-1
+#define BTNS PROFILE_BUTTON,BUTTON_PINS
+#define ENABLE_PROFILES
+#else
+#define BTNS BUTTON_PINS
+#endif
+
 #ifdef HID_ENABLED
 #define KILL_SWITCH SWITCH
-#if PROFILES_ENABLED
+#ifdef ENABLE_PROFILES
 #define PROFILES 1
 #else
 #define PROFILES 0

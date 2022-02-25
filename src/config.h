@@ -12,15 +12,25 @@
 
 /**
  * @brief The following settings change behavior of inputs
+ * 
+ * @param DEBOUNCEDELAY Time to prevent button from been set again to true
  */
-#define DEBOUNCEDELAY 150 //time to prevent button from been set again to true
+#define DEBOUNCEDELAY 150 
 /**
- * @brief Define the number buttons that are going to be created
- * (Note that the actual number of buttons is BUTTONS-1 as the 1st button is used for button switching)
- * (unless PROFILE is set to 0)
+ * @brief Define the buttons and define their pin numbers.
+ * 
+ * @param PROFILE_BUTTON set the pin for the button that changes profiles(should not be included in BUTTON_PINS)
+ * set this to -1 disables profiles
+ * 
+ * @param BUTTON_PINS set the pins seperated with ',' which are going to be assigned as buttons.
+ * 
+ * @param BUTTONS Define the number buttons that are going to be created. 
+ * Number of BUTTON_PINS+1 if PROFILE_BUTTON isn't set to -1, else the number should be the number of BUTTON_PINS.
  */
+
+#define BUTTON_PINS A1, 7
+#define PROFILE_BUTTON A0
 #define BUTTONS 3
-#define BUTTON_PINS A0, A1, 7
 
 /**
  * @brief Define the number of joysticks and their pins 
@@ -33,7 +43,6 @@
  * @brief The following settings enable/disable Components
  */
 #define SWITCH 8  //set this to 0 to disable switch disabler
-#define PROFILES_ENABLED 1 //set this to 0 to disable profiles and use the first button as a normal macro
 #define BUILTIN_LEDS_ENABLED 0 // enable/disable builtin leds of the board
 #define SEVEN_SEGMENT 0 // enable/disable 7 segment display
 #define SD_ENABLED 0 //enable/disable micro_sd (macros are loaded from default_profiles.h)

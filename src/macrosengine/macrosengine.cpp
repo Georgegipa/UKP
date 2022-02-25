@@ -2,7 +2,7 @@
 #include "macrosengine/macrosengine.hpp"
 #include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
-#include "extenededHelpers/exthelpers.h"
+#include "extraHelpers/exthelpers.h"
 #include "helpers.h"
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
@@ -87,7 +87,7 @@ void macrosengine::keyboardMacro(int num_args, ...)
 
 /**
  * @brief Select how much to scroll up or down.
- * 
+ *
  * @param up Set this to true to scroll up, or false to scroll down.
  * @param val Set the amount of scrolling.
  */
@@ -96,14 +96,20 @@ inline void macrosengine::mouseScroll(bool up, int val)
     Mouse.move(0, 0, up ? val : val * -1);
 }
 
-void macrosengine::mouseAction(char *word)
+/**
+ * @brief Convert given word to a mouse action.
+ * Supported keywords SCRUPx and SCRDWx where x indicates the pixels to scroll (1-127)
+ * @param word String to analyze and execute
+ * @return int Returns -1 if keyword isn't a mouse action
+ */
+int macrosengine::mouseAction(char *word)
 {
-    //scroll command size is >5
+    // scroll command size is >5
     int wordlen = strlen(word);
+    int up = -1;
     if (wordlen >= 5)
     {
         char buf[4];
-        bool up;
         strncpy_T(buf, word, 3);
         if (!strcmp(buf, "SCR"))
         {
@@ -113,12 +119,16 @@ void macrosengine::mouseAction(char *word)
             else if (!strcmp(buf, "DW"))
                 up = 0;
             else
-                return;
+                return up;
+#if DEBUG
+            Serial.println("Scroll action detected!");
+#endif
             int scrval = atoi(&word[5]);
             if (scrval >= 0 && scrval <= 127)
                 mouseScroll(up, scrval);
         }
     }
+    return up;
 }
 
 /**
@@ -155,7 +165,8 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
         }
         else if (token_length > 1) // convert modifier keys
         {
-            key = findKey(token);
+            if (mouseAction(token) == -1) // if mouse action isn't found
+                key = findKey(token);     // execute a basic keyboard command
         }
 
 #if DEBUG

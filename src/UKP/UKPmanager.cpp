@@ -5,10 +5,7 @@
 #endif
 
 UKPmanager manager;
-/**
- * @brief Initialize all the components needed to di
- *
- */
+
 void UKPmanager::begin()
 {
     out.begin(LED_PIN); // start binary display(led and buzzer)
