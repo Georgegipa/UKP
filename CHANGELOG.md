@@ -13,15 +13,25 @@ Update description(template)
 ### Fixed
 *  -->
 
-
+## [0.8.1] - 2022-02-26
+Scrolling , profile remapping 
+### Removed
+* helpers.h
+* _7segments_leds.h
+### Changed
+* moved HID_ENABLED->settings.h 
+* moved 7segments leds pins to config.h
+* UKPmanager no longer requires currentProfile 
+* macrosengine reversed profileId and buttonId to only require buttonId if PROFILES are disabled
+* 
 ## [0.8.0] - 2022-02-25
 Scrolling , profile remapping 
 ### Added
 * Support for Joysticks(not binded yet to macros)
 * Profile Button is now remappable
-* Scrolling support with jSCRUPx SCRDWx 
+* Scrolling support with SCRUPx SCRDWx 
 * printtobuild to display which version is being build for selected config
-* Warning if no inputs are defined
+* Error if no inputs are defined
 * strncpy_T a null terminated strncpy
 ### Changed
 * Moved macros.h->settings.h

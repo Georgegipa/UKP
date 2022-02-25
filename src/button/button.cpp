@@ -1,6 +1,6 @@
 #include "button/button.hpp"
 #if BUTTONS
-#include "helpers.h"
+#include "helpers/helpers.h"
 
 int button::buttonSum = 0;
 

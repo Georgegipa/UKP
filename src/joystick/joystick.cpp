@@ -1,7 +1,7 @@
 #include "joystick.hpp"
 #if JOYSTICKS
-#include "helpers.h"
-#include "math.h"
+#include "helpers/helpers.h"
+#include <math.h>
 #define REMAP_VAL 10
 #define OFFSET 2
 

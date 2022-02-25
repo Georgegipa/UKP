@@ -1,12 +1,12 @@
-#ifdef HID_ENABLED
 #include "macrosengine/macrosengine.hpp"
+#ifdef HID_ENABLED
 #include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
-#include "extraHelpers/exthelpers.h"
-#include "helpers.h"
+#include "helpers/helpers.h"
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
 macrosengine MA;
 
+/** @brief Initialize components used by macrosengine */
 void macrosengine::begin()
 {
     Keyboard.begin();
@@ -16,6 +16,8 @@ void macrosengine::begin()
 #endif
 }
 
+/**
+ * @brief Destroy the macrosengine::macrosengine object */
 macrosengine::~macrosengine()
 {
     Keyboard.end();
@@ -53,7 +55,6 @@ int macrosengine::findKey(char *word)
  * @param word to find inside extra_key_codes.h
  * @return The modifier key's integer value
  */
-// TODO: Clean up extra_key_codes.h
 ConsumerKeycode macrosengine::findExtraKey(char *word)
 {
     using namespace extraKeys;
@@ -73,6 +74,12 @@ ConsumerKeycode macrosengine::findExtraKey(char *word)
     return HID_CONSUMER_UNASSIGNED;
 }
 
+/**
+ * @brief A variadic function that takes num_args followed by the keys that are going to be pressed
+ * 
+ * @param num_args The number of keys which are going to be pressed.
+ * @param ... A number of num_args which are going to be pressed.
+ */
 void macrosengine::keyboardMacro(int num_args, ...)
 {
     va_list args;
@@ -186,6 +193,11 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
     Keyboard.releaseAll();
 }
 
+/**
+ * @brief Press the returned ConsumerKeycode from findExtraKey
+ * 
+ * @param key The key that is going to be pressed if it exists
+ */
 void macrosengine::executeExtraKey(char *key)
 {
     ConsumerKeycode keyCode = findExtraKey(key);
@@ -195,7 +207,9 @@ void macrosengine::executeExtraKey(char *key)
 
 /**
  * @brief Reads,analyzes and executes all the supported macro types (see README).
- *
+ * Extra info:
+ * If sd card is enabled then loadDefaults should be set to 0 to try load sd card macros first.
+ * If profiles are disabled profileId should be 0.
  * @param buttonId The currently selected profile
  * @param profileId The button pressed
  * @param loadDefaults True to load the default profiles/False load from sd.(if sd card is not enabled this parameter doesn't do anything)
@@ -227,7 +241,7 @@ void macrosengine::parseMacro(int profileId, int buttonId, bool loadDefaults)
             strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
 #if SD_ENABLED
         else // read from micro_sd
-            strncpy(str, sd.readLine(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
+            strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
 #endif
         switch (check[0])
         {
@@ -265,7 +279,7 @@ void macrosengine::parseMacro(int profileId, int buttonId, bool loadDefaults)
             strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)));
 #if SD_ENABLED
         else
-            strncpy(str, sd.readLine(findMacroID(profileId, buttonId)), MACRO_MAX_SIZE);
+            strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)), MACRO_MAX_SIZE);
 #endif
         executeMacro(str);
     }

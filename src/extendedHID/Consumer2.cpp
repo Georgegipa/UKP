@@ -1,3 +1,4 @@
+#include "settings.h"
 #ifdef HID_ENABLED
 #include "Consumer2.h"
 

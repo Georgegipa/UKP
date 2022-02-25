@@ -1,21 +1,11 @@
 #pragma once
-#include <Arduino.h>
-#include "binary_output/binary_output.hpp"
-#include "7segment/_7segment_leds.h"
-
-/*
-7segment wiring
-g fCOMa b
-| | | | |
-    a
-f       b
-    g
-e       c
-    d   .
-| | | | |
-e dCOMc .
-*/
+#include "settings.h"
 #if SEVEN_SEGMENT
+#include "binary_output/binary_output.hpp"
+#include <Arduino.h>
+#define SEGMENT_LEDS 8
+PROGMEM_INT leds[SEGMENT_LEDS] = {SEVEN_SEGMENT_PINS};
+
 const byte symbols[] = {
 
     B01000001, //!

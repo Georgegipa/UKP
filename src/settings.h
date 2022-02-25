@@ -8,6 +8,10 @@
 #define LED_PIN LED
 #endif
 
+#ifdef UKP
+#define HID_ENABLED 1
+#endif
+
 //profile button is the first defined button 
 //if is -1 then profiles are disabled
 #if PROFILE_BUTTON!=-1

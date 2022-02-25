@@ -1,3 +1,4 @@
+#include "settings.h"
 #ifdef HID_ENABLED
 #pragma once
 #include <Arduino.h>

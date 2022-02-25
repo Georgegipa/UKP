@@ -24,10 +24,10 @@ void UKPmanager::begin()
 #endif
 #if PROFILES
     lastProfileState = currentProfile;
+    currentProfile = 0;
 #if SEVEN_SEGMENT
     seg.displayProfile(currentProfile);
 #endif
-    currentProfile = 0;
 
 #endif
 #endif
@@ -62,29 +62,35 @@ void UKPmanager::profileChanged()
     seg.displayProfile(currentProfile);
 #endif
 }
+
+/**
+ * @brief Change the profile is profiles are enabled.
+ * When the last profile is reach , the counter resets.
+ */
+inline void UKPmanager::changeProfile()
+{
+    currentProfile < defaultProfilesSum - 1 ? currentProfile++ : currentProfile = 0;
+}
+
 #endif
 
 /**
  * @brief Send correct button id by checking if profiles are enabled
  * If profiles are enabled increment by 1 if profile button was pressed
- *
+ * If a profile button is defined then the first button changes profiles
  * @param button_pin the button which triggered a macro
  */
 void UKPmanager::manageButtonMacros(int &button_pin)
 {
-    // if button isn't profile button , or profiles are disabled , then execute macro
-#ifdef HID_ENABLED
-    if (button_pin || (!PROFILES))
-    {
-        MA.parseMacro(currentProfile, button_pin - (IF_TRUE(PROFILES)));
-    }
+#ifdef UKP
+    if (button_pin)
+#if PROFILES
+        MA.parseMacro(button_pin - 1, currentProfile);
     else
-    { // change profile
-        if (currentProfile < defaultProfilesSum - 1)
-            currentProfile++;
-        else
-            currentProfile = 0;
-    }
+        changeProfile();
+#else
+        MA.parseMacro(button_pin);
+#endif
 #else
     Serial.print("->Pressed:");
     Serial.print(button_pin);

@@ -1,3 +1,4 @@
+#include "settings.h"
 #if HID_ENABLED && SD_ENABLED
 #pragma once
 #include <Arduino.h>

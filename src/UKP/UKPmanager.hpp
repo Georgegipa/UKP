@@ -17,13 +17,14 @@ private:
 #endif
 // if profiles are enabled track when they change
 #if PROFILES
+    int currentProfile;
     int lastProfileState;
     void profileChanged();
+    inline void changeProfile();
 #endif
 #ifdef KILL_SWITCH
     boolean killSwitch();
 #endif
-    int currentProfile;
     void manageButtonMacros(int &buttonId);
     int pinTriggered; // save the button id of the last pressed button
 public:

@@ -40,10 +40,26 @@
 #define JOYSTICK_PINS A2,A3
 
 /**
+ * @brief Display outputs
+ * 7segment wiring
+ *  g fCOMa b
+ *  | | | | |
+ *      a
+ *  f       b
+ *      g
+ *  e       c
+ *      d   .
+ *  | | | | |
+ *   e dCOMc .
+ * @param SEVEN_SEGMENT_PINS define the 8 pins corresponding to the display pins a,b,c,d,e,f,g,.
+ */
+#define SEVEN_SEGMENT 0 // enable/disable 7 segment display
+#define SEVEN_SEGMENT_PINS 2, 3, 4, 5, 6, 7, 8, 9 
+
+/**
  * @brief The following settings enable/disable Components
  */
 #define SWITCH 8  //set this to 0 to disable switch disabler
 #define BUILTIN_LEDS_ENABLED 0 // enable/disable builtin leds of the board
-#define SEVEN_SEGMENT 0 // enable/disable 7 segment display
 #define SD_ENABLED 0 //enable/disable micro_sd (macros are loaded from default_profiles.h)
 #define LED 9 //define the led pin number (set this to 0 to use builtin led)

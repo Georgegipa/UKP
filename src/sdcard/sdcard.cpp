@@ -1,7 +1,6 @@
-#ifdef HID_ENABLED
-#include "settings.h"
-#if SD_ENABLED
 #include "sdcard/sdcard.hpp"
+#ifdef HID_ENABLED
+#if SD_ENABLED
 
 sdcard sd;
 
