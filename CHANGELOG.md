@@ -23,7 +23,7 @@ Scrolling , profile remapping
 * moved 7segments leds pins to config.h
 * UKPmanager no longer requires currentProfile 
 * macrosengine reversed profileId and buttonId to only require buttonId if PROFILES are disabled
-* 
+* replaced strncpy with strncpy_T in macrosengine
 ## [0.8.0] - 2022-02-25
 Scrolling , profile remapping 
 ### Added
