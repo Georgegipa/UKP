@@ -30,6 +30,7 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
     * ~~Accept more complicated commands(open programs,enter strings)~~ (v0.5+)
     * ~~Accept media keys~~ (v0.7+)
     * Accept mouse actions
+        * ~~Support for scrolling~~ (v0.8+)
     * More macro commands
 * SD improvements
     * better micro sd detection
@@ -121,6 +122,10 @@ more coming soon...
 * F22
 * F23
 * F24
+
+### Extra Mouse Modifiers
+* SCRUPx Scroll up x pixels
+* SCRDWx Scroll down x pixels
 
 ## Supported Extra Keys
 * PLAY_PAUSE

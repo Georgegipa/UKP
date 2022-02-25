@@ -14,6 +14,24 @@ Update description(template)
 *  -->
 
 
+## [0.8.0] - 2022-02-25
+Scrolling , profile remapping 
+### Added
+* Support for Joysticks(not binded yet to macros)
+* Profile Button is now remappable
+* Scrolling support with jSCRUPx SCRDWx 
+* printtobuild to display which version is being build for selected config
+* Warning if no inputs are defined
+* strncpy_T a null terminated strncpy
+### Changed
+* Moved macros.h->settings.h
+* Moved all defined macros to settings.h
+* Replaced strcmp with strcasecmp to be safe against lower case letters
+* Renamed Extra keys
+### Removed
+* Unnecessary defined inline functions defined by Arduino.h
+### Fixed
+* Multiple issues where project would fail to build due to being unable to find excluded headers
 ## [0.7.2] - 2022-02-20
 DynamicInput 
 ### Added
@@ -25,14 +43,11 @@ DynamicInput
 ### Changed
 * buttons_pins moved to config.h
 * moved button config to button.hpp
-
-
 ## [0.7.1] - 2022-02-19
 Support for more keyCodes
 ## Added 
 * Browser Controls
 * Open calculator, media player, file explorer, email
-
 ## [0.7.0] - 2022-02-19
 Support for more KeyCodes
 ### Added
@@ -43,7 +58,6 @@ Support for more KeyCodes
 ### Changed
 * Renaned definitions.h -> config.h
 * Moved extern variabled to global_varibles.h
-
 ## [0.6.0]
 SD card support
 ### **alpha 5** - 2022-1-20
