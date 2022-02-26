@@ -214,7 +214,7 @@ void macrosengine::executeExtraKey(char *key)
  * @param profileId The button pressed
  * @param loadDefaults True to load the default profiles/False load from sd.(if sd card is not enabled this parameter doesn't do anything)
  */
-void macrosengine::parseMacro(int profileId, int buttonId, bool loadDefaults)
+void macrosengine::parseMacro( int buttonId,int profileId, bool loadDefaults)
 {
     char str[MACRO_MAX_SIZE], check[MACRO_COMMAND_SIZE + 1];
     if (!SD_ENABLED) // if sd card is disabled only default profiles can be loaded
@@ -228,12 +228,11 @@ void macrosengine::parseMacro(int profileId, int buttonId, bool loadDefaults)
 #endif
     // first start by checking if a macro command exists
     if (loadDefaults)
-        strncpy_P(check, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
+        strncpy_PT(check, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
 #if SD_ENABLED
     else
-        strncpy(check, sd.readLine(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE); // load from micro sd
+        strncpy_T(check, sd.readLine(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE); // load from micro sd
 #endif
-    str[MACRO_COMMAND_SIZE] = '\0';
 
     if (check[MACRO_COMMAND_SIZE - 1] == ',') // macro contains macro command , remove command from macro
     {

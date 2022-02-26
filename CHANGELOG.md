@@ -13,6 +13,17 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.2] - 2022-02-26
+Bug fix 
+### Added
+* strncpy_PT a null terminated strncpy_P
+### Removed
+* unused code
+### Changed
+* 
+### Fixed
+* parseMacro on macrosengine binding wrong buttons to profiles
+
 ## [0.8.1] - 2022-02-26
 Scrolling , profile remapping 
 ### Removed

@@ -10,6 +10,10 @@
 
 UKPmanager manager;
 
+/**
+ * @brief Initialize all the components related to UKP and are enabled in the config.h file.
+ * 
+ */
 void UKPmanager::begin()
 {
     out.begin(LED_PIN); // start binary display(led and buzzer)
@@ -98,6 +102,11 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 }
 
 #ifdef KILL_SWITCH
+/**
+ * @brief Control outputs based on the state of the kill kill_switch.
+ * 
+ * @return The state of the kill_switch pin.
+ */
 bool UKPmanager::killSwitch()
 {
     // kill switch must set high in order to allow macros
@@ -111,6 +120,10 @@ bool UKPmanager::killSwitch()
 }
 #endif
 
+/**
+ * @brief Continuously check state of components.
+ * 
+ */
 void UKPmanager::runtime()
 {
 #ifdef KILL_SWITCH
