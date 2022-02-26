@@ -2,6 +2,10 @@
 
 #ifdef HID_ENABLED
 #include "macrosengine/macrosengine.hpp"
+#include "DynamicInput/DynamicInput.hpp"
+
+#ifdef APP_CONTROL
+#include "scomms/scomms.hpp"
 #endif
 
 UKPmanager manager;
@@ -9,29 +13,30 @@ UKPmanager manager;
 void UKPmanager::begin()
 {
     out.begin(LED_PIN); // start binary display(led and buzzer)
-#ifdef HID_ENABLED
-    MA.begin(); // start macrosengine, also loads sd card
-#if SEVEN_SEGMENT
-    seg.begin(); // start 7 segment display
-#endif
-    // disable the builtin leds
-#ifdef KILL_SWITCH
-    pinMode(KILL_SWITCH, INPUT);
-#endif
-#if BUILTIN_LEDS_ENABLED == 0
-    pinMode(LED_BUILTIN_RX, INPUT);
-    pinMode(LED_BUILTIN_TX, INPUT);
+    MA.begin();         // start macrosengine, also loads sd card
+#ifdef APP_CONTROL
+    SC.begin(BAUD_RATE);
 #endif
 #if PROFILES
     lastProfileState = currentProfile;
     currentProfile = 0;
+#endif
 #if SEVEN_SEGMENT
+    seg.begin(); // start 7 segment display
     seg.displayProfile(currentProfile);
 #endif
+#ifdef KILL_SWITCH
+    pinMode(KILL_SWITCH, INPUT);
+#endif
+#if BUILTIN_LEDS_ENABLED == 0 // disable the builtin leds
+    pinMode(LED_BUILTIN_RX, INPUT);
+    pinMode(LED_BUILTIN_TX, INPUT);
+#endif
 
-#endif
-#endif
 #if DEBUG
+#ifndef APP_CONTROL
+    Serial.begin(BAUD_RATE);
+#endif
     while (!Serial)
         ; // wait for serial
 #ifdef KILL_SWITCH
@@ -82,7 +87,6 @@ inline void UKPmanager::changeProfile()
  */
 void UKPmanager::manageButtonMacros(int &button_pin)
 {
-#ifdef UKP
     if (button_pin)
 #if PROFILES
         MA.parseMacro(button_pin - 1, currentProfile);
@@ -90,10 +94,6 @@ void UKPmanager::manageButtonMacros(int &button_pin)
         changeProfile();
 #else
         MA.parseMacro(button_pin);
-#endif
-#else
-    Serial.print("->Pressed:");
-    Serial.print(button_pin);
 #endif
 }
 
@@ -118,6 +118,10 @@ void UKPmanager::runtime()
 #endif
     {
         auto d = Input.inputPolling();
+#ifdef APP_CONTROL
+        if (d.type != type_none)
+            SC.sendReport(d);
+#endif
         switch (d.type)
         {
         case type_button:
@@ -131,4 +135,8 @@ void UKPmanager::runtime()
     if (lastProfileState != currentProfile)
         profileChanged();
 #endif
+#ifdef APP_CONTROL
+    SC.runtime();
+#endif
 }
+#endif

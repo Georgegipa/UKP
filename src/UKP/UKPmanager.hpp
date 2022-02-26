@@ -1,8 +1,8 @@
 #pragma once
-#include <Arduino.h>
 #include "settings.h"
+#ifdef HID_ENABLED
+#include <Arduino.h>
 #include "binary_output/binary_output.hpp"
-#include "DynamicInput/DynamicInput.hpp"
 
 #if SEVEN_SEGMENT
 #include "7segment/_7segment.hpp"
@@ -33,3 +33,4 @@ public:
 };
 
 extern UKPmanager manager;
+#endif

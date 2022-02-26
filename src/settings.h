@@ -12,6 +12,11 @@
 #define HID_ENABLED 1
 #endif
 
+//enable the companion app to UKP
+#if COMPANION_APP
+#define APP_CONTROL
+#endif
+
 //profile button is the first defined button 
 //if is -1 then profiles are disabled
 #if PROFILE_BUTTON!=-1

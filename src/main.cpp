@@ -1,17 +1,14 @@
 #include <Arduino.h>
-#include "settings.h"
 #include "printtobuild.h"
 #include "UKP/UKPmanager.hpp"
-#include "scomms/scomms.hpp"
+#include "SKP/SKPmanager.hpp"
 
 void setup()
 {
-  SC.begin(BAUD_RATE);
   manager.begin();
 }
 
 void loop()
 {
   manager.runtime();
-  SC.runtime();
 }
