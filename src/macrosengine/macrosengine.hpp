@@ -18,6 +18,7 @@ private:
     void executeExtraKey(char *key);
     inline void mouseScroll(bool up, int val);
     int mouseAction(char *word);
+    void processProfile(char *word);
 
 public:
     void begin();
@@ -25,6 +26,5 @@ public:
     void keyboardMacro(int num_args, ...);
     void parseMacro(int buttonId, int profileId = 0, bool loadDefaults = !SD_ENABLED);
 };
-extern const int defaultProfilesSum;
 extern macrosengine MA;
 #endif

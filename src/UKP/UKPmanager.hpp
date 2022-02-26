@@ -15,11 +15,9 @@ private:
 #if SEVEN_SEGMENT
     _7segment seg;
 #endif
-#if PROFILES // Profile behavior.
-    int currentProfile;
+#if PROFILES
     int lastProfileState;
     void profileChanged();
-    inline void changeProfile();
 #endif
 #ifdef KILL_SWITCH
     bool killSwitch();

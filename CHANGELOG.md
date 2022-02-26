@@ -13,17 +13,22 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.3] - 2022-02-26
+P macro command
+### Added
+* P macro command to change profiles with a macro
+* New profile class to control profiles globally
+### Changed
+* W macro command changed to R
+* P macro command changed to W
 ## [0.8.2] - 2022-02-26
 Bug fix 
 ### Added
 * strncpy_PT a null terminated strncpy_P
 ### Removed
 * unused code
-### Changed
-* 
 ### Fixed
 * parseMacro on macrosengine binding wrong buttons to profiles
-
 ## [0.8.1] - 2022-02-26
 Scrolling , profile remapping 
 ### Removed

@@ -3,7 +3,7 @@
 #ifdef HID_ENABLED
 #include "macrosengine/macrosengine.hpp"
 #include "DynamicInput/DynamicInput.hpp"
-
+#include "macrosengine/profiles.hpp"
 #ifdef APP_CONTROL
 #include "scomms/scomms.hpp"
 #endif
@@ -12,7 +12,7 @@ UKPmanager manager;
 
 /**
  * @brief Initialize all the components related to UKP and are enabled in the config.h file.
- * 
+ *
  */
 void UKPmanager::begin()
 {
@@ -23,7 +23,6 @@ void UKPmanager::begin()
 #endif
 #if PROFILES
     lastProfileState = currentProfile;
-    currentProfile = 0;
 #endif
 #if SEVEN_SEGMENT
     seg.begin(); // start 7 segment display
@@ -71,16 +70,6 @@ void UKPmanager::profileChanged()
     seg.displayProfile(currentProfile);
 #endif
 }
-
-/**
- * @brief Change the profile is profiles are enabled.
- * When the last profile is reach , the counter resets.
- */
-inline void UKPmanager::changeProfile()
-{
-    currentProfile < defaultProfilesSum - 1 ? currentProfile++ : currentProfile = 0;
-}
-
 #endif
 
 /**
@@ -95,7 +84,7 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 #if PROFILES
         MA.parseMacro(button_pin - 1, currentProfile);
     else
-        changeProfile();
+        Profile++;
 #else
         MA.parseMacro(button_pin);
 #endif
@@ -104,7 +93,7 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 #ifdef KILL_SWITCH
 /**
  * @brief Control outputs based on the state of the kill kill_switch.
- * 
+ *
  * @return The state of the kill_switch pin.
  */
 bool UKPmanager::killSwitch()
@@ -122,7 +111,7 @@ bool UKPmanager::killSwitch()
 
 /**
  * @brief Continuously check state of components.
- * 
+ *
  */
 void UKPmanager::runtime()
 {

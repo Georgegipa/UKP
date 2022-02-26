@@ -7,8 +7,8 @@ MACRO macro_2[] = "CTRL+Z";
 MACRO macro_3[] = "CTRL+Y";
 MACRO macro_4[] = "E,VOL_UP";
 MACRO macro_5[] = "E,VOL_DOWN";
-MACRO macro_6[] = "W,calc";
-MACRO macro_7[] = "W,notepad";
+MACRO macro_6[] = "R,calc";
+MACRO macro_7[] = "R,notepad";
 
 MACRO_ARRAY defaultMacros[] = {
     macro_0,

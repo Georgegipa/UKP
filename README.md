@@ -1,7 +1,7 @@
 # UKP
 (Universal Keypad Protocol)
 
-A simple macro keyboard with profile support and more!
+A simple modular macro keyboard with profile support and more!
 <!-- 
 SKP as well as its companion app is under heavy development!
 For microcontrollers supporting builtin USB-HID (like the arduino micro) UKP is used.
@@ -55,26 +55,32 @@ Basic macro rules:
 * letters should be capital.
 * the supported [Modifier keys](#supported-modifier-keys) are listed below.
 * If the given modifier or key is not found then it is not pressed
+* Combine any modifier key with mouse scroll with [Mouse Modifier](#extra-mouse-modifiers)
 
 Learn more on how to change default macros [here](#changing-default-macros)
 
 # MACRO COMMANDS 
 ## THINGS TO KNOW BEFORE USING
-### Macro commands contain 1 letter (**are case sensitive!**) and are followed by a comma (,).
+### Macro commands contain 1 letter and are followed by a comma (,).
 * **If no commands are detected ,then the string is treated as a normal macro!**
 * **Macro commands are not always executed when the button is held and thus can cause errors!**
 ## USAGE
 With release v0.5+ UKP now supports the following commands:
 
 **(str represents the following string)**
-* W,str
-    * Press WIN+R and paste the following str. Used for opening programs and services
-* P,str 
-    * Enter str to output 
+* R,str
+    * Windows RUN.Press WIN+R and paste the following str. Used for opening programs and services
+* W,str 
+    * Write str to output 
 * O,str
     * Functions like basic macro but instead of holding all the buttons pressed, instead each button is released as soon as it is pressed
 * E,str
     * Press and then release the following [extra key](#supported-extra-keys)
+* P,x
+    * **DOES NOTHING IF PROFILES ARE DISABLED!**
+    * Switch to x-number profile (if this greater than the max Profiles , then its set to max)
+    * If x is + or - then go to the next or previous profile
+    * If x is set to a negative number of any other character nothing happens
 
 more coming soon...
 

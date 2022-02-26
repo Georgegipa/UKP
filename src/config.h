@@ -36,7 +36,7 @@
  * @brief Define the number of joysticks and their pins 
  * 
  */
-#define JOYSTICKS 1
+#define JOYSTICKS 0
 #define JOYSTICK_PINS A2,A3
 
 /**
