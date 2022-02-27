@@ -4,7 +4,7 @@
 #include "extendedHID/Consumer2.h"
 #include "helpers/helpers.h"
 #include "profiles.hpp"
-const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTONS - 1)) : 1);
+const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTON_SUM - 1)) : 1);
 macrosengine MA;
 
 /** @brief Initialize components used by macrosengine */
@@ -35,44 +35,16 @@ int macrosengine::findKey(char *word)
 {
     using namespace basicKeys;
     char buf[bindingMaxSize];
-#if DEBUG
-    Serial.print(F("Got basicKey:"));
-    Serial.println(word);
-#endif
+    LOG(2,"Got basicKey:",word);
     for (int i = 0; i < bindingsSum; i++)
     {
-        strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcasecmp(buf, word))                           // if str1==str2 then strcmp returns 0
+        strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
+        if (!strcasecmp(buf, word))                   // if str1==str2 then strcmp returns 0
         {
             return intfromPROGMEM(key_codes, i); // retrieve key's code from progmem
         }
     }
     return -1;
-}
-
-/**
- * @brief Find the corresponding code for the extra keys from "extra_key_codes.h"
- *
- * @param word to find inside extra_key_codes.h
- * @return The modifier key's integer value
- */
-ConsumerKeycode macrosengine::findExtraKey(char *word)
-{
-    using namespace extraKeys;
-#if DEBUG
-    Serial.print(F("Got extraKey:"));
-    Serial.println(word);
-#endif
-    char buf[bindingMaxSize];
-    for (int i = 0; i < bindingsSum; i++)
-    {
-        strcpy_P(buf, (char *)pgm_read_word(&(bindings[i]))); // retrieve current string from progmem
-        if (!strcasecmp(buf, word))                           // if str1==str2 then strcmp returns 0
-        {
-            return key_codes[i];
-        }
-    }
-    return HID_CONSUMER_UNASSIGNED;
 }
 
 /**
@@ -128,9 +100,7 @@ int macrosengine::mouseAction(char *word)
                 up = 0;
             else
                 return up;
-#if DEBUG
-            Serial.println("Scroll action detected!");
-#endif
+            LOG(1,"Scroll action detected!");
             int scrval = atoi(&word[5]);
             if (scrval >= 0 && scrval <= 127)
                 mouseScroll(up, scrval);
@@ -176,7 +146,7 @@ void macrosengine::processProfile(char *word)
  */
 inline int macrosengine::findMacroID(int profile_id, int button_id)
 {
-    return (((PROFILES ? BUTTONS - 1 : BUTTONS) * profile_id) + (button_id));
+    return (((PROFILES ? BUTTON_SUM - 1 : BUTTON_SUM) * profile_id) + (button_id));
 }
 
 /**
@@ -187,10 +157,7 @@ inline int macrosengine::findMacroID(int profile_id, int button_id)
 void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
 {
     int token_length = 0, key;
-#if DEBUG
-    Serial.print(F("Macro loaded:"));
-    Serial.println(macro);
-#endif
+    LOG(2,"Macro loaded:",macro);
     char *token = strtok(macro, "+");
     while (token != NULL)
     {
@@ -206,14 +173,7 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
                 key = findKey(token);     // execute a basic keyboard command
         }
 
-#if DEBUG
-        Serial.print("Token is:");
-        Serial.print(token);
-        Serial.print(" with length of :");
-        Serial.print(token_length);
-        Serial.print(" and an integer value of: ");
-        Serial.println(key);
-#endif
+        LOG(2, "Token is:", token, " with length of :", token_length, " and an integer value of: ", key);
         if (key != -1)
             Keyboard.press(key);
         if (releaseOneByOne)
@@ -224,15 +184,26 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
 }
 
 /**
- * @brief Press the returned ConsumerKeycode from findExtraKey
+ * @brief Find and Press the corresponding keycode for the extra keys from "extra_key_codes.h".
  *
- * @param key The key that is going to be pressed if it exists
+ * @param If keycode is found returns true.
  */
-void macrosengine::executeExtraKey(char *key)
+bool macrosengine::processExtraKey(char *key)
 {
-    ConsumerKeycode keyCode = findExtraKey(key);
-    if (keyCode != HID_CONSUMER_UNASSIGNED)
-        Consumer.write(keyCode);
+
+    using namespace extraKeys;
+    LOG(2,"Got extraKey:",key);
+    char buf[bindingMaxSize];
+    for (int i = 0; i < bindingsSum; i++)
+    {
+        strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
+        if (!strcasecmp(buf, key))                   // if str1==str2 then strcmp returns 0
+        {
+            Consumer.write(key_codes[i]);
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -258,7 +229,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
 #endif
     // first start by checking if a macro command exists
     if (loadDefaults)
-        strncpy_PT(check, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
+        strncpy_PT(check, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
 #if SD_ENABLED
     else
         strncpy_T(check, sd.readLine(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE); // load from micro sd
@@ -267,7 +238,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
     if (check[MACRO_COMMAND_SIZE - 1] == ',') // macro contains macro command , remove command from macro
     {
         if (loadDefaults) // read from progmem
-            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
+            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
 #if SD_ENABLED
         else // read from micro_sd
             strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
@@ -275,32 +246,25 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
         switch (toupper(check[0]))
         {
         case 'W': // paste following string
-#if DEBUG
-            Serial.print("Entering text:");
-            Serial.println(str);
-#endif
+            LOG(2, "W macro loaded", str);
             Keyboard.print(str);
             break;
         case 'R': // open windows program
             keyboardMacro(2, KEY_RIGHT_GUI, 'r');
-#if DEBUG
-            Serial.print("WIN+R:");
-            Serial.println(str);
-#endif
+            LOG(2, "R macro loaded", str);
             delay(50);
             Keyboard.println(str);
             break;
         case 'O': // press keys one by one
-#if DEBUG
-            Serial.print("Pressing the following keys one by one");
-            Serial.println(str);
-#endif
+            LOG(2, "O macro loaded", str);
             executeMacro(str, true);
             break;
         case 'E': // press extra keys
-            executeExtraKey(str);
+            LOG(2, "E macro loaded", str);
+            processExtraKey(str);
             break;
         case 'P': // change profile
+            LOG(2, "P macro loaded", str);
             processProfile(str);
             break;
         }
@@ -308,7 +272,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
     else // macro doesn't contain macro command
     {
         if (loadDefaults)
-            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)));
+            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)));
 #if SD_ENABLED
         else
             strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)), MACRO_MAX_SIZE);

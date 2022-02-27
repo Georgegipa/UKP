@@ -12,10 +12,9 @@ class macrosengine
 {
 private:
     int findKey(char *word);
-    ConsumerKeycode findExtraKey(char *word);
     inline int findMacroID(int profileId, int buttonId);
     void executeMacro(char *macro, bool releaseOneByOne = 0);
-    void executeExtraKey(char *key);
+    bool processExtraKey(char *key);
     inline void mouseScroll(bool up, int val);
     int mouseAction(char *word);
     void processProfile(char *word);

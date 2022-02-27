@@ -8,8 +8,8 @@ class DynamicInput
 {
 private:
     InputData d;
-#if BUTTONS
-    button btn[BUTTONS];
+#if BUTTON_SUM
+    button btn[BUTTON_SUM];
 #endif
 #if JOYSTICKS
     joystick jstck[JOYSTICKS];

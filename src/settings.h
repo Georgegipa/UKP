@@ -12,18 +12,14 @@
 #define HID_ENABLED 1
 #endif
 
-//enable the companion app to UKP
+//enable the companion app control to UKP
 #if COMPANION_APP
 #define APP_CONTROL
 #endif
 
-//profile button is the first defined button 
-//if is -1 then profiles are disabled
+//Check if profile button is the defined
 #if PROFILE_BUTTON!=-1
-#define BTNS PROFILE_BUTTON,BUTTON_PINS
 #define ENABLE_PROFILES
-#else
-#define BTNS BUTTON_PINS
 #endif
 
 #ifdef HID_ENABLED
@@ -35,10 +31,20 @@
 #endif
 #endif
 
+//If profiles are enabled then append profile button, 
+//and increase the number of total buttons
+#if PROFILES
+#define BTNS PROFILE_BUTTON,BUTTON_PINS
+#define BUTTON_SUM BUTTONS+1
+#else
+#define BUTTON_SUM BUTTONS
+#define BTNS BUTTON_PINS
+#endif
+
 //check if the sum of inputs is 0
 //prevent from compiling a build that does nothing
 
-#if BUTTONS+JOYSTICKS == 0
+#if BUTTON_SUM+JOYSTICKS == 0
 #error Defined not inputs, build canceled
 #endif
 

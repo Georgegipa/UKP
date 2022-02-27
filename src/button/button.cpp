@@ -1,5 +1,5 @@
 #include "button/button.hpp"
-#if BUTTONS
+#if BUTTON_SUM
 #include "helpers/helpers.h"
 
 int button::buttonSum = 0;

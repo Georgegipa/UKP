@@ -2,7 +2,6 @@
  * @file config.h
  * @author Georgegipa
  * @brief This file contains all the options for the current project
- * @version 0.7.0
  */
 
 /**
@@ -24,13 +23,12 @@
  * 
  * @param BUTTON_PINS set the pins seperated with ',' which are going to be assigned as buttons.
  * 
- * @param BUTTONS Define the number buttons that are going to be created. 
- * Number of BUTTON_PINS+1 if PROFILE_BUTTON isn't set to -1, else the number should be the number of BUTTON_PINS.
+ * @param BUTTONS Define the number BUTTON_PINS buttons that are going to be created. 
  */
 
 #define BUTTON_PINS A1, 7
 #define PROFILE_BUTTON A0
-#define BUTTONS 3
+#define BUTTONS 2
 
 /**
  * @brief Define the number of joysticks and their pins 

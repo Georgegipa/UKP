@@ -3,8 +3,8 @@
 DynamicInput Input;
 InputData DynamicInput::inputPolling()
 {
-#if BUTTONS
-    for (int i = 0; i < BUTTONS; i++)
+#if BUTTON_SUM
+    for (int i = 0; i < BUTTON_SUM; i++)
     {
         d.type = type_button;
         d.id = -1;

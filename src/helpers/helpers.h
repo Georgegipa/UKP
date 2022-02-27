@@ -7,6 +7,8 @@ void strncpy_T(char *buf,char str[],int size);
 
 void strncpy_PT(char *buf,char str[],int size);
 
+void LOG(int num_args, ...);
+
 /**
  * @brief Read a PROGMEM_INT (const int PROGMEM array) like a normal array.
  * A replacement for array reading array[i] -> intfromPROGMEM(array,i)

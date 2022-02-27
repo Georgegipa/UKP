@@ -41,7 +41,7 @@ void scomms::respond(char request)
     case '4':
         Serial.print(PROTOCOL_PREFIX);
         Serial.print("Buttons:");
-        Serial.print(BUTTONS);
+        Serial.print(BUTTON_SUM);
         break;
     default:
         Serial.print(NOT_VALID_COMMAND);
