@@ -141,8 +141,8 @@ more coming soon...
 * NEXT_TRACK
 * PREV_TRACK
 * STOP
-* BR_UP
-* BR_DOWN
+* BR_UP (brightness UP)
+* BR_DOWN (brightness DOWN)
 * MEDIA (opens default media player)
 * EMAIL
 * CALC

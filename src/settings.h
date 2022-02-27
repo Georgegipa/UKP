@@ -44,7 +44,7 @@
 
 //define macros
 #define ARR_SIZE(X) sizeof(X)/sizeof(X[0])
-#define RETRIEVE_PROFILE(POS) (char *)pgm_read_word(&(defaultMacros[POS]))
+#define RETRIEVE_PROFILE(ARR,POS) (char *)pgm_read_word(ARR+POS)
 #define MACRO const char PROGMEM
 #define MACRO_ARRAY const char *const PROGMEM
 #define PROGMEM_INT const int PROGMEM

@@ -40,8 +40,11 @@ void UKPmanager::begin()
 #ifndef APP_CONTROL
     Serial.begin(BAUD_RATE);
 #endif
-    while (!Serial)
-        ; // wait for serial
+    while (!Serial)// wait for serial
+    {
+        out.flashing(3,100); 
+        delay(200);
+    }
 #ifdef KILL_SWITCH
     Serial.print("Kill switch enabled on pin:");
     Serial.println(KILL_SWITCH);
@@ -98,7 +101,6 @@ void UKPmanager::manageButtonMacros(int &button_pin)
  */
 bool UKPmanager::killSwitch()
 {
-    // kill switch must set high in order to allow macros
     bool killSwitchState = digitalRead(KILL_SWITCH);
     if (!killSwitchState)
         out.setHigh();
@@ -116,7 +118,7 @@ bool UKPmanager::killSwitch()
 void UKPmanager::runtime()
 {
 #ifdef KILL_SWITCH
-    if (killSwitch())
+    if (killSwitch())// kill switch must set high in order to allow macros
 #endif
     {
         auto d = Input.inputPolling();

@@ -258,7 +258,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
 #endif
     // first start by checking if a macro command exists
     if (loadDefaults)
-        strncpy_PT(check, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
+        strncpy_PT(check, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
 #if SD_ENABLED
     else
         strncpy_T(check, sd.readLine(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE); // load from micro sd
@@ -267,7 +267,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
     if (check[MACRO_COMMAND_SIZE - 1] == ',') // macro contains macro command , remove command from macro
     {
         if (loadDefaults) // read from progmem
-            strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
+            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
 #if SD_ENABLED
         else // read from micro_sd
             strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
@@ -308,7 +308,7 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
     else // macro doesn't contain macro command
     {
         if (loadDefaults)
-            strcpy_P(str, RETRIEVE_PROFILE(findMacroID(profileId, buttonId)));
+            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros,findMacroID(profileId, buttonId)));
 #if SD_ENABLED
         else
             strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)), MACRO_MAX_SIZE);

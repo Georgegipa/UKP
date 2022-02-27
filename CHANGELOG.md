@@ -13,6 +13,11 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.3b] - 2022-02-27
+### Added
+* In debug mode if a HID compatible mc is connected led flashes until connected over serial
+### Changed
+* * RETRIEVE_PROFILE now supports all char PROGMEM arrays
 ## [0.8.3] - 2022-02-26
 P macro command
 ### Added
