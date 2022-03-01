@@ -1,5 +1,5 @@
 #include "settings.h"
-#if HID_ENABLED && SD_ENABLED
+#if SD_ENABLED
 #pragma once
 #include <SPI.h>
 #include <SD.h>

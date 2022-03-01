@@ -18,20 +18,16 @@
 #define APP_CONTROL
 #endif
 
-//Check if profile button is the defined
-#if PROFILE_BUTTON!=-1
-#define ENABLE_PROFILES
-#endif
-
 #ifdef HID_ENABLED//HID board definitions
 #define KILL_SWITCH SWITCH
-#ifdef ENABLE_PROFILES
+#if PROFILE_BUTTON!=-1
 #define PROFILES 1
 #else
 #define PROFILES 0
 #endif
 #else //Non HID boards
 #undef PROFILE_BUTTON
+#undef SD_ENABLED
 #endif
 
 //If profiles are enabled then append profile button, 

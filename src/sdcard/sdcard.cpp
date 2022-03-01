@@ -1,5 +1,4 @@
 #include "sdcard/sdcard.hpp"
-#ifdef HID_ENABLED
 #if SD_ENABLED
 
 sdcard sd;
@@ -99,5 +98,4 @@ char *sdcard::readLine(int line)
     else
         return NULL;
 }
-#endif
 #endif
