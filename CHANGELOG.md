@@ -13,6 +13,21 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.5] - 2022-03-01
+### Added
+* SSprintf that functions like printf for logging purposes
+* The ability to have profiles enabled without a profile button defined
+### Changed
+* Moved helpers to settings.h (accessible from the whole project)
+### Removed
+* LOG 
+    * replaced by SSprintf
+## [0.8.4] - 2022-02-28
+### Added
+* Extra keys are now processed like basic macros
+    * H , O macro command supported added
+### Removed
+* E macro command
 ## [0.8.3c] - 2022-02-27
 ### Added
 * variadic LOG function to replace debug serial prints

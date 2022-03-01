@@ -1,6 +1,5 @@
 #include "joystick.hpp"
 #if JOYSTICKS
-#include "helpers/helpers.h"
 #include <math.h>
 #define REMAP_VAL 10
 #define OFFSET 2
@@ -14,10 +13,8 @@ joystick::joystick()
 {
     pinX = intfromPROGMEM(joystickPins, joysticks * 2);
     pinY = intfromPROGMEM(joystickPins, joysticks * 2 + 1);
-#if DEBUG
-    Serial.println("pinX:" + pinX);
-    Serial.println("pinY:" + pinY);
-#endif
+    SSprintf("pinX:%d\n",pinX);
+    SSprintf("pinY:%d\n",pinY);
     pinMode(pinX, INPUT);
     pinMode(pinY, INPUT);
     joysticks++;

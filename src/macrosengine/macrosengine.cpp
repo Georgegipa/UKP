@@ -2,7 +2,6 @@
 #ifdef HID_ENABLED
 #include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
-#include "helpers/helpers.h"
 #include "profiles.hpp"
 const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTON_SUM - 1)) : 1);
 macrosengine MA;
@@ -10,6 +9,7 @@ macrosengine MA;
 /** @brief Initialize components used by macrosengine */
 void macrosengine::begin()
 {
+    stickyKeys = 0;
     Keyboard.begin();
     Mouse.begin();
 #if SD_ENABLED
@@ -23,6 +23,7 @@ macrosengine::~macrosengine()
 {
     Keyboard.end();
     Mouse.end();
+    Consumer.end();
 }
 
 /**
@@ -35,7 +36,7 @@ int macrosengine::findKey(char *word)
 {
     using namespace basicKeys;
     char buf[bindingMaxSize];
-    LOG(2,"Got basicKey:",word);
+    SSprintf("Got basicKey:%s\n", word);
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
@@ -100,7 +101,7 @@ int macrosengine::mouseAction(char *word)
                 up = 0;
             else
                 return up;
-            LOG(1,"Scroll action detected!");
+            SSprintf("Scroll action detected!\n");
             int scrval = atoi(&word[5]);
             if (scrval >= 0 && scrval <= 127)
                 mouseScroll(up, scrval);
@@ -109,6 +110,11 @@ int macrosengine::mouseAction(char *word)
     return up;
 }
 
+/**
+ * @brief Process profile commands.
+ * 
+ * @param word String to analyze and execute. 
+ */
 void macrosengine::processProfile(char *word)
 {
 #if PROFILES
@@ -149,17 +155,26 @@ inline int macrosengine::findMacroID(int profile_id, int button_id)
     return (((PROFILES ? BUTTON_SUM - 1 : BUTTON_SUM) * profile_id) + (button_id));
 }
 
+inline bool macrosengine::holdButton(int extraActions)
+{
+    return extraActions == 1 ? 0 : 1;
+}
+
 /**
  * @brief Splits the given char* array. Then executes the given macros.
  *
  * @param *macro A char* containing the keys which are going to be pressed.
+ * @param extraActions control extra behavior
+ *  * 0, hold all keys and release all them once the macro is read
+ *  * 1, press and release a key when its recognized.
+ *  * 2, hold a key until clearStickyKeys is called again.
  */
-void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
+void macrosengine::executeMacro(char *macro, int extraActions)
 {
-    int token_length = 0, key;
-    LOG(2,"Macro loaded:",macro);
-    char *token = strtok(macro, "+");
-    while (token != NULL)
+    int token_length = 0, key, media_keys_pressed = 0;
+    SSprintf("Macro loaded:%s\n", macro);
+    char *token = strtok(macro, "+");//
+    while (token)
     {
         token_length = strlen(token);
         key = -1;
@@ -167,39 +182,79 @@ void macrosengine::executeMacro(char *macro, bool releaseOneByOne)
         {
             key = tolower(*token);
         }
-        else if (token_length > 1) // convert modifier keys
+        else if (token_length >= 4) // convert modifier keys
         {
-            if (mouseAction(token) == -1) // if mouse action isn't found
-                key = findKey(token);     // execute a basic keyboard command
+            // consumer api can only send up to 4 media keys
+            if (processExtraKey(token,holdButton(extraActions)) && media_keys_pressed <= 4)
+            {
+                media_keys_pressed++;
+                key = -2;
+            }
+            else if (mouseAction(token) != -1) // if the mouse action is found read next keyword
+            {
+                key = -2;
+            }
+            else
+                key = findKey(token); // execute a basic keyboard command
         }
+        else if (token_length > 1)
+            key = findKey(token); // execute a basic keyboard command
 
-        LOG(2, "Token is:", token, " with length of :", token_length, " and an integer value of: ", key);
-        if (key != -1)
+        SSprintf("Token is:%s", token);
+        SSprintf(" with length of :%d", token_length);
+        SSprintf(" and an integer value of:%d\n", key);
+        //-1 basic Key not found
+        //-2 other action executed
+        if (key >= 0)
             Keyboard.press(key);
-        if (releaseOneByOne)
+        if (extraActions == 1)
             Keyboard.releaseAll();
+
         token = strtok(NULL, "+");
     }
-    Keyboard.releaseAll();
+
+    if (extraActions == 0) // release all buttons when macro is fully read
+    {
+        Keyboard.releaseAll();
+        Consumer.releaseAll();
+    }
+    else if (extraActions == 2)
+        stickyKeys = true;
 }
 
 /**
- * @brief Find and Press the corresponding keycode for the extra keys from "extra_key_codes.h".
- *
- * @param If keycode is found returns true.
+ * @brief Release Keys been held from H macrocommand.
  */
-bool macrosengine::processExtraKey(char *key)
+void macrosengine::clearStickyKeys()
+{
+    Keyboard.releaseAll();
+    Consumer.releaseAll();
+    stickyKeys = 0;
+    SSprintf("Sticky Keys cleared!\n");
+}
+
+/**
+ * @brief Find and Press/Hold the corresponding keycode for the extra keys from "extra_key_codes.h".
+ *
+ * @param key The key that it's going to be searched in "extra_key_codes.h".
+ * @param hold Set to true to hold the key pressed.
+ * @returns True if keycode is found.
+ */
+bool macrosengine::processExtraKey(char *key, bool hold)
 {
 
     using namespace extraKeys;
-    LOG(2,"Got extraKey:",key);
+    SSprintf("Got extraKey:%sn", key);
     char buf[bindingMaxSize];
     for (int i = 0; i < bindingsSum; i++)
     {
         strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
-        if (!strcasecmp(buf, key))                   // if str1==str2 then strcmp returns 0
+        if (!strcasecmp(buf, key))                    // if str1==str2 then strcmp returns 0
         {
-            Consumer.write(key_codes[i]);
+            if (hold)
+                Consumer.press(key_codes[i]);
+            else
+                Consumer.write(key_codes[i]);
             return true;
         }
     }
@@ -246,26 +301,26 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
         switch (toupper(check[0]))
         {
         case 'W': // paste following string
-            LOG(2, "W macro loaded", str);
+            SSprintf("W macro loaded %s\n", str);
             Keyboard.print(str);
             break;
         case 'R': // open windows program
             keyboardMacro(2, KEY_RIGHT_GUI, 'r');
-            LOG(2, "R macro loaded", str);
+            SSprintf("R macro loaded %s\n", str);
             delay(50);
             Keyboard.println(str);
             break;
         case 'O': // press keys one by one
-            LOG(2, "O macro loaded", str);
-            executeMacro(str, true);
-            break;
-        case 'E': // press extra keys
-            LOG(2, "E macro loaded", str);
-            processExtraKey(str);
+            SSprintf("O macro loaded %s\n", str);
+            executeMacro(str, 1);
             break;
         case 'P': // change profile
-            LOG(2, "P macro loaded", str);
+            SSprintf("P macro loaded %s\n", str);
             processProfile(str);
+            break;
+        case 'H': // hold keys
+            SSprintf("H macro loaded %s\n", str);
+            executeMacro(str, 2);
             break;
         }
     }

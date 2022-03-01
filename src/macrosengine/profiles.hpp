@@ -2,7 +2,6 @@
 #include "settings.h"
 extern const int defaultProfilesSum;
 #ifdef PROFILES
-#include <Arduino.h>
 
 class profiles
 {

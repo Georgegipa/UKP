@@ -28,18 +28,17 @@ void strncpy_PT(char *buf, char str[], int size)
     buf[size] = '\0';
 }
 
-void LOG(int num_args, ...)
+/**
+ * @brief Behaves exactly like printf and prints results with Serial.print
+ */
+void SSprintf(const char *s, ...)
 {
 #if DEBUG
-    va_list args;
-    va_start(args, num_args);
-    for (int i = 0; i < num_args; i++)
-    {
-        if (i == num_args - 1)
-            Serial.println(va_arg(args, char*));
-        else
-            Serial.print(va_arg(args, char*));
-    }
-    va_end(args);
+    va_list arg;
+    va_start(arg, s);
+    char buf[100];
+    vsprintf(buf, s, arg);
+    Serial.print(buf);
+    va_end(arg);
 #endif
 }

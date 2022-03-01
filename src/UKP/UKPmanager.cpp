@@ -40,19 +40,16 @@ void UKPmanager::begin()
 #ifndef APP_CONTROL
     Serial.begin(BAUD_RATE);
 #endif
-    while (!Serial)// wait for serial
+    while (!Serial) // wait for serial
     {
-        out.flashing(3,100); 
+        out.flashing(3, 100);
         delay(200);
     }
 #ifdef KILL_SWITCH
-    Serial.print("Kill switch enabled on pin:");
-    Serial.println(KILL_SWITCH);
+    SSprintf("Kill switch enabled on pin:%d\n", KILL_SWITCH);
 #endif
-    Serial.print("Number of buttons intialized:");
-    Serial.println(button::buttonSum);
-    Serial.print("Number of profiles intialized:");
-    Serial.println(defaultProfilesSum);
+    SSprintf("Number of buttons intialized:%d\n", button::buttonSum);
+    SSprintf("Number of profiles intialized:%d\n", defaultProfilesSum);
 #endif
 }
 
@@ -63,10 +60,7 @@ void UKPmanager::begin()
  */
 void UKPmanager::profileChanged()
 {
-#if DEBUG
-    Serial.print(F("Current Profile changed to: "));
-    Serial.println(currentProfile);
-#endif
+    SSprintf("Current Profile changed to:%d\n", currentProfile);
     lastProfileState = currentProfile;
     out.flashing(currentProfile + 1);
 #if SEVEN_SEGMENT
@@ -83,12 +77,17 @@ void UKPmanager::profileChanged()
  */
 void UKPmanager::manageButtonMacros(int &button_pin)
 {
+    if (MA.stickyKeys)
+        MA.clearStickyKeys();
+
     if (button_pin)
-#if PROFILES
+#if PROFILE_BUTTON >= 0 // profile button is enabled
         MA.parseMacro(button_pin - 1, currentProfile);
     else
         Profile++;
-#else
+#elif PROFILE_BUTTON == -2 // profiles are enabled without a profile button
+        MA.parseMacro(button_pin, currentProfile);
+#elif PROFILE_BUTTON == -1 // disabled profiles
         MA.parseMacro(button_pin);
 #endif
 }
@@ -118,7 +117,7 @@ bool UKPmanager::killSwitch()
 void UKPmanager::runtime()
 {
 #ifdef KILL_SWITCH
-    if (killSwitch())// kill switch must set high in order to allow macros
+    if (killSwitch()) // kill switch must set high in order to allow macros
 #endif
     {
         auto d = Input.inputPolling();

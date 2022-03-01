@@ -1,7 +1,6 @@
 #pragma once
 #include "settings.h"
 #if JOYSTICKS
-#include <Arduino.h>
 
 PROGMEM_INT joystickPins[JOYSTICKS * 2] = {JOYSTICK_PINS};
 class joystick

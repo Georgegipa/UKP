@@ -2,7 +2,6 @@
 #include "settings.h"
 #if SEVEN_SEGMENT
 #include "binary_output/binary_output.hpp"
-#include <Arduino.h>
 #define SEGMENT_LEDS 8
 PROGMEM_INT leds[SEGMENT_LEDS] = {SEVEN_SEGMENT_PINS};
 

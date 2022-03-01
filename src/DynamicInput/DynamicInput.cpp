@@ -23,8 +23,7 @@ InputData DynamicInput::inputPolling()
         int state = jstck[i].state();
         if (state != 0)
         {
-            Serial.print("Joystick position:");
-            Serial.println(state);
+            SSprintf("Joystick position:%d\n",state);
         }
 #endif
     }

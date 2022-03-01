@@ -8,14 +8,14 @@ bool sdcard::begin()
 {
     if (!SD.begin(10))
     {
-        Serial.println("Card Mount Failed");
+        SSprintf("Card Mount Failed\n");
         sdConnected = 0;
         return false;
     }
     else
     {
         sdConnected = 1;
-        Serial.println("Successfully mounted microSD");
+        SSprintf("Successfully mounted microSD\n");
     }
     timesCalled = 0;
     refereshFileInfo();
@@ -56,7 +56,6 @@ void sdcard::refereshFileInfo()
         {
             current_str_len++;
         }
-        Serial.print(t);
     }
     F.close();
     if (timesCalled) //if this function was called at least once before

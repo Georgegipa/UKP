@@ -1,7 +1,6 @@
 #pragma once
 #include "settings.h"
 #ifdef HID_ENABLED
-#include <Arduino.h>
 #include "binary_output/binary_output.hpp"
 
 #if SEVEN_SEGMENT

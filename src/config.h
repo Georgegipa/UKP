@@ -18,17 +18,17 @@
 /**
  * @brief Define the buttons and define their pin numbers.
  * 
- * @param PROFILE_BUTTON set the pin for the button that changes profiles(should not be included in BUTTON_PINS)
- * set this to -1 disables profiles
- * 
- * @param BUTTON_PINS set the pins seperated with ',' which are going to be assigned as buttons.
- * 
  * @param BUTTONS Define the number BUTTON_PINS buttons that are going to be created. 
+ * @param BUTTON_PINS set the pins seperated with ',' which are going to be assigned as buttons.
+ * @param PROFILE_BUTTON set the pin for the button that changes profiles(should not be included in BUTTON_PINS)
+ *          * Set this to -1 disable profiles.
+ *          * Set this to -2 to disable profile button but keep profiles enabled.
+ * 
  */
 
+#define BUTTONS 2
 #define BUTTON_PINS A1, 7
 #define PROFILE_BUTTON A0
-#define BUTTONS 2
 
 /**
  * @brief Define the number of joysticks and their pins 

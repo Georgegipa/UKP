@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include "settings.h"
 #include "DynamicInput/Inputs.h"
 #define PROTOCOL_PREFIX F("->")
 #define NOT_VALID_COMMAND F("NVC")

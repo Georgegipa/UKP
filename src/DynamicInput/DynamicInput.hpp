@@ -1,5 +1,4 @@
 #pragma once
-#include <Arduino.h>
 #include "button/button.hpp"
 #include "joystick/joystick.hpp"
 #include "Inputs.h"

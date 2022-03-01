@@ -1,7 +1,6 @@
 #pragma once
 #include "settings.h"
 #ifdef HID_ENABLED
-#include <Arduino.h>
 #include "HID.h"
 #include "Consumer_definitions.h"
 #include "Consumer2_Keycodes.h"
@@ -24,7 +23,7 @@ typedef union ATTRIBUTE_PACKED
 
 class Consumer2_
 {
-private:
+public:
     inline void press(ConsumerKeycode m)
     {
         // search for a free spot
@@ -55,8 +54,6 @@ private:
     {
         end();
     }
-
-public:
     Consumer2_(void);
     inline void begin(void)
     {

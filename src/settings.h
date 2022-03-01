@@ -1,4 +1,5 @@
 #include "config.h"
+#include "helpers/helpers.h"
 
 #if !LED
 #ifdef LED_BUILTIN
@@ -22,18 +23,20 @@
 #define ENABLE_PROFILES
 #endif
 
-#ifdef HID_ENABLED
+#ifdef HID_ENABLED//HID board definitions
 #define KILL_SWITCH SWITCH
 #ifdef ENABLE_PROFILES
 #define PROFILES 1
 #else
 #define PROFILES 0
 #endif
+#else //Non HID boards
+#undef PROFILE_BUTTON
 #endif
 
 //If profiles are enabled then append profile button, 
 //and increase the number of total buttons
-#if PROFILES
+#if PROFILE_BUTTON>=0 && HID_ENABLED
 #define BTNS PROFILE_BUTTON,BUTTON_PINS
 #define BUTTON_SUM BUTTONS+1
 #else

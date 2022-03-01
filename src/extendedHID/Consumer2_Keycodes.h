@@ -1,7 +1,6 @@
 #include "settings.h"
 #ifdef HID_ENABLED
 #pragma once
-#include <Arduino.h>
 enum ConsumerKeycode : uint16_t
 {
     HID_CONSUMER_UNASSIGNED = 0x00,

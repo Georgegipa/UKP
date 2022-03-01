@@ -1,6 +1,5 @@
 #include "7segment/_7segment.hpp"
 #if SEVEN_SEGMENT
-#include "helpers/helpers.h"
 
 void _7segment::begin(bool is_cathode)
 {

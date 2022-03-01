@@ -1,5 +1,4 @@
 #include "scomms/scomms.hpp"
-#include "settings.h"
 
 scomms SC;
 

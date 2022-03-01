@@ -1,7 +1,6 @@
 #pragma once
 #include "settings.h"
 #if BUTTON_SUM
-#include <Arduino.h>
 PROGMEM_INT buttonPins[BUTTON_SUM] = {BTNS};
 
 class button
