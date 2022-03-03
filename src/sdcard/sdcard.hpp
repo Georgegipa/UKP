@@ -7,7 +7,6 @@
 class sdcard
 {
 private:
-    const char *file = "macros.txt";
     char *internalStr;
     int timesCalled;
     void refereshFileInfo();

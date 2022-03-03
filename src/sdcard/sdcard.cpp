@@ -1,6 +1,6 @@
 #include "sdcard/sdcard.hpp"
 #if SD_ENABLED
-
+#define file "macros.txt"
 sdcard sd;
 
 bool sdcard::begin()
