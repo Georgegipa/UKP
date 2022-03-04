@@ -202,7 +202,7 @@ void macrosengine::executeMacro(char *macro, int extraActions)
 
         SSprintf("Token is:%s", token);
         SSprintf(" with length of :%d", token_length);
-        SSprintf(" and an integer value of:%d\n", key);
+        SSprintf(" and (key) val:%d\n", key);
         //-1 basic Key not found
         //-2 other action executed
         if (key >= 0)
@@ -244,7 +244,7 @@ bool macrosengine::processExtraKey(char *key, bool hold)
 {
 
     using namespace extraKeys;
-    SSprintf("Got extraKey:%sn", key);
+    SSprintf("Got extraKey:%s\n", key);
     char buf[bindingMaxSize];
     for (int i = 0; i < bindingsSum; i++)
     {
@@ -301,25 +301,25 @@ void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
         switch (toupper(check[0]))
         {
         case 'W': // paste following string
-            SSprintf("W macro loaded %s\n", str);
+            SSprintf("W macro: %s\n", str);
             Keyboard.print(str);
             break;
         case 'R': // open windows program
             keyboardMacro(2, KEY_RIGHT_GUI, 'r');
-            SSprintf("R macro loaded %s\n", str);
+            SSprintf("R macro: %s\n", str);
             delay(50);
             Keyboard.println(str);
             break;
         case 'O': // press keys one by one
-            SSprintf("O macro loaded %s\n", str);
+            SSprintf("O macro: %s\n", str);
             executeMacro(str, 1);
             break;
         case 'P': // change profile
-            SSprintf("P macro loaded %s\n", str);
+            SSprintf("P macro: %s\n", str);
             processProfile(str);
             break;
         case 'H': // hold keys
-            SSprintf("H macro loaded %s\n", str);
+            SSprintf("H macro: %s\n", str);
             executeMacro(str, 2);
             break;
         }
