@@ -27,7 +27,7 @@ macrosengine::~macrosengine()
 }
 
 /**
- * @brief Find the corresponding code for modifier key from "basic_key_codes.h"
+ * @brief Find the corresponding keycode for modifier key from "basic_key_codes.h"
  *
  * @param word to find inside basic_key_codes.h
  * @return The modifier key's integer value
@@ -37,12 +37,32 @@ int macrosengine::findKey(char *word)
     using namespace basicKeys;
     char buf[bindingMaxSize];
     SSprintf("Got basicKey:%s\n", word);
-    for (int i = 0; i < bindingsSum; i++)
+    if (word[0] == 'F' || word[0] == 'f') // check if word is a F key
     {
-        strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
-        if (!strcasecmp(buf, word))                   // if str1==str2 then strcmp returns 0
+        strncpy(word, word + 1, strlen(word));
+        int fkey = atoi(word);
+        if (fkey >= 1 && fkey <= 24) // check if f key is correct
         {
-            return intfromPROGMEM(key_codes, i); // retrieve key's code from progmem
+            switch (fkey)
+            {
+            case 1 ... 12: // for f1 to f12 keys keycode is equal to fkey + F1
+                return KEY_F1 + fkey - 1;
+            case 13 ... 24: // for f13 to f24 keys keycode is equal to fkey + F13
+                return KEY_F13 + fkey - 13;
+            }
+        }
+        else
+            return -1;
+    }
+    else
+    {
+        for (int i = 0; i < bindingsSum; i++)
+        {
+            strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
+            if (!strcasecmp(buf, word))                   // if str1==str2 then strcmp returns 0
+            {
+                return intfromPROGMEM(key_codes, i); // retrieve key's code from progmem
+            }
         }
     }
     return -1;
@@ -112,8 +132,8 @@ int macrosengine::mouseAction(char *word)
 
 /**
  * @brief Process profile commands.
- * 
- * @param word String to analyze and execute. 
+ *
+ * @param word String to analyze and execute.
  */
 void macrosengine::processProfile(char *word)
 {
@@ -173,7 +193,7 @@ void macrosengine::executeMacro(char *macro, int extraActions)
 {
     int token_length = 0, key, media_keys_pressed = 0;
     SSprintf("Macro loaded:%s\n", macro);
-    char *token = strtok(macro, "+");//
+    char *token = strtok(macro, "+"); //
     while (token)
     {
         token_length = strlen(token);
@@ -185,7 +205,7 @@ void macrosengine::executeMacro(char *macro, int extraActions)
         else if (token_length >= 4) // convert modifier keys
         {
             // consumer api can only send up to 4 media keys
-            if (processExtraKey(token,holdButton(extraActions)) && media_keys_pressed <= 4)
+            if (processExtraKey(token, holdButton(extraActions)) && media_keys_pressed <= 4)
             {
                 media_keys_pressed++;
                 key = -2;

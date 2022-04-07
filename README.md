@@ -115,17 +115,17 @@ more coming soon...
 * DOWN          (down arrow key)        
 * LEFT          (left arrow key)
 * RIGHT         (right arrow key)
-* BACKSPACE
+* BKSP          (backspace key)
 * TAB
 * ENTER
 * ESC
-* INSERT
-* DELETE
-* PUP           (page up)
-* PDOWN         (page down)
+* INS           (insert key)
+* DEL           (delete key)
+* PU            (page up)
+* PD            (page down)
 * HOME
 * END
-* CAPS          (caps lock)
+* CL            (caps lock)
 * F1
 * F2
 * F3
@@ -159,30 +159,42 @@ more coming soon...
     * Scroll down x pixels
 
 ## Supported Extra Keys
+
+### Volume and Brightness Control
+```  
+* VOL_M         (mute volume)                   🔇      
+* VOL_U         (volume UP)                     🔊      
+* VOL_D         (volume DOWN)                   🔉       
+* BRT_U         (brightness UP)                 🔆      
+* BRT_D         (brightness DOWN)               🔅      
 ```
-* PLAY_PAUSE    (play/pause media)              ⏯      
-* STOP          (stop currently playing media)  ⏹      
-* VOL_MUTE      (mute volume)                   🔇      
-* VOL_UP        (+2 volume)                     🔊      
-* VOL_DOWN      (-2 volume)                     🔉       
-* NEXT_TRACK    (play next track)               ⏭      
-* PREV_TRACK    (play pervious track)           ⏮      
-* BR_UP         (brightness UP)                 🔆      
-* BR_DOWN       (brightness DOWN)               🔅      
+
+### Media Playback Controls
+```
+* M_PLAY        (play/pause media)              ⏯      
+* M_STOP        (stop currently playing media)  ⏹     
+* M_NEXT        (play next track)               ⏭      
+* M_PREV        (play pervious track)           ⏮   
+```
+
+### Open Basic Apps
+```
 * MEDIA         (opens default media player)    📺      
 * EMAIL         (opens default email program)   📧      
 * CALC          (opens calculator)              🧮      
-* FILES         (opens file explorer)           📁      
+* FILES         (opens file explorer)           📁   
 ```
+
 ### Browser Controls
 (this is a sub-category of extra keys and behavior is the same)
 ```
-* B_HOME        (redirect to home page)         🏠      
-* B_BACK        (go back a page)                ◀     
-* B_FORWARD     (go forward a page)              ▶          
-* B_REFRESH     (refresh current page)          🔃      
-* B_BOOKMARKS   (open bookmarks/favorites)      ⭐          
+* B_HOME        (redirect to home page*)         🏠      
+* B_PREV        (go back a page)                ◀     
+* B_NEXT        (go forward a page)              ▶          
+* B_REF         (refresh current page)          🔃      
+* B_FAV         (open bookmarks/favorites)      ⭐          
 ```
+**\*if browser isn't open a window on home tab is opened**
 
 # PROFILES
 Once all macros are defined , UKP generates the number of profiles which are going to be used by the input devices. 
