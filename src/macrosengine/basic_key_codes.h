@@ -14,7 +14,7 @@ namespace basicKeys
     MACRO binding_7[] = "RIGHT";
     MACRO binding_8[] = "BACKSPACE";
     MACRO binding_9[] = "TAB";
-    MACRO binding_10[] = "RETURN";
+    MACRO binding_10[] = "ENTER";
     MACRO binding_11[] = "ESC";
     MACRO binding_12[] = "INSERT";
     MACRO binding_13[] = "DELETE";

@@ -117,7 +117,7 @@ more coming soon...
 * RIGHT         (right arrow key)
 * BACKSPACE
 * TAB
-* RETURN
+* ENTER
 * ESC
 * INSERT
 * DELETE
