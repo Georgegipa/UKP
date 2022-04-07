@@ -7,7 +7,7 @@
 class sdcard
 {
 private:
-    char *internalStr;
+    char internalStr[MACRO_MAX_SIZE];
     int timesCalled;
     void refereshFileInfo();
     bool sdConnected;
@@ -15,7 +15,7 @@ private:
 public:
     bool begin();
     bool checkConnection();
-    int maxLines, maxStrLength;
+    char *readLine(const char *fileName, int lineNumber);
     char *readLine(int line);
 };
 

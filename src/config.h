@@ -59,5 +59,5 @@
  */
 #define SWITCH 8  //set this to 0 to disable switch disabler
 #define BUILTIN_LEDS_ENABLED 0 // enable/disable builtin leds of the board
-#define SD_ENABLED 0 //enable/disable micro_sd (macros are loaded from default_profiles.h)
+#define SD_ENABLED 1 //enable/disable micro_sd (macros are loaded from default_profiles.h)
 #define LED 9 //define the led pin number (set this to 0 to use builtin led)
