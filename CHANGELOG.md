@@ -13,6 +13,11 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.6b] - 2022-04-08
+### Changed
+* Mouse scroll behavior
+    * SCRUP,SCRDW -> SCRU,SCRD
+    * now caseinsensitive 
 ## [0.8.6] - 2022-04-07
 ### Changed
 * Simplified bindings name for basic and extra keys

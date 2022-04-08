@@ -153,9 +153,9 @@ more coming soon...
 
 ## Extra Mouse Modifiers
 **ℹ x is a number between 1 and 127!**
-* SCRUPx 
+* SCRUx 
     * Scroll up x pixels
-* SCRDWx 
+* SCRDx 
     * Scroll down x pixels
 
 ## Supported Extra Keys

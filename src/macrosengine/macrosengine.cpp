@@ -41,18 +41,15 @@ int macrosengine::findKey(char *word)
     {
         strncpy(word, word + 1, strlen(word));
         int fkey = atoi(word);
-        if (fkey >= 1 && fkey <= 24) // check if f key is correct
+        switch (atoi(word))
         {
-            switch (fkey)
-            {
-            case 1 ... 12: // for f1 to f12 keys keycode is equal to fkey + F1
-                return KEY_F1 + fkey - 1;
-            case 13 ... 24: // for f13 to f24 keys keycode is equal to fkey + F13
-                return KEY_F13 + fkey - 13;
-            }
-        }
-        else
+        case 1 ... 12: // for f1 to f12 keys keycode is equal to fkey + F1
+            return KEY_F1 + fkey - 1;
+        case 13 ... 24: // for f13 to f24 keys keycode is equal to fkey + F13
+            return KEY_F13 + fkey - 13;
+        default:
             return -1;
+        }
     }
     else
     {
@@ -110,19 +107,17 @@ int macrosengine::mouseAction(char *word)
     int up = -1;
     if (wordlen >= 5)
     {
-        char buf[4];
-        strncpy_T(buf, word, 3);
-        if (!strcmp(buf, "SCR"))
+        strncpy_T(word, word, 3);
+        if (!strcasecmp(word, "SCR"))
         {
-            strncpy_T(buf, &word[3], 2);
-            if (!strcmp(buf, "UP"))
+            if (word[3] == 'U' || word[3] == 'u')
                 up = 1;
-            else if (!strcmp(buf, "DW"))
+            else if (word[3] == 'D' || word[3] == 'd')
                 up = 0;
             else
                 return up;
             SSprintf("Scroll action detected!\n");
-            int scrval = atoi(&word[5]);
+            int scrval = atoi(&word[4]);
             if (scrval >= 0 && scrval <= 127)
                 mouseScroll(up, scrval);
         }
