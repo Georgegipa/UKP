@@ -52,6 +52,7 @@ void UKPmanager::begin()
     SSprintf("Number of buttons intialized:%d\n", button::buttonSum);
     SSprintf("Number of profiles intialized:%d\n", defaultProfilesSum);
 #endif
+    Retriever.begin();
 }
 
 #if PROFILES

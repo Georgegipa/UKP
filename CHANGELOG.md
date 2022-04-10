@@ -13,6 +13,13 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.9.0] - 2022-04-10
+### Added
+* Proper sdcard support
+    * read and parse lines to macrosengine
+    * option to change default sdcard file
+* Option to select behavior if sdcard is not available
+    * LOAD_BEHAVIOR added to config.h
 ## [0.8.6c] - 2022-04-10
 ### Changed
 * MacrosEngine 3.0
