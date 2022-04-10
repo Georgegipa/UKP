@@ -4,6 +4,7 @@
 #include "macrosengine/macrosengine.hpp"
 #include "DynamicInput/DynamicInput.hpp"
 #include "macrosengine/profiles.hpp"
+#include "macroretriever/macroretriever.hpp"
 #ifdef APP_CONTROL
 #include "scomms/scomms.hpp"
 #endif
@@ -82,14 +83,15 @@ void UKPmanager::manageButtonMacros(int &button_pin)
 
     if (button_pin)
 #if PROFILE_BUTTON >= 0 // profile button is enabled
-        MA.parseMacro(button_pin - 1, currentProfile);
+        MA.parseMacro(Retriever.getMacro(button_pin- 1, currentProfile));
     else
         Profile++;
 #elif PROFILE_BUTTON == -2 // profiles are enabled without a profile button
-        MA.parseMacro(button_pin, currentProfile);
+        MA.parseMacro(Retriever.getMacro(button_pin, currentProfile));
 #elif PROFILE_BUTTON == -1 // disabled profiles
-        MA.parseMacro(button_pin);
+        MA.parseMacro(Retriever.getMacro(button_pin));
 #endif
+    
 }
 
 #ifdef KILL_SWITCH

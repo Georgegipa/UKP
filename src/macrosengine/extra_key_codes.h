@@ -3,24 +3,24 @@
 
 namespace extraKeys
 {
-    MACRO binding_0[] = "PLAY_PAUSE";
-    MACRO binding_1[] = "VOL_MUTE";
-    MACRO binding_2[] = "VOL_UP";
-    MACRO binding_3[] = "VOL_DOWN";
-    MACRO binding_4[] = "NEXT_TRACK";
-    MACRO binding_5[] = "PREV_TRACK";
-    MACRO binding_6[] = "STOP";
-    MACRO binding_7[] = "BR_UP";
-    MACRO binding_8[] = "BR_DOWN";
+    MACRO binding_0[] = "M_PLAY";
+    MACRO binding_1[] = "M_NEXT";
+    MACRO binding_2[] = "M_PREV";
+    MACRO binding_3[] = "M_STOP";
+    MACRO binding_4[] = "VOL_M";
+    MACRO binding_5[] = "VOL_U";
+    MACRO binding_6[] = "VOL_D";
+    MACRO binding_7[] = "BRT_U";
+    MACRO binding_8[] = "BRT_D";
     MACRO binding_9[] = "MEDIA";   // opens default media player
     MACRO binding_10[] = "EMAIL";  // opens default email app
     MACRO binding_11[] = "CALC";   // opens calculator
     MACRO binding_12[] = "FILES";  // open windows file explorer
     MACRO binding_13[] = "B_HOME"; // if browser is open redirects to home ,else opens new window on home tab
-    MACRO binding_14[] = "B_BACK";
-    MACRO binding_15[] = "B_FORWARD";
-    MACRO binding_16[] = "B_REFRESH";
-    MACRO binding_17[] = "B_BOOKMARKS";
+    MACRO binding_14[] = "B_PREV";
+    MACRO binding_15[] = "B_NEXT";
+    MACRO binding_16[] = "B_REF";
+    MACRO binding_17[] = "B_FAV";
 
     MACRO_ARRAY bindings[] = {
         binding_0,
@@ -45,12 +45,12 @@ namespace extraKeys
     const ConsumerKeycode key_codes[] =
         {
             MEDIA_PLAY_PAUSE,
-            MEDIA_VOLUME_MUTE,
-            MEDIA_VOLUME_UP,
-            MEDIA_VOLUME_DOWN,
             MEDIA_NEXT,
             MEDIA_PREVIOUS,
             MEDIA_STOP,
+            MEDIA_VOLUME_MUTE,
+            MEDIA_VOLUME_UP,
+            MEDIA_VOLUME_DOWN,
             CONSUMER_BRIGHTNESS_UP,
             CONSUMER_BRIGHTNESS_DOWN,
             CONSUMER_CONTROL_CONFIGURATION,
@@ -64,5 +64,5 @@ namespace extraKeys
             CONSUMER_BROWSER_BOOKMARKS};
 
     PROGMEM_INT bindingsSum = ARR_SIZE(key_codes);    // number of all bindings
-    PROGMEM_INT bindingMaxSize = ARR_SIZE(binding_3); // size of the longest binding
+    PROGMEM_INT bindingMaxSize = ARR_SIZE(binding_0); // size of the longest binding
 }

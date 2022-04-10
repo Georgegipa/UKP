@@ -13,6 +13,22 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.6c] - 2022-04-10
+### Changed
+* MacrosEngine 3.0
+    * now only analyzes strings
+    * moved button and profile analysis to separate files(macroretriever)
+## [0.8.6b] - 2022-04-08
+### Changed
+* Mouse scroll behavior
+    * SCRUP,SCRDW -> SCRU,SCRD
+    * now caseinsensitive 
+## [0.8.6] - 2022-04-07
+### Changed
+* Simplified bindings name for basic and extra keys
+* Moved f keys logic to macrosengine
+### Removed
+* F keys from bindings
 ## [0.8.5] - 2022-03-01
 ### Added
 * SSprintf that functions like printf for logging purposes
