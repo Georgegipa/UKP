@@ -234,7 +234,7 @@ The following outputs are currently supported:
 
 # Changing Default Macros
 To change the default macros which are stored in arduino's flash:
-* navigate to macrosengine/default_macros.h
+* navigate to default_macros.h
 * add a new macro with a unique name : MACRO name[] = "your_macro";
     * your_macro should be replaced by your desired macro [instructions1](#basic-macros) and [instructions2](#macro-commands)
 * add the newly added macro name to the defaultMacros

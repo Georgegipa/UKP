@@ -1,9 +1,7 @@
 #include "macrosengine/macrosengine.hpp"
 #ifdef HID_ENABLED
-#include "macrosengine/default_macros.h"
 #include "extendedHID/Consumer2.h"
 #include "profiles.hpp"
-const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTON_SUM - 1)) : 1);
 macrosengine MA;
 
 /** @brief Initialize components used by macrosengine */
@@ -12,9 +10,6 @@ void macrosengine::begin()
     stickyKeys = 0;
     Keyboard.begin();
     Mouse.begin();
-#if SD_ENABLED
-    sd.begin();
-#endif
 }
 
 /**
@@ -37,7 +32,7 @@ int macrosengine::findKey(char *word)
     using namespace basicKeys;
     char buf[bindingMaxSize];
     SSprintf("Got basicKey:%s\n", word);
-    if (word[0] == 'F' || word[0] == 'f') // check if word is a F key
+    if (toupper(word[0]) == 'F') // check if word is a F key
     {
         strncpy(word, word + 1, strlen(word));
         int fkey = atoi(word);
@@ -110,9 +105,9 @@ int macrosengine::mouseAction(char *word)
         strncpy_T(word, word, 3);
         if (!strcasecmp(word, "SCR"))
         {
-            if (word[3] == 'U' || word[3] == 'u')
+            if (toupper(word[3]) == 'U')
                 up = 1;
-            else if (word[3] == 'D' || word[3] == 'd')
+            else if (toupper(word[3]) == 'D')
                 up = 0;
             else
                 return up;
@@ -158,16 +153,6 @@ void macrosengine::processProfile(char *word)
             Profile[len];
     }
 #endif
-}
-/**
- * @brief Returns the position of the default_profiles array corresponding to the button pressed and the profile selected.
- * If profiles are enabled the total number of buttons is -1.
- * @param profile_id the currently selected profile
- * @param button_id the pressed button
- */
-inline int macrosengine::findMacroID(int profile_id, int button_id)
-{
-    return (((PROFILES ? BUTTON_SUM - 1 : BUTTON_SUM) * profile_id) + (button_id));
 }
 
 inline bool macrosengine::holdButton(int extraActions)
@@ -276,78 +261,44 @@ bool macrosengine::processExtraKey(char *key, bool hold)
     return false;
 }
 
-/**
- * @brief Reads,analyzes and executes all the supported macro types (see README).
- * Extra info:
- * If sd card is enabled then loadDefaults should be set to 0 to try load sd card macros first.
- * If profiles are disabled profileId should be 0.
- * @param buttonId The currently selected profile
- * @param profileId The button pressed
- * @param loadDefaults True to load the default profiles/False load from sd.(if sd card is not enabled this parameter doesn't do anything)
- */
-void macrosengine::parseMacro(int buttonId, int profileId, bool loadDefaults)
+void macrosengine::parseMacro(char *macro)
 {
-    char str[MACRO_MAX_SIZE], check[MACRO_COMMAND_SIZE + 1];
-    if (!SD_ENABLED) // if sd card is disabled only default profiles can be loaded
-        loadDefaults = 1;
-#if SD_ENABLED
-    else // check if file can be read
+    if (macro[MACRO_COMMAND_SIZE - 1] == ',')
     {
-        if (!sd.checkConnection())
-            loadDefaults = 1;
-    }
-#endif
-    // first start by checking if a macro command exists
-    if (loadDefaults)
-        strncpy_PT(check, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE);
-#if SD_ENABLED
-    else
-        strncpy_T(check, sd.readLine(findMacroID(profileId, buttonId)), MACRO_COMMAND_SIZE); // load from micro sd
-#endif
-
-    if (check[MACRO_COMMAND_SIZE - 1] == ',') // macro contains macro command , remove command from macro
-    {
-        if (loadDefaults) // read from progmem
-            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE);
-#if SD_ENABLED
-        else // read from micro_sd
-            strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)) + MACRO_COMMAND_SIZE, MACRO_MAX_SIZE);
-#endif
-        switch (toupper(check[0]))
+        char check = macro[0];
+        //the given macro contains macrocommand ,now remove command from macro
+        strncpy_T(macro, &macro[MACRO_COMMAND_SIZE], strlen(macro) - MACRO_COMMAND_SIZE);
+        switch (toupper(check))
         {
         case 'W': // paste following string
-            SSprintf("W macro: %s\n", str);
-            Keyboard.print(str);
+            SSprintf("W macro: %s\n", macro);
+            Keyboard.print(macro);
             break;
         case 'R': // open windows program
             keyboardMacro(2, KEY_RIGHT_GUI, 'r');
-            SSprintf("R macro: %s\n", str);
+            SSprintf("R macro: %s\n", macro);
             delay(50);
-            Keyboard.println(str);
+            Keyboard.println(macro);
             break;
         case 'O': // press keys one by one
-            SSprintf("O macro: %s\n", str);
-            executeMacro(str, 1);
+            SSprintf("O macro: %s\n", macro);
+            executeMacro(macro, 1);
             break;
         case 'P': // change profile
-            SSprintf("P macro: %s\n", str);
-            processProfile(str);
+            SSprintf("P macro: %s\n", macro);
+            processProfile(macro);
             break;
         case 'H': // hold keys
-            SSprintf("H macro: %s\n", str);
-            executeMacro(str, 2);
+            SSprintf("H macro: %s\n", macro);
+            executeMacro(macro, 2);
             break;
         }
     }
     else // macro doesn't contain macro command
     {
-        if (loadDefaults)
-            strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)));
-#if SD_ENABLED
-        else
-            strncpy_T(str, sd.readLine(findMacroID(profileId, buttonId)), MACRO_MAX_SIZE);
-#endif
-        executeMacro(str);
+        SSprintf("O macro: %s\n", macro);
+        executeMacro(macro);
     }
 }
+
 #endif

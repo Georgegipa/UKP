@@ -4,15 +4,11 @@
 #include <Mouse.h>
 #include "basic_key_codes.h"
 #include "extra_key_codes.h"
-#if SD_ENABLED
-#include "sdcard/sdcard.hpp"
-#endif
 
 class macrosengine
 {
 private:
     int findKey(char *word);
-    inline int findMacroID(int profileId, int buttonId);
     void executeMacro(char *macro, int extraActions = 0);
     bool processExtraKey(char *key,bool hold=0);
     inline void mouseScroll(bool up, int val);
@@ -25,7 +21,7 @@ public:
     void begin();
     ~macrosengine();
     void keyboardMacro(int num_args, ...);
-    void parseMacro(int buttonId, int profileId = 0, bool loadDefaults = !SD_ENABLED);
+    void parseMacro(char *macro);
     void clearStickyKeys();
 };
 extern macrosengine MA;

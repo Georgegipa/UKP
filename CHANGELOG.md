@@ -13,6 +13,11 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.8.6c] - 2022-04-10
+### Changed
+* MacrosEngine 3.0
+    * now only analyzes strings
+    * moved button and profile analysis to separate files(macroretriever)
 ## [0.8.6b] - 2022-04-08
 ### Changed
 * Mouse scroll behavior
