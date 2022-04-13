@@ -15,7 +15,6 @@ private:
     inline bool holdButton(int extraActions);
     int mouseAction(char *word);
     void processProfile(char *word);
-
 public:
     bool stickyKeys;
     void begin();
@@ -23,6 +22,7 @@ public:
     void keyboardMacro(int num_args, ...);
     void parseMacro(char *macro);
     void clearStickyKeys();
+    void KeyboardPrint(char *word);
 };
 extern macrosengine MA;
 #endif

@@ -2,7 +2,8 @@
 #ifdef HID_ENABLED
 #include "default_macros.h"
 #include "macrosengine/profiles.hpp"
-const int defaultProfilesSum = (PROFILES ? (dp_num / (BUTTON_SUM - 1)) : 1);
+int maxProfiles = FLASH_PROFILES;
+#include "macrosengine/macrosengine.hpp"
 macroretriever Retriever;
 
 void macroretriever::begin()
@@ -11,16 +12,19 @@ void macroretriever::begin()
     if (!SD.begin(10))
     {
         SSprintf("Card Mount Failed\n");
+        sdCardFailed = 1;
         return;
     }
     else
     {
         SSprintf("Successfully mounted microSD\n");
-    }
+
 #if DEBUG
-    SDFileInfo();
-    printFile(DEFAULT_FILE);
+        SDFileInfo();
 #endif
+        // find out how many lines are in a file
+        maxProfiles = (getFileInfo() / (BUTTON_SUM - 1));
+    }
 #endif
 }
 
@@ -47,6 +51,11 @@ char *macroretriever::getMacro(int buttonId, int profileId)
 {
     memset(str, 0, sizeof(str));
 #if SD_ENABLED
+    if (sdCardFailed) // if the file open has failed once dont try to open it again
+    {
+        strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)));
+        return str;
+    }
     if (checkConnection() == 0 && LOAD_BEHAVIOR) // if file is not found and loadDefaults is true load macros from flash
         strcpy_P(str, RETRIEVE_PROFILE(defaultMacros, findMacroID(profileId, buttonId)));
     else
@@ -66,6 +75,13 @@ bool macroretriever::checkConnection(const char *fileName)
     if (!f)
     {
         SSprintf("Error opening file\n");
+        if (!strcasecmp(fileName, DEFAULT_FILE)) // if the default file is not found, then sd is disconnected
+        {
+            sdCardFailed = 1;
+            Profile.reset();
+            maxProfiles = FLASH_PROFILES;
+        }
+        SSprintf("Times failed: %d\n", sdCardFailed);
         return 0;
     }
     f.close();
@@ -109,27 +125,80 @@ char *macroretriever::readLine(int lineNumber, const char *fileName)
         return NULL;
     }
     SSprintf("Reading line %d from file %s\n", lineNumber, fileName);
+    if (lineLen(lineNumber, fileName) > MACRO_MAX_SIZE)
+    {
+        LongMacro(pos, fileName);
+        str[0] = '\0';
+        return str;
+    }
     File f = SD.open(fileName);
     memset(str, 0, sizeof(str));
+    SSprintf("Line length:%d\n", lineLen(lineNumber, fileName));
     f.seek(pos);
     f.readBytesUntil('\n', str, MACRO_MAX_SIZE);
-    // remove the \r from the end of the string if it exists
-    if (str[strlen(str) - 1] == '\r')
-        str[strlen(str) - 1] = '\0';
+    replaceCarriageReturn();
     SSprintf("%s", str);
     f.close();
     return str;
 }
-#if DEBUG
+
+// remove the \r from the end of the string if it exists
+void macroretriever::replaceCarriageReturn(char replacement)
+{
+    if (str[strlen(str) - 1] == '\r')
+        str[strlen(str) - 1] = replacement;
+}
+
+// check line length
+int macroretriever::lineLen(int line, const char *filename)
+{
+    int pos = retrieveLinePos(line, filename);
+    if (pos == -1)
+    {
+        return -1;
+    }
+    File f = SD.open(filename);
+    f.seek(pos);
+    int len = f.readStringUntil('\n').length();
+    f.close();
+    return len;
+}
+
+// Splits and loads strings longer than the max macro size
+void macroretriever::LongMacro(int original_pos, const char *filename)
+{
+    File f = SD.open(filename);
+    f.seek(original_pos);
+    memset(str, 0, sizeof(str));
+    int readBytes = f.readBytesUntil('\n', str, MACRO_MAX_SIZE);
+    SSprintf("%d %s\n", readBytes, str);
+    int pos = f.position();
+    f.close();
+    MA.parseMacro(str);
+    while (readBytes >= 50) // while the next line is shorter than the current one
+    {
+        f = SD.open(filename);
+        f.seek(pos);
+        // read the next part of the string
+        memset(str, 0, sizeof(str));
+        readBytes = f.readBytesUntil('\n', str, MACRO_MAX_SIZE);
+        replaceCarriageReturn('\n');
+        MA.KeyboardPrint(str);
+        SSprintf("%d %s\n", readBytes, str);
+        pos = f.position();
+        f.close();
+    }
+}
+
 // print file contents to serial monitor
-void macroretriever::printFile(const char *fileName)
+int macroretriever::getFileInfo(const char *fileName)
 {
     int linecount = 0;
     File f = SD.open(fileName);
     if (!f)
     {
         SSprintf("Error opening file\n");
-        return;
+        return -1;
     }
     while (f.available())
     {
@@ -144,7 +213,10 @@ void macroretriever::printFile(const char *fileName)
     }
     f.close();
     SSprintf("Lines: %d\n", linecount);
+    return linecount;
 }
+
+#if DEBUG
 
 void macroretriever::SDFileInfo()
 {
@@ -174,6 +246,7 @@ void macroretriever::SDFileInfo()
         f = root.openNextFile();
     }
     SSprintf("\n");
+    root.close();
 }
 
 #endif
