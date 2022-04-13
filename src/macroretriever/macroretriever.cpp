@@ -175,7 +175,7 @@ void macroretriever::LongMacro(int original_pos, const char *filename)
     int pos = f.position();
     f.close();
     MA.parseMacro(str);
-    while (readBytes >= 50) // while the next line is shorter than the current one
+    while (readBytes >= MACRO_MAX_SIZE) // while the next line is shorter than the current one
     {
         f = SD.open(filename);
         f.seek(pos);

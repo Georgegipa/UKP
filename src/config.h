@@ -7,7 +7,7 @@
 /**
  * @brief Macro settings
  */
-#define MACRO_MAX_SIZE 50 // max number of chars allowed for a macro
+#define MACRO_MAX_SIZE 40 // max number of chars allowed for a macro
 
 /**
  * @brief The following settings change behavior of inputs

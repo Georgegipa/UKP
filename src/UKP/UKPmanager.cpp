@@ -46,13 +46,13 @@ void UKPmanager::begin()
         out.flashing(3, 100);
         delay(200);
     }
+    Retriever.begin();
 #ifdef KILL_SWITCH
     SSprintf("Kill switch enabled on pin:%d\n", KILL_SWITCH);
 #endif
     SSprintf("Number of buttons intialized:%d\n", button::buttonSum);
     SSprintf("Number of profiles intialized:%d\n", maxProfiles);
-#endif
-    Retriever.begin();
+#endif   
 }
 
 #if PROFILES
