@@ -48,6 +48,7 @@
 #endif
 
 //define macros
+#define FLASH_PROFILES (PROFILES ? (dp_num / (BUTTON_SUM - 1)) : 1) //set the number of profiles when reading macros from flash
 #define ARR_SIZE(X) sizeof(X)/sizeof(X[0])
 #define RETRIEVE_PROFILE(ARR,POS) (char *)pgm_read_word(ARR+POS)
 #define MACRO const char PROGMEM

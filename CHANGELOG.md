@@ -13,6 +13,18 @@ Update description(template)
 ### Fixed
 *  -->
 
+## [0.9.0] - 2022-04-13
+SD 2.0 api
+### Added
+* Proper sd support
+    * read and parse lines to macrosengine
+    * option to change default sd file
+* Option to select behavior if sd is not available
+    * LOAD_BEHAVIOR added to config.h
+    * Automatically change maxProfiles if sd is not available
+    * If DEFAULT_FILE is not found then macros are loaded from flash
+* Read and parse extremely long lines
+* Automatically remove carriage return '\r' from string
 ## [0.8.6c] - 2022-04-10
 ### Changed
 * MacrosEngine 3.0

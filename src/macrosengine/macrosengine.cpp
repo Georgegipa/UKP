@@ -263,10 +263,12 @@ bool macrosengine::processExtraKey(char *key, bool hold)
 
 void macrosengine::parseMacro(char *macro)
 {
+    if (macro[0] == 0)
+        return;
     if (macro[MACRO_COMMAND_SIZE - 1] == ',')
     {
         char check = macro[0];
-        //the given macro contains macrocommand ,now remove command from macro
+        // the given macro contains macrocommand ,now remove command from macro
         strncpy_T(macro, &macro[MACRO_COMMAND_SIZE], strlen(macro) - MACRO_COMMAND_SIZE);
         switch (toupper(check))
         {
@@ -296,9 +298,14 @@ void macrosengine::parseMacro(char *macro)
     }
     else // macro doesn't contain macro command
     {
-        SSprintf("O macro: %s\n", macro);
+        SSprintf("Default macro: %s\n", macro);
         executeMacro(macro);
     }
+}
+
+void macrosengine::KeyboardPrint(char *word)
+{
+    Keyboard.print(word);
 }
 
 #endif

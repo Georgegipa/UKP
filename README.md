@@ -1,5 +1,5 @@
 # UKP
-(Universal Keypad Protocol)
+### (Usb KeyPad)
 
 A simple modular macro keyboard with profile support and more!
 <!-- 
@@ -19,7 +19,8 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
 * Display current profile in a number of different ways:
     * Binary output (speaker or led)
     * 7 Segment display
-* Load Profiles from micro_sd
+* Load Profiles from a SD card
+* Case insensitive macros
 
 ## Project Roadmap
 * ~~Create a keypad with multiple profiles~~ (v0.2+)
@@ -33,7 +34,7 @@ For microcontrollers which don't have support for USB-HID(like the arduino uno) 
         * ~~Support for scrolling~~ (v0.8+)
     * More macro commands
 * SD improvements
-    * better micro sd detection
+    * ~~better micro sd detection~~ (v0.9+)
     * bind profiles to files (1.txt -> profile 1 ....)
 * More input options
     * add keypad support
@@ -74,20 +75,20 @@ Learn more on how to change default macros [here](#changing-default-macros).
 * **Macro commands are not always executed when the button is held and thus can cause errors!**
 ## Supported macro commands
 ### Generic macro commands
-**ℹ str represents the following string!**
+**str represents the following string!**
 * R,str
     * Windows RUN.Press WIN+R , paste the following str and then press enter.
         * Used for opening programs and services.
-    * ℹ R stands for **RUN**
+    * R stands for **RUN**
 * W,str 
     * Write str to output 
-    * ℹ W stands for **Write**
+    * W stands for **Write**
 * P,x
     * **DOES NOTHING IF PROFILES ARE DISABLED!**
     * Switch to x-number profile (if this greater than the max Profiles , then its set to max)
     * If x is + or - then go to the next or previous profile.
     * If x is set to a negative number of any other character nothing happens.
-    * ℹ P stands for **Profiles**
+    * P stands for **Profiles**
 
 ### Change basic macro behavior
 The following macro commands can be appended in front of the basic macros to alter their behavior.
@@ -152,7 +153,7 @@ more coming soon...
 * F24
 
 ## Extra Mouse Modifiers
-**ℹ x is a number between 1 and 127!**
+**x is a number between 1 and 127!**
 * SCRUx 
     * Scroll up x pixels
 * SCRDx 
