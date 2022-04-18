@@ -8,13 +8,34 @@
 class macrosengine
 {
 private:
+    enum KeyCodeType
+    {
+        KEY_NOT_FOUND,
+        BASIC_KEY_CODE,
+        EXTRA_KEY_CODE,
+        MOUSE_ACTION        
+    };
+    enum KeyBehavior
+    {
+        WAIT_FOR_ALL_KEYS,
+        PRESS_ONCE,
+        KEEP_PRESSED
+    };
+    union KeyCode
+    {
+        ConsumerKeycode consumerCode;
+        int keyboardCode;
+    }keyCode;
     int findKey(char *word);
-    void executeMacro(char *macro, int extraActions = 0);
-    bool processExtraKey(char *key,bool hold=0);
-    inline void mouseScroll(bool up, int val);
-    inline bool holdButton(int extraActions);
+    ConsumerKeycode findExtraKey(char *key);
+    KeyCodeType findKeyCodeType(char *word);
     int mouseAction(char *word);
+    bool isMouseAction(char *word);
+    inline void mouseScroll(bool up, int val);
+    void executeMacro(char *macro, macrosengine::KeyBehavior behavior=WAIT_FOR_ALL_KEYS);
     void processProfile(char *word);
+    void extraAction(macrosengine::KeyCodeType type, macrosengine::KeyBehavior behavior=WAIT_FOR_ALL_KEYS);
+    
 public:
     bool stickyKeys;
     void begin();
@@ -23,6 +44,9 @@ public:
     void parseMacro(char *macro);
     void clearStickyKeys();
     void KeyboardPrint(char *word);
+    void macroCommand(char *macro);
+    inline char getMacroCommand(char *macro);
+    bool isMacroCommand(char *macro);
 };
 extern macrosengine MA;
 #endif

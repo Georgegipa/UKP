@@ -22,6 +22,24 @@ macrosengine::~macrosengine()
 }
 
 /**
+ * @brief A variadic function that takes num_args followed by the keys that are going to be pressed
+ *
+ * @param num_args The number of keys which are going to be pressed.
+ * @param ... A number of num_args which are going to be pressed.
+ */
+void macrosengine::keyboardMacro(int num_args, ...)
+{
+    va_list args;
+    va_start(args, num_args);
+    for (int i = 0; i < num_args; i++)
+    {
+        Keyboard.press(va_arg(args, int));
+    }
+    va_end(args);
+    Keyboard.releaseAll();
+}
+
+/**
  * @brief Find the corresponding keycode for modifier key from "basic_key_codes.h"
  *
  * @param word to find inside basic_key_codes.h
@@ -31,7 +49,6 @@ int macrosengine::findKey(char *word)
 {
     using namespace basicKeys;
     char buf[bindingMaxSize];
-    SSprintf("Got basicKey:%s\n", word);
     if (toupper(word[0]) == 'F') // check if word is a F key
     {
         strncpy(word, word + 1, strlen(word));
@@ -61,21 +78,73 @@ int macrosengine::findKey(char *word)
 }
 
 /**
- * @brief A variadic function that takes num_args followed by the keys that are going to be pressed
+ * @brief Return the keycode of the key if it exists in "extra_key_codes.h"
  *
- * @param num_args The number of keys which are going to be pressed.
- * @param ... A number of num_args which are going to be pressed.
+ * @param key The macro to find inside extra_key_codes.h
+ * @return ConsumerKeycode if key exists, else return ConsumerKeycode::KEY_NOT_FOUND
  */
-void macrosengine::keyboardMacro(int num_args, ...)
+ConsumerKeycode macrosengine::findExtraKey(char *key)
 {
-    va_list args;
-    va_start(args, num_args);
-    for (int i = 0; i < num_args; i++)
+    using namespace extraKeys;
+    char buf[bindingMaxSize];
+    for (int i = 0; i < bindingsSum; i++)
     {
-        Keyboard.press(va_arg(args, int));
+        strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
+        if (!strcasecmp(buf, key))                    // if str1==str2 then strcmp returns 0
+            return key_codes[i];
     }
-    va_end(args);
-    Keyboard.releaseAll();
+    return HID_CONSUMER_UNASSIGNED;
+}
+
+
+/**
+ * @brief Check if given word is a mouse action
+ * @param word String to analyze
+ * @return bool Returns true if word is a mouse action
+ */
+bool macrosengine::isMouseAction(char *word)
+{
+    int wordlen = strlen(word); // scroll command size is >5
+    if (wordlen >= 5)
+    {
+        char buf[4];
+        strncpy_T(buf, word, 3);
+        if (!strcasecmp(buf, "SCR"))
+        {
+            if (toupper(word[3]) == 'U' || toupper(word[3]) == 'D')
+            {
+                int scrval = atoi(&word[4]);
+
+                if (scrval >= 0 && scrval <= 127)
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * @brief Convert given word to a mouse action.
+ * Supported keywords SCRUPx and SCRDWx where x indicates the pixels to scroll (1-127)
+ * @param word String to analyze and execute
+ * @return int Returns -1 if keyword isn't a mouse action
+ */
+int macrosengine::mouseAction(char *word)
+{
+    int up = -1;
+    SSprintf("Got mouseAction:%s\n", word);
+    if (isMouseAction(word))
+    {
+        if (toupper(word[3]) == 'U')
+            up = 1;
+        else if (toupper(word[3]) == 'D')
+            up = 0;
+        else
+            return up;
+        SSprintf("Scroll action detected!\n");
+        mouseScroll(up, atoi(&word[4]));
+    }
+    return up;
 }
 
 /**
@@ -89,36 +158,6 @@ inline void macrosengine::mouseScroll(bool up, int val)
     Mouse.move(0, 0, up ? val : val * -1);
 }
 
-/**
- * @brief Convert given word to a mouse action.
- * Supported keywords SCRUPx and SCRDWx where x indicates the pixels to scroll (1-127)
- * @param word String to analyze and execute
- * @return int Returns -1 if keyword isn't a mouse action
- */
-int macrosengine::mouseAction(char *word)
-{
-    // scroll command size is >5
-    int wordlen = strlen(word);
-    int up = -1;
-    if (wordlen >= 5)
-    {
-        strncpy_T(word, word, 3);
-        if (!strcasecmp(word, "SCR"))
-        {
-            if (toupper(word[3]) == 'U')
-                up = 1;
-            else if (toupper(word[3]) == 'D')
-                up = 0;
-            else
-                return up;
-            SSprintf("Scroll action detected!\n");
-            int scrval = atoi(&word[4]);
-            if (scrval >= 0 && scrval <= 127)
-                mouseScroll(up, scrval);
-        }
-    }
-    return up;
-}
 
 /**
  * @brief Process profile commands.
@@ -155,9 +194,49 @@ void macrosengine::processProfile(char *word)
 #endif
 }
 
-inline bool macrosengine::holdButton(int extraActions)
+/**
+ * @brief Press Once or Hold key based on their type.
+ *
+ * @param type The type of the key.
+ * @param behavior If the key should be pressed or held.
+ */
+void macrosengine::extraAction(macrosengine::KeyCodeType type, macrosengine::KeyBehavior behavior)
 {
-    return extraActions == 1 ? 0 : 1;
+    if (type == BASIC_KEY_CODE)
+    {
+        SSprintf("Key val:%d\n", keyCode.keyboardCode);
+        switch (behavior)
+        {
+        case KEEP_PRESSED:
+        case WAIT_FOR_ALL_KEYS:
+            Keyboard.press(keyCode.keyboardCode);
+            break;
+        case PRESS_ONCE:
+            Keyboard.press(keyCode.keyboardCode);
+            Keyboard.releaseAll();
+            break;
+        default:
+            break;
+        }
+    }
+    else if (type == EXTRA_KEY_CODE)
+    {
+        SSprintf("Key val:%u\n", keyCode.consumerCode);
+        switch (behavior)
+        {
+        case KEEP_PRESSED:
+        case WAIT_FOR_ALL_KEYS:
+            Consumer.press(keyCode.consumerCode);
+            break;
+        case PRESS_ONCE:
+            Consumer.write(keyCode.consumerCode);
+            break;
+        default:
+            break;
+        }
+    }
+    else
+        return;
 }
 
 /**
@@ -169,56 +248,42 @@ inline bool macrosengine::holdButton(int extraActions)
  *  * 1, press and release a key when its recognized.
  *  * 2, hold a key until clearStickyKeys is called again.
  */
-void macrosengine::executeMacro(char *macro, int extraActions)
+void macrosengine::executeMacro(char *macro, macrosengine::KeyBehavior extraActions)
 {
-    int token_length = 0, key, media_keys_pressed = 0;
+    int media_keys_pressed = 0;
     SSprintf("Macro loaded:%s\n", macro);
-    char *token = strtok(macro, "+"); //
+    char *token = strtok(macro, "+");
     while (token)
     {
-        token_length = strlen(token);
-        key = -1;
-        if (token_length == 1) // convert char to int
+        KeyCodeType type = findKeyCodeType(token);
+        switch (type)
         {
-            key = tolower(*token);
+        case BASIC_KEY_CODE:
+            SSprintf("Got basicKey:%s\n", token);
+            break;
+        case EXTRA_KEY_CODE:
+            SSprintf("Got extraKey:%s\n", token);
+            media_keys_pressed++;
+            if (media_keys_pressed >= 4) // consumer api can only send up to 4 media keys
+                type = KEY_NOT_FOUND;
+            break;
+        case MOUSE_ACTION:
+            mouseAction(token);
+            break;
+        default:
+            break;
         }
-        else if (token_length >= 4) // convert modifier keys
-        {
-            // consumer api can only send up to 4 media keys
-            if (processExtraKey(token, holdButton(extraActions)) && media_keys_pressed <= 4)
-            {
-                media_keys_pressed++;
-                key = -2;
-            }
-            else if (mouseAction(token) != -1) // if the mouse action is found read next keyword
-            {
-                key = -2;
-            }
-            else
-                key = findKey(token); // execute a basic keyboard command
-        }
-        else if (token_length > 1)
-            key = findKey(token); // execute a basic keyboard command
 
-        SSprintf("Token is:%s", token);
-        SSprintf(" with length of :%d", token_length);
-        SSprintf(" and (key) val:%d\n", key);
-        //-1 basic Key not found
-        //-2 other action executed
-        if (key >= 0)
-            Keyboard.press(key);
-        if (extraActions == 1)
-            Keyboard.releaseAll();
-
+        extraAction(type, extraActions);
         token = strtok(NULL, "+");
     }
 
-    if (extraActions == 0) // release all buttons when macro is fully read
+    if (extraActions == WAIT_FOR_ALL_KEYS) // release all buttons when macro is fully read
     {
         Keyboard.releaseAll();
         Consumer.releaseAll();
     }
-    else if (extraActions == 2)
+    else if (extraActions == KEEP_PRESSED)
         stickyKeys = true;
 }
 
@@ -233,79 +298,115 @@ void macrosengine::clearStickyKeys()
     SSprintf("Sticky Keys cleared!\n");
 }
 
-/**
- * @brief Find and Press/Hold the corresponding keycode for the extra keys from "extra_key_codes.h".
- *
- * @param key The key that it's going to be searched in "extra_key_codes.h".
- * @param hold Set to true to hold the key pressed.
- * @returns True if keycode is found.
- */
-bool macrosengine::processExtraKey(char *key, bool hold)
+macrosengine::KeyCodeType macrosengine::findKeyCodeType(char *word)
 {
-
-    using namespace extraKeys;
-    SSprintf("Got extraKey:%s\n", key);
-    char buf[bindingMaxSize];
-    for (int i = 0; i < bindingsSum; i++)
+    int word_length = strlen(word);
+    int key = -1;
+    SSprintf("Token is:%s with length of :%d\n", word, word_length);
+    // check if word is on the ascii table between 32 and 126
+    if (word_length == 1 && (word[0] >= 32 && word[0] <= 126))
     {
-        strcpy_P(buf, RETRIEVE_PROFILE(bindings, i)); // retrieve current string from progmem
-        if (!strcasecmp(buf, key))                    // if str1==str2 then strcmp returns 0
+        // if word is capitalized, the convert it to lowercase
+        if (isupper(word[0]))
+            word[0] = tolower(word[0]);
+        keyCode.keyboardCode = word[0];
+        return BASIC_KEY_CODE;
+    }
+    else if (word_length >= 4) // convert modifier keys
+    {
+        // check if word is a media key
+        ConsumerKeycode temp = findExtraKey(word);
+        if (temp != HID_CONSUMER_UNASSIGNED)
         {
-            if (hold)
-                Consumer.press(key_codes[i]);
-            else
-                Consumer.write(key_codes[i]);
-            return true;
+            keyCode.consumerCode = temp;
+            return EXTRA_KEY_CODE;
+        }
+        // check if word is a mouse action
+        else if (isMouseAction(word))
+        {
+            return MOUSE_ACTION;
         }
     }
-    return false;
+    // after all checks, check if word is a keyboard key
+    if (key == -1)
+        key = findKey(word); // check if word is a basic keyboard command
+    // check if word exists as a basic key
+    if (key >= 0)
+    {
+        keyCode.keyboardCode = key;
+        return BASIC_KEY_CODE;
+    }
+    return KEY_NOT_FOUND;
 }
 
 void macrosengine::parseMacro(char *macro)
 {
     if (macro[0] == 0)
         return;
-    if (macro[MACRO_COMMAND_SIZE - 1] == ',')
+    switch (getMacroCommand(macro))
     {
-        char check = macro[0];
-        // the given macro contains macrocommand ,now remove command from macro
-        strncpy_T(macro, &macro[MACRO_COMMAND_SIZE], strlen(macro) - MACRO_COMMAND_SIZE);
-        switch (toupper(check))
-        {
-        case 'W': // paste following string
-            SSprintf("W macro: %s\n", macro);
-            Keyboard.print(macro);
-            break;
-        case 'R': // open windows program
-            keyboardMacro(2, KEY_RIGHT_GUI, 'r');
-            SSprintf("R macro: %s\n", macro);
-            delay(50);
-            Keyboard.println(macro);
-            break;
-        case 'O': // press keys one by one
-            SSprintf("O macro: %s\n", macro);
-            executeMacro(macro, 1);
-            break;
-        case 'P': // change profile
-            SSprintf("P macro: %s\n", macro);
-            processProfile(macro);
-            break;
-        case 'H': // hold keys
-            SSprintf("H macro: %s\n", macro);
-            executeMacro(macro, 2);
-            break;
-        }
-    }
-    else // macro doesn't contain macro command
-    {
-        SSprintf("Default macro: %s\n", macro);
+    case 'W': // paste following string
+        macroCommand(macro);
+        Keyboard.print(macro);
+        break;
+    case 'R': // open windows program
+        keyboardMacro(2, KEY_RIGHT_GUI, 'r');
+        macroCommand(macro);
+        delay(50);
+        Keyboard.println(macro);
+        break;
+    case 'O': // press keys one by one
+        macroCommand(macro);
+        executeMacro(macro, KeyBehavior::PRESS_ONCE);
+        break;
+    case 'P': // change profile
+        macroCommand(macro);
+        processProfile(macro);
+        break;
+    case 'H': // hold keys
+        macroCommand(macro);
+        executeMacro(macro, KeyBehavior::KEEP_PRESSED);
+        break;
+    case 1: // macro doesn't contain macro command
         executeMacro(macro);
+        break;
     }
+}
+
+// Remove macro command from macro
+void macrosengine::macroCommand(char *macro)
+{
+    char temp = toupper(macro[0]);
+    strncpy_T(macro, &macro[MACRO_COMMAND_SIZE], strlen(macro) - MACRO_COMMAND_SIZE);
+    SSprintf("%c macro command: %s\n", temp, macro);
 }
 
 void macrosengine::KeyboardPrint(char *word)
 {
     Keyboard.print(word);
+}
+
+// Return the macro command from macro if it's found or 1 if not found(default macro)
+inline char macrosengine::getMacroCommand(char *macro)
+{
+    return (macro[MACRO_COMMAND_SIZE - 1] == ',') ? toupper(macro[0]) : 1;
+}
+
+bool macrosengine::isMacroCommand(char *macro)
+{
+    if (getMacroCommand(macro) == 1)
+        return false;
+    switch (toupper(macro[0]))
+    {
+    case 'W':
+    case 'R':
+    case 'O':
+    case 'P':
+    case 'H':
+        return true;
+    default:
+        return false;
+    }
 }
 
 #endif
