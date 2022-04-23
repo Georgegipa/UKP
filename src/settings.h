@@ -13,6 +13,7 @@
 #define HID_ENABLED 1
 #endif
 
+//TODO: support for companion app
 //enable the companion app control to UKP
 #if COMPANION_APP
 #define APP_CONTROL
